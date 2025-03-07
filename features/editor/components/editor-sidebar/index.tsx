@@ -23,6 +23,7 @@ export default function EditorSidebar() {
                         'z-[40] mt-[97px] w-16 overflow-hidden p-0 shadow-none transition-all focus:border-none',
                         { hidden: state.editor.preview },
                     )}
+                    data-testid="editor-sidebar-tabs"
                 >
                     <TabList />
                     <SheetDescription />
@@ -33,6 +34,7 @@ export default function EditorSidebar() {
                         'z-[40] mr-16 mt-[97px] h-full w-80 overflow-hidden bg-background p-0 shadow-none transition-all focus:outline-none focus:ring-0 focus-visible:ring-0',
                         { hidden: state.editor.preview },
                     )}
+                    data-testid="editor-sidebar-content"
                 >
                     <div className="no-scrollbar grid h-full gap-4 overflow-scroll pb-36 ring-1 ring-red-500">
                         {Object.entries(SIDEBAR_TABS).map(([k, component], index) => (

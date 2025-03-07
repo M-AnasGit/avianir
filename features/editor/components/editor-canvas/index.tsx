@@ -27,6 +27,7 @@ export default function EditorCanvas() {
                     '!w-[375px]': state.editor.device === 'mobile',
                 },
             )}
+            data-testid="editor-canvas"
         >
             <Button
                 className={clsx('absolute right-4 top-4 z-[30] bg-muted hover:bg-transparent', {

@@ -51,6 +51,7 @@ export default function EditorNavigation() {
     return (
         <TooltipProvider>
             <nav
+                data-testid={'editor-navigation'}
                 className={clsx(
                     'fixed inset-0 z-[20] flex h-fit items-center justify-between gap-2 border-b-[1px] bg-background p-6 transition-all',
                     { '!h-0 !overflow-hidden !p-0': state.editor.preview },

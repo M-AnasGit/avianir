@@ -16,7 +16,12 @@ export default function TabList() {
         <div className="flex h-[90%] w-full flex-col items-center justify-between">
             <TabsList className="flex w-full flex-col items-center justify-start gap-4 border-0 bg-transparent">
                 {Object.entries(SIDEBAR_TABS_ICONS).map(([k, icon], index) => (
-                    <TabsTrigger key={index} value={k} className="h-10 w-10 p-0 data-[state=active]:bg-muted">
+                    <TabsTrigger
+                        key={index}
+                        data-testid={k}
+                        value={k}
+                        className="h-10 w-10 p-0 data-[state=active]:bg-muted"
+                    >
                         {icon}
                     </TabsTrigger>
                 ))}
