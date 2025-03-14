@@ -151,7 +151,12 @@ export default function MenuBar({ editor, palette }: Props) {
                         Object.entries(buttons).map(([key, { icon, action, pressed }]) => (
                             <Tooltip key={key}>
                                 <TooltipTrigger>
-                                    <Toggle asChild pressed={!!pressed} onClick={action}>
+                                    <Toggle
+                                        asChild
+                                        pressed={!!pressed}
+                                        onClick={action}
+                                        data-testid={`menu-bar-${key}`}
+                                    >
                                         {icon}
                                     </Toggle>
                                 </TooltipTrigger>
@@ -160,7 +165,11 @@ export default function MenuBar({ editor, palette }: Props) {
                         ))}
                 </div>
             </TooltipProvider>
-            <div className="px-1 pt-2">
+            <div
+                className="px-1 pt-2"
+                data-testid="menu-bar-inputs"
+                data-current={selectedInput ? selectedInput : editor.isActive('codeBlock') && 'code'}
+            >
                 {selectedInput === 'color' && (
                     <RichTextColorInput
                         currentColor={editor.getAttributes('textStyle').color || 'default'}

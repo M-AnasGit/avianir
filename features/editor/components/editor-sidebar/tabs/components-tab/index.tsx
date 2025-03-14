@@ -13,7 +13,7 @@ export default function ComponentsTab() {
             {Object.entries(COMPONENTS_TAB_ITEMS).map(([key, value], i) => {
                 return (
                     <AccordionItem key={i} value={key} className="border-b-[1px] py-0">
-                        <AccordionTrigger className="capitalize !no-underline" data-testid={`${key}`}>
+                        <AccordionTrigger className="capitalize !no-underline" data-testid={`components-${key}`}>
                             {key}
                         </AccordionTrigger>
                         <AccordionContent className="grid grid-cols-3 gap-y-4">

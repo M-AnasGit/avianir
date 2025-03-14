@@ -1,6 +1,6 @@
 'use client';
 import React from 'react';
-import { Dialog, DialogContent } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogClose } from '@/components/ui/dialog';
 
 type ModalContextType = {
     modal: React.ReactNode | null;
@@ -25,7 +25,7 @@ const ModalProvider = ({ children }: { children: React.ReactNode }) => {
         <ModalContext.Provider value={{ modal, handleSetModal, handleRemoveModal }}>
             {children}
             <Dialog open={!!modal} onOpenChange={handleRemoveModal}>
-                <DialogContent>{modal}</DialogContent>
+                <DialogContent data-testid="modal-dialog">{modal}</DialogContent>
             </Dialog>
         </ModalContext.Provider>
     );

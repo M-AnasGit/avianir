@@ -18,7 +18,7 @@ export default function TabList() {
                 {Object.entries(SIDEBAR_TABS_ICONS).map(([k, icon], index) => (
                     <TabsTrigger
                         key={index}
-                        data-testid={k}
+                        data-testid={`sidebar-tabs-${k}`}
                         value={k}
                         className="h-10 w-10 p-0 data-[state=active]:bg-muted"
                     >

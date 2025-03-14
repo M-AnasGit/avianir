@@ -47,7 +47,12 @@ export default function Content({ type }: Props) {
     return (
         <AccordionContent className="prop-accordion-content">
             {type === 'rich-content' ? (
-                <Button variant={'outline'} onClick={handleButtonClick} className="text-primary">
+                <Button
+                    variant={'outline'}
+                    onClick={handleButtonClick}
+                    className="text-primary"
+                    data-testid="edit-content"
+                >
                     <Pencil size={16} />
                     Edit content
                 </Button>

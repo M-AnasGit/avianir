@@ -44,7 +44,10 @@ export default function ContentTab() {
                     return (
                         exists && (
                             <AccordionItem key={i} value={key} className="border-b-[1px] py-0">
-                                <AccordionTrigger className="capitalize !no-underline" data-testid={key}>
+                                <AccordionTrigger
+                                    className="capitalize !no-underline"
+                                    data-testid={`content-tab-${key}`}
+                                >
                                     {key}
                                 </AccordionTrigger>
                                 {value.component(props)}

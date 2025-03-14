@@ -1,21 +1,12 @@
 import { Locator, Page } from '@playwright/test';
 
 class SidebarContentComponent {
-    readonly page: Page;
+    protected page: Page;
     readonly $content: Locator;
 
     constructor(page: Page) {
         this.page = page;
         this.$content = page.getByTestId('editor-sidebar-content');
-    }
-
-    /**
-     * Expands a specific accordion by its name.
-     * @param accordionName The visible name of the accordion to expand.
-     */
-    public async expandAccordion(accordionName: string) {
-        await this.$content.waitFor({ state: 'visible' });
-        await this.$content.getByTestId(accordionName).click();
     }
 
     /**
