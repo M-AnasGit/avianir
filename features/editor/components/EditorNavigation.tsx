@@ -45,8 +45,10 @@ export default function EditorNavigation() {
     }, []);
 
     const handleSave = React.useCallback(() => {
-        updateCourseData(state.chapter_id, unloadData(state));
-    }, []);
+        if (state.chapter_id) {
+            updateCourseData(state.chapter_id, unloadData(state));
+        }
+    }, [state, state.chapter_id]);
 
     return (
         <TooltipProvider>
