@@ -88,9 +88,13 @@ export const updateState = (state: EditorState, updatedEditorState: Editor, noHi
     let updatedHistory: Editor[] = state.history.history;
 
     if (!noHistory) {
-        updatedHistory = state.history.history
-            .slice(Math.max(0, state.history.currentIndex - 8), state.history.currentIndex + 1)
-            .concat(updatedEditorState);
+        if (state.history.history.length < 1) {
+            updatedHistory = [state.editor, updatedEditorState];
+        } else {
+            updatedHistory = state.history.history
+                .slice(Math.max(0, state.history.currentIndex - 8), state.history.currentIndex + 1)
+                .concat(updatedEditorState);
+        }
     }
 
     const newEditorState = {

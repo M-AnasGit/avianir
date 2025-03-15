@@ -242,6 +242,15 @@ export const deleteElement = (state: EditorState, action: EditorAction): EditorS
     currentElements.splice(index, 1);
     newElementsMap.delete(selectedElementId);
 
+    for (let i = index; i < currentElements.length; i++) {
+        const old_element_in_position = currentElements[i].id;
+
+        newElementsMap.set(old_element_in_position, {
+            index: i,
+            parentId: currentElement.parentId,
+        });
+    }
+
     if (Array.isArray(selectedElement?.content) && selectedElement.content.length > 0) {
         const childrenIds = getAllContainerChildren(selectedElement.content);
         childrenIds.forEach((id) => newElementsMap.delete(id));
@@ -340,9 +349,9 @@ export const togglePreview = (state: EditorState): EditorState => {
  * @returns The updated editor state with the previous state restored
  */
 export const undo = (state: EditorState): EditorState => {
-    if (state.history.currentIndex <= 0 || state.history.history.length <= 1) return state;
+    if (state.history.currentIndex < 0 || state.history.history.length < 1) return state;
 
-    const updatedEditorState = state.history.history[state.history.currentIndex - 1];
+    const updatedEditorState = state.history.history[Math.max(state.history.currentIndex - 1, 0)];
     return {
         ...state,
         editor: updatedEditorState,
