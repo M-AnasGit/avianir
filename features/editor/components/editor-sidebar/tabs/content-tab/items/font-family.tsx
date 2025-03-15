@@ -2,9 +2,7 @@
 import React from 'react';
 //@SHADCNUI
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-//@CUSTOM HOOK
-import { useContent } from '../../provider';
-
+//@CONSTANTS
 const FONT_FAMILY_MAP: Record<string, string> = {
     arial: 'Arial, sans-serif',
     inter: 'Inter, sans-serif',
@@ -21,10 +19,14 @@ const FONT_FAMILY_MAP: Record<string, string> = {
     'arial Black': 'Arial Black, sans-serif',
     impact: 'Impact, sans-serif',
 };
+//@TYPES
+import { ElementChangeEvent } from '../types';
+type Props = {
+    style: React.CSSProperties;
+    handleStyleChange: (e: ElementChangeEvent) => void;
+};
 
-export default function FontFamily() {
-    const { currentStyle: style, handleStyleChange } = useContent();
-
+export default function FontFamily({ style, handleStyleChange }: Props) {
     const handleFontFamilyChange = (font: string) => {
         handleStyleChange({
             target: {

@@ -1,16 +1,17 @@
 'use client';
 import React from 'react';
 //@CUSTOM COMPONENT
-import InputWithSelect from '../input-with-select-for-unit';
-//@CUSTOM HOOK
-import { useContent } from '../../provider';
-
+import InputWithSelect from './input-with-select-for-unit';
+//@TYPES
+import { ElementChangeEvent } from '../types';
 type FontSizesUnits = 'px' | 'em' | 'rem' | '%';
 const FONT_SIZE_UNITS: FontSizesUnits[] = ['px', 'em', 'rem', '%'];
+type Props = {
+    style: React.CSSProperties;
+    handleStyleChange: (e: ElementChangeEvent) => void;
+};
 
-export default function FontSize() {
-    const { currentStyle: style, handleStyleChange } = useContent();
-
+export default function FontSize({ style, handleStyleChange }: Props) {
     const [fontSizeUnit, setFontSizeUnit] = React.useState<FontSizesUnits>('px');
     const handleFontSizeUnitChange = React.useCallback(
         (unit: string) => {

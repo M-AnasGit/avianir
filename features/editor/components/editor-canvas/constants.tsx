@@ -30,6 +30,19 @@ export const DEFAULT_STYLES: Record<ElementTypes, React.CSSProperties> = {
     form: { width: '100%' },
 };
 
+export const DEFAULT_FORM_TEXT_STYLES: Record<string, React.CSSProperties> = {
+    title: {
+        fontSize: '18px',
+        lineHeight: '100%',
+        color: 'var(--primary)',
+    },
+    description: {
+        fontSize: '14px',
+        lineHeight: '100%',
+        color: 'var(--primary)',
+    },
+};
+
 export const DUMMY_CONTENT: Record<string, string> = {
     text: '<p>Text</p>',
     table: `

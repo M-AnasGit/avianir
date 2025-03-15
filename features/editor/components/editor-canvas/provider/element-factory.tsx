@@ -6,11 +6,12 @@ import ContainerElement from '../default-elements/container-element';
 import MediaElement from '../default-elements/media-element';
 //@CONSTANTS
 import { initialStyles } from '@/features/editor/constants';
-import { DEFAULT_STYLES, DUMMY_CONTENT } from '../constants';
+import { DEFAULT_FORM_TEXT_STYLES, DEFAULT_STYLES, DUMMY_CONTENT } from '../constants';
 //@TYPES
 import { ElementTypes, EditorElement, DeviceTypes } from '@/features/editor/types';
 
 import { v4 } from 'uuid';
+import FormContainer from '../form-elements/form-container';
 
 class ElementFactory {
     static createElement(type: ElementTypes): EditorElement | null {
@@ -32,8 +33,14 @@ class ElementFactory {
 
         const generateFormContent = (): EditorElement['formContent'] => ({
             form: {
-                title: 'Form',
-                description: 'Description',
+                title: {
+                    value: '<p><strong>Sample form title</strong></p>',
+                    style: DEFAULT_FORM_TEXT_STYLES['title'],
+                },
+                description: {
+                    value: '<p>Sample form description</p>',
+                    style: DEFAULT_FORM_TEXT_STYLES['description'],
+                },
                 submit_btn_text: 'Submit',
             },
         });
@@ -105,6 +112,13 @@ class ElementFactory {
                             style={stylePerDevice[activeDevice]}
                             content={element.content}
                         />
+                    )
+                );
+            case 'form':
+                return (
+                    element.formContent &&
+                    element.formContent.form && (
+                        <FormContainer formDetails={element.formContent.form} style={stylePerDevice[activeDevice]} />
                     )
                 );
             default:

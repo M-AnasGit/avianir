@@ -9,6 +9,7 @@ import Decorations from './items/decorations';
 import { ElementTypes } from '@/features/editor/types';
 
 import { SelectPresetType } from './types';
+import FormTitle from './items/form-title';
 
 export const CONTENT_TAB_ITEMS: Record<
     string,
@@ -20,6 +21,10 @@ export const CONTENT_TAB_ITEMS: Record<
     typography: {
         component: () => <Typography />,
         for: new Set(['text', 'table']),
+    },
+    'form title': {
+        component: () => <FormTitle />,
+        for: new Set(['form']),
     },
     container: {
         component: () => <Container />,

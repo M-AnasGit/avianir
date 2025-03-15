@@ -13,17 +13,31 @@ type Props = {
     type: EditorElement['type'];
     style: React.CSSProperties;
     palette: Palette;
-    handleContentChange: (e: ElementChangeEvent) => void;
+    handleContentChange?: (e: ElementChangeEvent) => void;
+    handleFormContentChange?: (v: string) => void;
 };
 
-export default function RichContentModal({ content, type, style, palette, handleContentChange }: Props) {
+export default function RichContentModal({
+    content,
+    type,
+    style,
+    palette,
+    handleContentChange,
+    handleFormContentChange,
+}: Props) {
     const handleSaveContent = (v: string) => {
-        handleContentChange({
-            target: {
-                id: 'text',
-                value: v,
-            },
-        });
+        if (handleContentChange) {
+            handleContentChange({
+                target: {
+                    id: 'text',
+                    value: v,
+                },
+            });
+        }
+
+        if (handleFormContentChange) {
+            handleFormContentChange(v);
+        }
     };
     return (
         <>

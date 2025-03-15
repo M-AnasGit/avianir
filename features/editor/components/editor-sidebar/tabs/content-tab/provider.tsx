@@ -4,7 +4,7 @@ import React from 'react';
 import { useEditor } from '@/features/editor/provider';
 //@TYPES
 import { EditorElement, Preset } from '@/features/editor/types';
-import { ElementChangeEvent } from './types';
+import { ElementChangeEvent, FormElementChange } from './types';
 type ContentContextType = {
     currentStyle: React.CSSProperties;
     currentContent: EditorElement['content'];
@@ -15,6 +15,7 @@ type ContentContextType = {
     handleApplyPreset: (preset: Preset) => void;
     handleDelete: () => void;
     handleContentChange: (e: ElementChangeEvent) => void;
+    handleFormContentChange: (e: FormElementChange) => void;
 };
 
 const ContentContext = React.createContext<ContentContextType | undefined>(undefined);
@@ -197,6 +198,27 @@ export const ContentProvider = ({ children }: { children: React.ReactNode }) => 
         });
     };
 
+    const handleFormContentChange = (e: FormElementChange) => {
+        if (state.editor.selectedElement === null || !state.editor.selectedElement.formContent) {
+            return;
+        }
+
+        const { id, value } = e.target;
+
+        dispatch({
+            type: 'UPDATE_ELEMENT',
+            payload: {
+                elementDetails: {
+                    ...state.editor.selectedElement,
+                    formContent: {
+                        ...state.editor.selectedElement.formContent,
+                        [id]: value,
+                    },
+                },
+            },
+        });
+    };
+
     const handleDelete = React.useCallback(() => {
         dispatch({
             type: 'DELETE_ELEMENT',
@@ -213,6 +235,7 @@ export const ContentProvider = ({ children }: { children: React.ReactNode }) => 
                 handleBatchStyleChange,
                 handleApplyPreset,
                 handleContentChange,
+                handleFormContentChange,
                 handleDelete,
                 handleChangeConfigAcrossDevices,
             }}

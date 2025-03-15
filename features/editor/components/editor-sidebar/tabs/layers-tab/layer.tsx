@@ -52,7 +52,9 @@ export default function Layer({ ele }: Props) {
     const Icon = React.useMemo(
         () =>
             COMPONENTS_TYPES_ICONS[
-                COMPONENTS_TAB_ITEMS['default'].find((item) => item.type === ele.type)?.type ?? 'text'
+                Object.values(COMPONENTS_TAB_ITEMS)
+                    .flat()
+                    .find((item) => item.type === ele.type)?.type ?? 'text'
             ] || Eye,
         [ele.type],
     );

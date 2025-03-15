@@ -1,5 +1,26 @@
 export type DeviceTypes = 'desktop' | 'tablet' | 'mobile';
 export type ElementTypes = 'container' | 'text' | 'table' | 'image' | 'video' | 'audio' | 'form';
+export type FormDetails = {
+    title: TextValueWithStyle;
+    description: TextValueWithStyle;
+    submit_btn_text: string;
+};
+export type InputDetails = {
+    placholder: TextValueWithStyle;
+    label: TextValueWithStyle;
+    answer: {
+        value: string;
+        exact: boolean;
+    };
+};
+export type RadioDetails = {
+    label: TextValueWithStyle;
+    options: {
+        value: TextValueWithStyle;
+        is_default: boolean;
+        correct: boolean;
+    }[];
+};
 export type EditorElement = {
     id: string;
     name: string;
@@ -16,27 +37,9 @@ export type EditorElement = {
               alt?: string;
           };
     formContent?: {
-        form?: {
-            title: string;
-            description: string;
-            submit_btn_text: string;
-        };
-        input?: {
-            placholder: string;
-            label: string;
-            answer: {
-                value: string;
-                exact: boolean;
-            };
-        };
-        radio_checkbox?: {
-            label: string;
-            options: {
-                value: string;
-                is_default: boolean;
-                correct: boolean;
-            }[];
-        };
+        form?: FormDetails;
+        input?: InputDetails;
+        radio_checkbox?: RadioDetails;
     };
 };
 

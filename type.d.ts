@@ -3,6 +3,11 @@ type Color = {
     dark: string;
 };
 
+type TextValueWithStyle = {
+    value: string;
+    style: React.CSSProperties;
+};
+
 type Palette = {
     default: {
         text: Color;
