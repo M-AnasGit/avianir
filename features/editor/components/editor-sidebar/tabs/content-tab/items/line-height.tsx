@@ -1,16 +1,18 @@
 'use client';
 import React from 'react';
 //@CUSTOM COMPONENT
-import InputWithSelect from '../input-with-select-for-unit';
-//@CUSTOM HOOK
-import { useContent } from '../../provider';
-
-type LineHeightUnits = 'px' | '%';
+import InputWithSelect from './input-with-select-for-unit';
+//@CONSTANTS
 const LINE_HEIGHT_UNITS: LineHeightUnits[] = ['px', '%'];
+//@TYPES
+import { ElementChangeEvent } from '../types';
+type LineHeightUnits = 'px' | '%';
+type Props = {
+    style: React.CSSProperties;
+    handleStyleChange: (e: ElementChangeEvent) => void;
+};
 
-export default function LineHeight() {
-    const { currentStyle: style, handleStyleChange } = useContent();
-
+export default function LineHeight({ style, handleStyleChange }: Props) {
     const [lineHeightUnit, setLineHeightUnit] = React.useState<LineHeightUnits>(() => {
         return (style.lineHeight as string)?.includes('%') ? '%' : 'px';
     });

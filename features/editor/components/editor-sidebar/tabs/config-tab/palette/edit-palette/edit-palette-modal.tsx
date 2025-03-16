@@ -1,7 +1,7 @@
 'use client';
 import React from 'react';
 //@LUCIDE ICONS
-import { Moon, Plus, Sun, Trash } from 'lucide-react';
+import { Moon, Plus, Sun, X } from 'lucide-react';
 //@SHADCN UI
 import { DialogClose, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
@@ -90,14 +90,17 @@ export default function EditPaletteModal({ isDefault, palette, updateCourseData 
                     {Object.entries(localPalette).map(([key, color], _) => {
                         return (
                             <div key={key} className="flex items-center justify-between gap-x-2 p-1">
-                                <Button
-                                    type="button"
-                                    variant="destructive"
-                                    onClick={() => handleDeleteColor(key)}
-                                    className="px-2"
-                                >
-                                    <Trash size={14} />
-                                </Button>
+                                {!isDefault && (
+                                    <Button
+                                        type="button"
+                                        variant={'ghost'}
+                                        onClick={() => handleDeleteColor(key)}
+                                        className="px-2"
+                                    >
+                                        <X className="text-destructive" />
+                                    </Button>
+                                )}
+
                                 <Input
                                     name={`${key}-name`}
                                     placeholder="Color name"

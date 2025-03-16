@@ -3,10 +3,10 @@ export type ElementTypes = 'container' | 'text' | 'table' | 'image' | 'video' | 
 export type FormDetails = {
     title: TextValueWithStyle;
     description: TextValueWithStyle;
-    submit_btn_text: string;
+    submit_btn: TextValueWithStyle;
 };
 export type InputDetails = {
-    placholder: TextValueWithStyle;
+    placeholder: TextValueWithStyle;
     label: TextValueWithStyle;
     answer: {
         value: string;

@@ -7,14 +7,16 @@ import { Checkbox } from '@/components/ui/checkbox';
 //@CUSTOM HOOK
 import { useContent } from '../provider';
 import { useEditor } from '@/features/editor/provider';
-
+//@TYPES
+import { ElementChangeEvent } from '../types';
 type Props = {
+    style: React.CSSProperties;
     colorKey: keyof React.CSSProperties;
+    handleStyleChange: (e: ElementChangeEvent) => void;
 };
 
-export default function ColorInput({ colorKey = 'color' }: Props) {
+export default function ColorInput({ colorKey = 'color', style, handleStyleChange }: Props) {
     const { palette } = useEditor();
-    const { currentStyle: style, handleStyleChange } = useContent();
 
     const labeledPalette = React.useMemo(
         () =>
@@ -51,6 +53,7 @@ export default function ColorInput({ colorKey = 'color' }: Props) {
     };
     const handleTransparent = (checked: boolean) => {
         if (!checked) {
+            console.log(prevColor.current);
             handleStyleChange({
                 target: {
                     id: colorKey,
@@ -69,7 +72,7 @@ export default function ColorInput({ colorKey = 'color' }: Props) {
 
     return (
         <>
-            {color !== 'transparent' && (
+            {color !== 'transparent' && color && (
                 <div className="flex items-center gap-4">
                     <ColorPicker id={colorKey} value={color} onChange={handleColorChange} className="w-full" />
                     <SelectWithSearch
@@ -80,7 +83,7 @@ export default function ColorInput({ colorKey = 'color' }: Props) {
                 </div>
             )}
             <div className="flex items-center gap-2 px-[2px]">
-                <Checkbox checked={color === 'transparent'} onCheckedChange={handleTransparent} />
+                <Checkbox checked={color === 'transparent' || !color} onCheckedChange={handleTransparent} />
                 <small className="prop-small">Transparent</small>
             </div>
         </>

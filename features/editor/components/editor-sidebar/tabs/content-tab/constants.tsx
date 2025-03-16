@@ -6,10 +6,12 @@ import Spacings from './items/spacings';
 import Borders from './items/borders';
 import Decorations from './items/decorations';
 
-import { ElementTypes } from '@/features/editor/types';
-
-import { SelectPresetType } from './types';
 import FormTitle from './items/form-title';
+import FormDescription from './items/form-description';
+import FormButton from './items/form-button';
+
+import { ElementTypes } from '@/features/editor/types';
+import { SelectPresetType } from './types';
 
 export const CONTENT_TAB_ITEMS: Record<
     string,
@@ -24,6 +26,14 @@ export const CONTENT_TAB_ITEMS: Record<
     },
     'form title': {
         component: () => <FormTitle />,
+        for: new Set(['form']),
+    },
+    'form description': {
+        component: () => <FormDescription />,
+        for: new Set(['form']),
+    },
+    'form button': {
+        component: () => <FormButton />,
         for: new Set(['form']),
     },
     container: {

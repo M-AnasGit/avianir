@@ -35,8 +35,13 @@ export default function FormContainer({ style, formDetails }: Props) {
                 <RichContent content={formDetails.description.value} style={formDetails.description.style} />
             )}
             <div className="flex flex-col gap-2 pb-4"></div>
-            <Button type="submit" className="w-fit">
-                {formDetails.submit_btn_text}
+            <Button
+                type="submit"
+                className="w-fit"
+                onClick={(e) => e.preventDefault()}
+                style={formDetails.submit_btn.style}
+            >
+                {formDetails.submit_btn.value}
             </Button>
         </form>
     );

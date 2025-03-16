@@ -6,7 +6,7 @@ import { AccordionContent } from '@/components/ui/accordion';
 import FontFamily from '../font-family';
 import FontSize from '../font-size';
 import TextAlignment from './text-alignement';
-import LineHeight from './line-height';
+import LineHeight from '../line-height';
 import LetterSpacing from './letter-spacing';
 //@CUSTOM HOOK
 import { useContent } from '../../provider';
@@ -23,7 +23,7 @@ export default function Typography() {
             {/* Text alignement */}
             <TextAlignment />
             {/* Line height */}
-            <LineHeight />
+            <LineHeight style={style} handleStyleChange={handleStyleChange} />
             {/* Letter spacing */}
             <LetterSpacing />
         </AccordionContent>

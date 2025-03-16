@@ -14,13 +14,13 @@ export const DEFAULT_STYLES: Record<ElementTypes, React.CSSProperties> = {
         width: '100%',
         fontSize: '16px',
         lineHeight: '100%',
-        color: 'var(--primary)',
+        color: 'var(--default-text)',
     },
     table: {
         width: '100%',
         fontSize: '16px',
         lineHeight: '100%',
-        color: 'var(--primary)',
+        color: 'var(--default-text)',
         borderCollapse: 'collapse',
         borderSpacing: '0',
     },
@@ -34,12 +34,16 @@ export const DEFAULT_FORM_TEXT_STYLES: Record<string, React.CSSProperties> = {
     title: {
         fontSize: '18px',
         lineHeight: '100%',
-        color: 'var(--primary)',
+        color: 'var(--default-text)',
     },
     description: {
         fontSize: '14px',
         lineHeight: '100%',
-        color: 'var(--primary)',
+        color: 'var(--default-text)',
+    },
+    submit_btn: {
+        color: '#ffffff',
+        backgroundColor: '#000000',
     },
 };
 

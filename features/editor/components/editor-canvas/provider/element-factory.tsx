@@ -41,7 +41,10 @@ class ElementFactory {
                     value: '<p>Sample form description</p>',
                     style: DEFAULT_FORM_TEXT_STYLES['description'],
                 },
-                submit_btn_text: 'Submit',
+                submit_btn: {
+                    value: 'Submit',
+                    style: DEFAULT_FORM_TEXT_STYLES['submit_btn'],
+                },
             },
         });
 

@@ -7,8 +7,12 @@ import { TooltipProvider } from '@/components/ui/tooltip';
 import DirectionInputs from '../direction-inputs';
 import ColorInput from '../color-input';
 import BorderStyle from './border-style';
+//@CUSTOM HOOKS
+import { useContent } from '../../provider';
 
 export default function Borders() {
+    const { currentStyle, handleStyleChange } = useContent();
+
     return (
         <TooltipProvider>
             <AccordionContent className="flex flex-col gap-4 px-[1px]">
@@ -19,7 +23,7 @@ export default function Borders() {
                 {/* Border color */}
                 <section className="prop-container">
                     <h5 className="prop-label">Border color</h5>
-                    <ColorInput colorKey="borderColor" />
+                    <ColorInput colorKey="borderColor" style={currentStyle} handleStyleChange={handleStyleChange} />
                 </section>
                 {/* Border style */}
                 <BorderStyle />
