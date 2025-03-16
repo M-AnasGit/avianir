@@ -1,7 +1,7 @@
 'use server';
 
 import serverClient from '@/db/server';
-import { ChapterData, Palette, Preset } from '../types';
+import { ChapterData, Preset } from '../types';
 
 export const getCourseData = async (course_id: string, chapter_id: string) => {
     if (!course_id) throw new Error('Course_id should be provided and not empty');

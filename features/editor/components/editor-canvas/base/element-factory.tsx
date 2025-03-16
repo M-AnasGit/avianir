@@ -120,8 +120,13 @@ class ElementFactory {
             case 'form':
                 return (
                     element.formContent &&
-                    element.formContent.form && (
-                        <FormContainer formDetails={element.formContent.form} style={stylePerDevice[activeDevice]} />
+                    element.formContent.form &&
+                    Array.isArray(element.content) && (
+                        <FormContainer
+                            formDetails={element.formContent.form}
+                            style={stylePerDevice[activeDevice]}
+                            content={element.content}
+                        />
                     )
                 );
             default:

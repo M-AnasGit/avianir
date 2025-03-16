@@ -2,8 +2,7 @@
 import ColorCircle from './color-circle';
 //@LUCIDE ICONS
 import { Sun, Moon } from 'lucide-react';
-//@TYPES
-import { Palette } from '@/features/editor/types';
+
 type Props = {
     palette: Palette['custom'];
 };

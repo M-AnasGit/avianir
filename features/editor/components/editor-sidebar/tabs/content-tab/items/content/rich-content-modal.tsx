@@ -6,7 +6,7 @@ import RichTableInput from '@/components/rich-content/rich-table';
 //@CUSTOM COMPONENT
 import { DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 //@TYPES
-import { EditorElement, Palette } from '@/features/editor/types';
+import { EditorElement } from '@/features/editor/types';
 import { ElementChangeEvent } from '../../types';
 type Props = {
     content: EditorElement['content'];

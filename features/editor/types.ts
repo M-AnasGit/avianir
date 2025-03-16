@@ -1,5 +1,15 @@
 export type DeviceTypes = 'desktop' | 'tablet' | 'mobile';
-export type ElementTypes = 'container' | 'text' | 'table' | 'image' | 'video' | 'audio' | 'form';
+export type ElementTypes =
+    | 'container'
+    | 'text'
+    | 'table'
+    | 'image'
+    | 'video'
+    | 'audio'
+    | 'form'
+    | 'input'
+    | 'radio'
+    | 'checkbox';
 export type FormDetails = {
     title: TextValueWithStyle;
     description: TextValueWithStyle;
@@ -115,25 +125,6 @@ export type Preset = {
     stylePerDevice: EditorElement['stylePerDevice'];
     globalStyle: EditorElement['globalStyle'];
     type: EditorElement['type'];
-};
-
-export type Palette = {
-    default: {
-        text: Color;
-        link: Color;
-        quote: Color;
-        'code keyword': Color;
-        'code variable': Color;
-        'code number': Color;
-        'code string': Color;
-        'code title': Color;
-        'code comment': Color;
-        'code background': Color;
-        'table header': Color;
-        'table select': Color;
-        'table border color': Color;
-    };
-    custom: Record<string, Color>;
 };
 
 export type ChapterData = {

@@ -13,6 +13,11 @@ type Palette = {
         text: Color;
         link: Color;
         quote: Color;
+        'btn text': Color;
+        'btn background': Color;
+        'input text': Color;
+        'input border': Color;
+        'input background': Color;
         'code keyword': Color;
         'code variable': Color;
         'code number': Color;

@@ -8,9 +8,9 @@ import { Badge } from '@/components/ui/badge';
 import clsx from 'clsx';
 //@CUSTOM HOOK
 import { useEditor } from '@/features/editor/provider';
-import { useCanvas } from '.';
+import { useCanvas } from '../provider';
 //@HELPERS
-import { calculateInsertPosition } from './helpers';
+import { calculateInsertPosition } from '../helpers';
 //@TYPES
 import { EditorElement, ElementTypes } from '@/features/editor/types';
 
@@ -24,8 +24,15 @@ type Props = {
 
 export default function ElementSkeleton({ index, ele, flexDirection }: Props) {
     const { state, dispatch, presets } = useEditor();
-    const { insertPosition, hanldeChangeInsertPosition, hoveredElement, handleHoverElement, dragRef, handleDragRef } =
-        useCanvas();
+    const {
+        insertPosition,
+        hanldeChangeInsertPosition,
+        hoveredElement,
+        handleHoverElement,
+        dragRef,
+        handleDragRef,
+        draggedType,
+    } = useCanvas();
     const { id, type, name, stylePerDevice } = ele;
     const style = React.useMemo(() => stylePerDevice[state.editor.device], [stylePerDevice, state.editor.device]);
 
@@ -100,8 +107,13 @@ export default function ElementSkeleton({ index, ele, flexDirection }: Props) {
     const handleDragEnter = (e: React.DragEvent) => {
         e.preventDefault();
         e.stopPropagation();
-        if (type === 'container' && hoveredElement !== e.currentTarget)
-            handleHoverElement(e.currentTarget as HTMLElement);
+        if (draggedType !== 'input' && draggedType !== 'radio' && draggedType !== 'checkbox') {
+            if (type === 'container' && hoveredElement !== e.currentTarget)
+                handleHoverElement(e.currentTarget as HTMLElement);
+        } else {
+            if (type === 'form' && hoveredElement !== e.currentTarget)
+                handleHoverElement(e.currentTarget as HTMLElement);
+        }
     };
     const lastExecutionTime = React.useRef<number | null>(null);
     const handleDragOver = (e: React.DragEvent) => {

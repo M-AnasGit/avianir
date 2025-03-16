@@ -5,7 +5,7 @@ import { getCourseData, updateCourseData } from '../server-actions/editor-data';
 //@CUSTOM HOOKS
 import { useToast } from '@/hooks/use-toast';
 //@Types
-import { ChapterData, Palette, Preset } from '../types';
+import { ChapterData, Preset } from '../types';
 type Props = {
     course_id: string;
     chapter_id: string;

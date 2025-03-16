@@ -4,6 +4,7 @@ import React from 'react';
 import { ComponentTabItem } from '../../types';
 import { useEditor } from '@/features/editor/provider';
 import { COMPONENTS_TYPES_ICONS } from '../../constants';
+import { ElementTypes } from '@/features/editor/types';
 type Props = {
     items: ComponentTabItem[];
 };
@@ -13,12 +14,12 @@ export default function ComponentItems({ items }: Props) {
 
     const handleDragStart = (e: React.DragEvent, type: string) => {
         e.dataTransfer.setData('type', type);
-        handleDragComponent(e.currentTarget as HTMLElement);
+        handleDragComponent(e.currentTarget as HTMLElement, type as ElementTypes);
 
         addEventListener(
             'dragend',
             () => {
-                handleDragComponent(null);
+                handleDragComponent(null, null);
             },
             {
                 once: true,

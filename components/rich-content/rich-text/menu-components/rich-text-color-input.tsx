@@ -1,12 +1,10 @@
 'use client';
 import React from 'react';
 //@CUSTOM COMPONENT
-import { ColorPicker } from '@/components/ui/colorpicker';
 import { SelectWithSearch } from '@/components/ui/select-with-search';
 //@CUSTOM HOOKS
 import { useTheme } from 'next-themes';
-//@Types
-import { Palette } from '@/features/editor/types';
+
 type Props = {
     currentColor: string;
     palette: Palette;

@@ -1,7 +1,7 @@
 'use client';
 import React from 'react';
 //@CUSTOM COMPONENTS
-import ElementSkeleton from '../provider/element-skeleton';
+import ElementSkeleton from '../base/element-skeleton';
 //@TYPES
 import { EditorElement } from '@/features/editor/types';
 

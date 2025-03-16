@@ -1,5 +1,5 @@
 'use client';
-import { useCanvas } from '.';
+import { useCanvas } from '../provider';
 
 type Props = {
     id: string;

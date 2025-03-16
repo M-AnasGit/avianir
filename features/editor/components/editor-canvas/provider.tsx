@@ -1,15 +1,16 @@
 'use client';
 import React from 'react';
+import ElementSkeleton from './base/element-skeleton';
 //@CUSTOM HOOK
 import { useEditor } from '@/features/editor/provider';
 //@TYPES
-import { EditorElement } from '@/features/editor/types';
-import ElementSkeleton from './element-skeleton';
+import { EditorElement, ElementTypes } from '@/features/editor/types';
 
 type CanvasProviderContextType = {
     hoveredElement: HTMLElement | null;
     insertPosition: InsertPositionType | null;
     dragRef: React.RefObject<string | null>;
+    draggedType: ElementTypes | null;
     hanldeChangeInsertPosition: (newPosition: InsertPositionType | null) => void;
     handleHoverElement: (element: HTMLElement | null) => void;
     handleUpdateContent: (content: EditorElement['content']) => void;
@@ -24,7 +25,7 @@ export type InsertPositionType = {
 const CanvasProviderContext = React.createContext<CanvasProviderContextType | undefined>(undefined);
 
 const CanvasProvider = ({ elements }: { elements: EditorElement[] }) => {
-    const { state, dispatch, componentDragged } = useEditor();
+    const { state, dispatch, componentDragged, draggedType } = useEditor();
 
     const handleUpdateContent = React.useCallback(
         (content: EditorElement['content']) => {
@@ -80,6 +81,7 @@ const CanvasProvider = ({ elements }: { elements: EditorElement[] }) => {
                 hoveredElement,
                 insertPosition,
                 dragRef,
+                draggedType,
                 hanldeChangeInsertPosition,
                 handleHoverElement,
                 handleUpdateContent,

@@ -1,4 +1,4 @@
-import { InsertPositionType } from '.';
+import { InsertPositionType } from '../provider';
 
 export const calculateInsertPosition = (
     children: Element[],
@@ -8,7 +8,6 @@ export const calculateInsertPosition = (
 ): InsertPositionType | null => {
     let closestElement: Element | null = null;
     let minDistance = Infinity;
-    let childPosition = Infinity;
 
     for (let child of children) {
         if (!child.id) {
@@ -30,7 +29,6 @@ export const calculateInsertPosition = (
         if (distance < minDistance) {
             minDistance = distance;
             closestElement = child;
-            childPosition = parseInt(child.getAttribute('data-position') || '0');
         }
     }
     if (!closestElement) return null;

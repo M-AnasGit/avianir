@@ -8,7 +8,7 @@ import editorReducer from './dispatch-actions/reducer';
 //@CUSTOM HOOKS
 import { useEditorData } from './hooks/useEditorData';
 //@TYPES
-import { Preset, Palette, ChapterData, EditorAction, EditorState } from './types';
+import { Preset, ChapterData, EditorAction, EditorState, ElementTypes } from './types';
 import { useTheme } from 'next-themes';
 type EditorContextType = {
     state: EditorState;
@@ -16,7 +16,8 @@ type EditorContextType = {
     presets: Preset[];
     palette: Palette;
     componentDragged: HTMLElement | null;
-    handleDragComponent: (element: HTMLElement | null) => void;
+    draggedType: ElementTypes | null;
+    handleDragComponent: (element: HTMLElement | null, type: ElementTypes | null) => void;
     updateCourseData: (id: string, data: ChapterData | Palette | Preset[]) => Promise<void>;
     dispatch: React.Dispatch<EditorAction>;
 };
@@ -66,8 +67,10 @@ const EditorProvider = ({ children, course_id, chapter_id }: EditorProps) => {
     );
 
     const [componentDragged, setComponentDragged] = React.useState<HTMLElement | null>(null);
-    const handleDragComponent = React.useCallback((element: HTMLElement | null) => {
+    const [draggedType, setDraggedType] = React.useState<ElementTypes | null>(null);
+    const handleDragComponent = React.useCallback((element: HTMLElement | null, type: ElementTypes | null) => {
         setComponentDragged(element);
+        setDraggedType(type);
     }, []);
 
     if (isLoading) return <Loading />;
@@ -81,6 +84,7 @@ const EditorProvider = ({ children, course_id, chapter_id }: EditorProps) => {
                 palette: localPalette ?? defaultPalette,
                 chapter,
                 componentDragged,
+                draggedType,
                 dispatch,
                 handleDragComponent,
                 updateCourseData,

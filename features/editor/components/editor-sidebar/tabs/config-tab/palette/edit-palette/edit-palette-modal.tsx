@@ -6,7 +6,6 @@ import { Moon, Plus, Sun, X } from 'lucide-react';
 import { DialogClose, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 //@TYPES
-import { Palette } from '@/features/editor/types';
 import { Input } from '@/components/ui/input';
 import { ColorPicker } from '@/components/ui/colorpicker';
 type Props = {

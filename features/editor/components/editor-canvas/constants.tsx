@@ -28,6 +28,15 @@ export const DEFAULT_STYLES: Record<ElementTypes, React.CSSProperties> = {
     video: { height: '100px', width: '100px' },
     audio: { width: '100%' },
     form: { width: '100%' },
+    input: {
+        width: '100%',
+    },
+    radio: {
+        width: '100%',
+    },
+    checkbox: {
+        width: '100%',
+    },
 };
 
 export const DEFAULT_FORM_TEXT_STYLES: Record<string, React.CSSProperties> = {
@@ -42,8 +51,8 @@ export const DEFAULT_FORM_TEXT_STYLES: Record<string, React.CSSProperties> = {
         color: 'var(--default-text)',
     },
     submit_btn: {
-        color: '#ffffff',
-        backgroundColor: '#000000',
+        color: 'var(--default-btn-text)',
+        backgroundColor: 'var(--default-btn-background)',
     },
 };
 

@@ -1,4 +1,4 @@
-import { Palette, EditorState } from './types';
+import { EditorState } from './types';
 
 export const initialStyles: React.CSSProperties = {
     width: 'fit-content',
@@ -78,6 +78,26 @@ export const defaultPalette: Palette = {
         quote: {
             light: '#555555',
             dark: '#BBBBBB',
+        },
+        'btn text': {
+            light: '#FFFFFF',
+            dark: '#FFFFFF',
+        },
+        'btn background': {
+            light: '#0366D6',
+            dark: '#58A6FF',
+        },
+        'input text': {
+            light: '#24292E',
+            dark: '#E1E4E8',
+        },
+        'input border': {
+            light: '#E1E4E8',
+            dark: '#30363D',
+        },
+        'input background': {
+            light: '#FAFBFC',
+            dark: '#0D1117',
         },
         'code keyword': {
             light: '#D73A49',
