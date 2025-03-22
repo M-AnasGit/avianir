@@ -1,9 +1,9 @@
 'use client';
 import React from 'react';
 //@CUSTOM COMPONENTS
-import InputWithSelect from '../input-with-select-for-unit';
+import InputWithSelect from './input-with-select-for-unit';
 //@CUSTOM HOOKS
-import { useContent } from '../../provider';
+import { useContent } from './../provider';
 
 type FontSizesUnits = 'px' | 'em' | 'rem' | '%';
 const FONT_SIZE_UNITS: FontSizesUnits[] = ['px', 'em', 'rem', '%'];

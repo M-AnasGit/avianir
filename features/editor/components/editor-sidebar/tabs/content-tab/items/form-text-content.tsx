@@ -102,10 +102,17 @@ export default function FormTextContent<T extends keyof FormContentMap>({ parent
             <FontFamily style={(formContent as any)[id].style} handleStyleChange={handleLocalStyleChange} />
             <FontSize style={(formContent as any)[id].style} handleStyleChange={handleLocalStyleChange} />
             <LineHeight style={(formContent as any)[id].style} handleStyleChange={handleLocalStyleChange} />
-            <Button variant={'outline'} onClick={handleButtonClick} className="text-primary" data-testid="edit-content">
-                <Pencil size={16} />
-                Edit content
-            </Button>
+            {(parent_id !== 'input' || id !== 'placeholder') && (
+                <Button
+                    variant={'outline'}
+                    onClick={handleButtonClick}
+                    className="text-primary"
+                    data-testid="edit-content"
+                >
+                    <Pencil size={16} />
+                    Edit content
+                </Button>
+            )}
         </AccordionContent>
     );
 }

@@ -15,6 +15,7 @@ type CanvasProviderContextType = {
     handleHoverElement: (element: HTMLElement | null) => void;
     handleUpdateContent: (content: EditorElement['content']) => void;
     handleDragRef: (id?: string, moving?: boolean) => void;
+    handleDraggedType: (type: ElementTypes | null) => void;
 };
 
 export type InsertPositionType = {
@@ -71,6 +72,14 @@ const CanvasProvider = ({ elements }: { elements: EditorElement[] }) => {
         dragRef.current = id;
     }, []);
 
+    const canvasDraggedType = React.useRef<ElementTypes | null>(draggedType);
+    const handleDraggedType = React.useCallback((type: ElementTypes | null) => {
+        canvasDraggedType.current = type;
+    }, []);
+    React.useEffect(() => {
+        if (draggedType) canvasDraggedType.current = draggedType;
+    }, [draggedType]);
+
     const flexDirection = React.useMemo(() => {
         return state.editor.elements[0].stylePerDevice[state.editor.device].flexDirection;
     }, [state.editor.elements[0].stylePerDevice]);
@@ -81,11 +90,12 @@ const CanvasProvider = ({ elements }: { elements: EditorElement[] }) => {
                 hoveredElement,
                 insertPosition,
                 dragRef,
-                draggedType,
+                draggedType: canvasDraggedType.current,
                 hanldeChangeInsertPosition,
                 handleHoverElement,
                 handleUpdateContent,
                 handleDragRef,
+                handleDraggedType,
             }}
         >
             <ElementSkeleton index={0} ele={elements[0]} flexDirection={flexDirection} />

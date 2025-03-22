@@ -19,10 +19,10 @@ export default function EditorCanvas() {
     return (
         <div
             className={clsx(
-                'no-scrollbar mb-[50px] ml-8 mr-[416px] mt-[150px] h-full bg-background shadow-sm transition-all',
+                'no-scrollbar mb-[50px] ml-8 mr-[416px] mt-[150px] h-full bg-background shadow-lg transition-all',
                 {
                     '!m-0 !p-0': state.editor.preview,
-                    'w-full': state.editor.device === 'desktop',
+                    '!w-[1440px]': state.editor.device === 'desktop',
                     '!w-[850px]': state.editor.device === 'tablet',
                     '!w-[375px]': state.editor.device === 'mobile',
                 },

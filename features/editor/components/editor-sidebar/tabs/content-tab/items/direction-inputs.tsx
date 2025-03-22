@@ -17,42 +17,43 @@ import { Input } from '@/components/ui/input';
 import { Toggle } from '@/components/ui/toggle';
 //@CUSTOM COMPONENT
 import InputWithIcon from './input-with-icon';
-//@CUSTOM HOOK
-import { useContent } from '../provider';
 //@TYPES
 import { ElementChangeEvent } from '../types';
 type Directions = 'top' | 'bottom' | 'right' | 'left';
 type Props = {
-    id: 'padding' | 'margin' | 'border' | 'borderRadius';
+    id: 'padding' | 'margin' | 'borderWidth' | 'borderRadius';
+    style: React.CSSProperties;
+    handleStyleChange: (e: ElementChangeEvent) => void;
+    handleBatchStyleChange: (e: ElementChangeEvent[]) => void;
     label?: string;
 };
 
 const AVAILABLE_DIRECTIONS: Record<
     Directions,
-    Record<'padding' | 'margin' | 'border' | 'borderRadius', keyof React.CSSProperties>
+    Record<'padding' | 'margin' | 'borderWidth' | 'borderRadius', keyof React.CSSProperties>
 > = {
     top: {
         padding: 'paddingTop',
         margin: 'marginTop',
-        border: 'borderTopWidth',
+        borderWidth: 'borderTopWidth',
         borderRadius: 'borderTopLeftRadius',
     },
     bottom: {
         padding: 'paddingBottom',
         margin: 'marginBottom',
-        border: 'borderBottomWidth',
+        borderWidth: 'borderBottomWidth',
         borderRadius: 'borderBottomRightRadius',
     },
     right: {
         padding: 'paddingRight',
         margin: 'marginRight',
-        border: 'borderRightWidth',
+        borderWidth: 'borderRightWidth',
         borderRadius: 'borderTopRightRadius',
     },
     left: {
         padding: 'paddingLeft',
         margin: 'marginLeft',
-        border: 'borderLeftWidth',
+        borderWidth: 'borderLeftWidth',
         borderRadius: 'borderBottomLeftRadius',
     },
 };
@@ -63,10 +64,17 @@ const DIRECTIONS_ICONS: Record<Directions, LucideIcon> = {
     left: AlignStartVertical,
 };
 
-export default function DirectionInputs({ id, label = '' }: Props) {
-    const { currentStyle: style, handleStyleChange, handleBatchStyleChange } = useContent();
-
-    const [link, setLink] = React.useState<boolean>(true);
+export default function DirectionInputs({ id, style, handleStyleChange, handleBatchStyleChange, label = '' }: Props) {
+    const [link, setLink] = React.useState<boolean>(() => {
+        let isLink = true;
+        let value = parseInt((style[AVAILABLE_DIRECTIONS.top[id]] as string) ?? '0');
+        Object.entries(DIRECTIONS_ICONS).forEach(([dir, Icon]) => {
+            if (parseInt((style[AVAILABLE_DIRECTIONS[dir as Directions][id]] as string) ?? '0') !== value) {
+                isLink = false;
+            }
+        });
+        return isLink;
+    });
     const handleLink = (v: boolean) => {
         setLink(v);
 

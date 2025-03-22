@@ -45,6 +45,7 @@ export default function SaveModal({ selectedElement, presets, updateCourseData }
                 stylePerDevice: selectedElement.stylePerDevice,
                 globalStyle: selectedElement.globalStyle,
                 type: selectedElement.type,
+                ...(selectedElement.formContent && { formContent: selectedElement.formContent }),
             },
         ]);
 

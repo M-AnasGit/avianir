@@ -21,6 +21,10 @@ export type InputDetails = {
     answer: {
         value: string;
         exact: boolean;
+        acceptance_threshold?: number;
+    };
+    config: {
+        rows: number;
     };
 };
 export type RadioDetails = {
@@ -125,6 +129,7 @@ export type Preset = {
     stylePerDevice: EditorElement['stylePerDevice'];
     globalStyle: EditorElement['globalStyle'];
     type: EditorElement['type'];
+    formContent?: EditorElement['formContent'];
 };
 
 export type ChapterData = {

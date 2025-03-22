@@ -32,6 +32,7 @@ export default function ElementSkeleton({ index, ele, flexDirection }: Props) {
         dragRef,
         handleDragRef,
         draggedType,
+        handleDraggedType,
     } = useCanvas();
     const { id, type, name, stylePerDevice } = ele;
     const style = React.useMemo(() => stylePerDevice[state.editor.device], [stylePerDevice, state.editor.device]);
@@ -54,6 +55,7 @@ export default function ElementSkeleton({ index, ele, flexDirection }: Props) {
         e.dataTransfer.setData('moving', 'true');
 
         handleDragRef(id, true);
+        handleDraggedType(type);
     };
     const handleDrop = (e: React.DragEvent) => {
         e.preventDefault();
@@ -87,6 +89,7 @@ export default function ElementSkeleton({ index, ele, flexDirection }: Props) {
                     stylePerDevice: current_preset.stylePerDevice,
                     globalStyle: current_preset.globalStyle,
                     preset: current_preset.name,
+                    formContent: current_preset.formContent,
                 };
             }
             dispatch({
@@ -120,11 +123,13 @@ export default function ElementSkeleton({ index, ele, flexDirection }: Props) {
         e.preventDefault();
         e.stopPropagation();
         if (!hoveredElement || hoveredElement !== e.currentTarget) return;
-        const container = Array.from(e.currentTarget.children).find(
-            (child) => child.getAttribute('data-property') === 'container',
+        const container = Array.from(e.currentTarget.children).find((child) =>
+            child.getAttribute('data-property')?.includes('container'),
         );
         if (!container) return;
-
+        const children = container.getAttribute('data-property')?.includes('form')
+            ? Array.from(Array.from(container.children).find((child) => child.id === 'form-elements')?.children || [])
+            : Array.from(container.children);
         const now = Date.now();
         if (lastExecutionTime.current !== null && now - lastExecutionTime.current < THROTTLE_TIME) {
             return;
@@ -135,7 +140,7 @@ export default function ElementSkeleton({ index, ele, flexDirection }: Props) {
         const clientMouse = flexDirection?.includes('row') ? e.clientX : e.clientY;
         const { id, position } =
             calculateInsertPosition(
-                Array.from(container.children),
+                Array.from(children),
                 clientMouse,
                 flexDirection?.includes('row') ? 'x' : 'y',
                 elementId,

@@ -10,8 +10,13 @@ import FormTitle from './items/form-title';
 import FormDescription from './items/form-description';
 import FormButton from './items/form-button';
 
+import InputLabel from './items/label';
+import InputArea from './items/input-area';
+import InputConfig from './items/input-config';
+
 import { ElementTypes } from '@/features/editor/types';
 import { SelectPresetType } from './types';
+import RadioConfig from './items/radio-config';
 
 export const CONTENT_TAB_ITEMS: Record<
     string,
@@ -35,6 +40,22 @@ export const CONTENT_TAB_ITEMS: Record<
     'form button': {
         component: () => <FormButton />,
         for: new Set(['form']),
+    },
+    label: {
+        component: () => <InputLabel />,
+        for: new Set(['input']),
+    },
+    'input area': {
+        component: () => <InputArea />,
+        for: new Set(['input']),
+    },
+    'input config': {
+        component: () => <InputConfig />,
+        for: new Set(['input']),
+    },
+    'radio config': {
+        component: () => <RadioConfig />,
+        for: new Set(['radio']),
     },
     container: {
         component: () => <Container />,

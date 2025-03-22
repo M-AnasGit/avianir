@@ -6,7 +6,7 @@ import { AccordionContent } from '@/components/ui/accordion';
 import FlexDirection from './flex-direction';
 import JustifyContent from './justify-content';
 import AlignItems from './align-items';
-import GapInput from './gap-input';
+import GapInput from '../gap-input';
 
 export default function Container() {
     return (

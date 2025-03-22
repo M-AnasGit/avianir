@@ -1,4 +1,4 @@
-import { InsertPositionType } from '../provider';
+import { InsertPositionType } from './provider';
 
 export const calculateInsertPosition = (
     children: Element[],

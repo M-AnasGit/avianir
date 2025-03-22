@@ -99,6 +99,30 @@ export const defaultPalette: Palette = {
             light: '#FAFBFC',
             dark: '#0D1117',
         },
+        'success background': {
+            light: '#D4EDDA',
+            dark: '#1E4620',
+        },
+        'success foreground': {
+            light: '#155724',
+            dark: '#A3E635',
+        },
+        'warning background': {
+            light: '#FFF3CD',
+            dark: '#664D03',
+        },
+        'warning foreground': {
+            light: '#856404',
+            dark: '#FFDD57',
+        },
+        'error background': {
+            light: '#F8D7DA',
+            dark: '#58151C',
+        },
+        'error foreground': {
+            light: '#721C24',
+            dark: '#F87171',
+        },
         'code keyword': {
             light: '#D73A49',
             dark: '#FF7B72',

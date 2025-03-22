@@ -107,7 +107,7 @@ export default function Layer({ ele }: Props) {
                             {ele.name}
                         </p>
                     </span>
-                    {ele.type === 'container' && (
+                    {(ele.type === 'container' || ele.type === 'form') && (
                         <button
                             className="shrink-0 cursor-pointer rounded-md [&[data-state=open]>svg]:rotate-180"
                             tabIndex={0}

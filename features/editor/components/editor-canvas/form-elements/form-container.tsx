@@ -36,19 +36,28 @@ export default function FormContainer({ content, style, formDetails }: Props) {
             {formDetails.description && (
                 <RichContent content={formDetails.description.value} style={formDetails.description.style} />
             )}
-            <div className="flex flex-col gap-2 pb-4">
+            <div className="flex flex-col gap-2 pb-4" id="form-elements">
                 {content.map((ele, i) => {
                     return <ElementSkeleton key={ele.id} index={i} ele={ele} flexDirection={'column'} />;
                 })}
             </div>
-            <Button
-                type="submit"
-                className="w-fit"
-                onClick={(e) => e.preventDefault()}
-                style={formDetails.submit_btn.style}
+
+            <div
+                style={{
+                    display: 'flex',
+                    width: '100%',
+                    justifyContent: formDetails.submit_btn.style['justifyContent'],
+                }}
             >
-                {formDetails.submit_btn.value}
-            </Button>
+                <Button
+                    type="submit"
+                    className="w-fit"
+                    onClick={(e) => e.preventDefault()}
+                    style={formDetails.submit_btn.style}
+                >
+                    {formDetails.submit_btn.value}
+                </Button>
+            </div>
         </form>
     );
 }

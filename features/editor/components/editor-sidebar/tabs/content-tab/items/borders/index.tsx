@@ -11,15 +11,27 @@ import BorderStyle from './border-style';
 import { useContent } from '../../provider';
 
 export default function Borders() {
-    const { currentStyle, handleStyleChange } = useContent();
+    const { currentStyle, handleStyleChange, handleBatchStyleChange } = useContent();
 
     return (
         <TooltipProvider>
             <AccordionContent className="flex flex-col gap-4 px-[1px]">
                 {/* Border width */}
-                <DirectionInputs id="border" label="Border width" />
+                <DirectionInputs
+                    id="borderWidth"
+                    label="Border width"
+                    style={currentStyle}
+                    handleStyleChange={handleStyleChange}
+                    handleBatchStyleChange={handleBatchStyleChange}
+                />
                 {/* Border radius */}
-                <DirectionInputs id="borderRadius" label="Radius" />
+                <DirectionInputs
+                    id="borderRadius"
+                    label="Radius"
+                    style={currentStyle}
+                    handleStyleChange={handleStyleChange}
+                    handleBatchStyleChange={handleBatchStyleChange}
+                />
                 {/* Border color */}
                 <section className="prop-container">
                     <h5 className="prop-label">Border color</h5>

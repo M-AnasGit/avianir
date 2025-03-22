@@ -27,7 +27,7 @@ export const addElement = (state: EditorState, action: EditorAction): EditorStat
         if (
             currentElements[index].content &&
             Array.isArray(currentElements[index].content) &&
-            currentElements[index].type === 'container'
+            (currentElements[index].type === 'container' || currentElements[index].type === 'form')
         ) {
             currentElements = currentElements[index].content as EditorElement[];
         } else {
@@ -151,7 +151,7 @@ export const moveElement = (state: EditorState, action: EditorAction): EditorSta
         if (
             target_container_elements[index].content &&
             Array.isArray(target_container_elements[index].content) &&
-            target_container_elements[index].type === 'container'
+            (target_container_elements[index].type === 'container' || target_container_elements[index].type === 'form')
         ) {
             target_container_elements = target_container_elements[index].content as EditorElement[];
         } else {

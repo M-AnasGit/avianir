@@ -18,6 +18,12 @@ type Palette = {
         'input text': Color;
         'input border': Color;
         'input background': Color;
+        'success background': Color;
+        'success foreground': Color;
+        'warning background': Color;
+        'warning foreground': Color;
+        'error background': Color;
+        'error foreground': Color;
         'code keyword': Color;
         'code variable': Color;
         'code number': Color;
@@ -31,3 +37,5 @@ type Palette = {
     };
     custom: Record<string, Color>;
 };
+
+type InputStates = 'success' | 'error' | 'warning';
