@@ -1,18 +1,19 @@
 'use client';
 import React from 'react';
+import { v4 } from 'uuid';
 //@DEFAULT-ELEMENTS
 import RichContentElement from '../default-elements/rich-content-element';
 import ContainerElement from '../default-elements/container-element';
 import MediaElement from '../default-elements/media-element';
+import FormContainer from '../form-elements/form-container';
+import FormInput from '../form-elements/input';
+import FormRadio from '../form-elements/radio';
+import FormCheckbox from '../form-elements/checkbox';
 //@CONSTANTS
 import { initialStyles } from '@/features/editor/constants';
 import { DEFAULT_FORM_CONTENT, DEFAULT_STYLES, DUMMY_CONTENT } from '../constants';
 //@TYPES
 import { ElementTypes, EditorElement, DeviceTypes } from '@/features/editor/types';
-
-import { v4 } from 'uuid';
-import FormContainer from '../form-elements/form-container';
-import FormInput from '../form-elements/input';
 
 class ElementFactory {
     static createElement(type: ElementTypes): EditorElement | null {
@@ -41,6 +42,9 @@ class ElementFactory {
                     ...(type === 'input' && {
                         input: DEFAULT_FORM_CONTENT['input'],
                     }),
+                    ...((type === 'radio' || type === 'checkbox') && {
+                        radio_checkbox: DEFAULT_FORM_CONTENT['radio_checkbox'],
+                    }),
                 }
             );
         };
@@ -60,6 +64,8 @@ class ElementFactory {
             content: generateContent(type),
             ...(type === 'form' && { formContent: generateFormContent('form') }),
             ...(type === 'input' && { formContent: generateFormContent('input') }),
+            ...(type === 'radio' && { formContent: generateFormContent('radio') }),
+            ...(type === 'checkbox' && { formContent: generateFormContent('checkbox') }),
         };
     }
 
@@ -135,6 +141,30 @@ class ElementFactory {
                         <FormInput
                             id={element.id}
                             inputDetails={element.formContent.input}
+                            style={stylePerDevice[activeDevice]}
+                        />
+                    )
+                );
+            case 'radio':
+                return (
+                    element.formContent &&
+                    element.formContent.radio_checkbox &&
+                    !Array.isArray(element.content) && (
+                        <FormRadio
+                            id={element.id}
+                            radioDetails={element.formContent.radio_checkbox}
+                            style={stylePerDevice[activeDevice]}
+                        />
+                    )
+                );
+            case 'checkbox':
+                return (
+                    element.formContent &&
+                    element.formContent.radio_checkbox &&
+                    !Array.isArray(element.content) && (
+                        <FormCheckbox
+                            id={element.id}
+                            radioDetails={element.formContent.radio_checkbox}
                             style={stylePerDevice[activeDevice]}
                         />
                     )

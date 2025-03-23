@@ -10,13 +10,15 @@ import FormTitle from './items/form-title';
 import FormDescription from './items/form-description';
 import FormButton from './items/form-button';
 
-import InputLabel from './items/label';
+import InputLabel from './items/input-label';
 import InputArea from './items/input-area';
 import InputConfig from './items/input-config';
 
+import RadioCheckboxLabel from './items/radio-checkbox-label';
+import RadioCheckboxOptions from './items/radio-checkbox-options';
+
 import { ElementTypes } from '@/features/editor/types';
 import { SelectPresetType } from './types';
-import RadioConfig from './items/radio-config';
 
 export const CONTENT_TAB_ITEMS: Record<
     string,
@@ -41,7 +43,7 @@ export const CONTENT_TAB_ITEMS: Record<
         component: () => <FormButton />,
         for: new Set(['form']),
     },
-    label: {
+    'input label': {
         component: () => <InputLabel />,
         for: new Set(['input']),
     },
@@ -53,9 +55,21 @@ export const CONTENT_TAB_ITEMS: Record<
         component: () => <InputConfig />,
         for: new Set(['input']),
     },
-    'radio config': {
-        component: () => <RadioConfig />,
+    'radio label': {
+        component: () => <RadioCheckboxLabel />,
         for: new Set(['radio']),
+    },
+    'radio options': {
+        component: () => <RadioCheckboxOptions />,
+        for: new Set(['radio']),
+    },
+    'checkbox label': {
+        component: () => <RadioCheckboxLabel />,
+        for: new Set(['checkbox']),
+    },
+    'checkbox options': {
+        component: () => <RadioCheckboxOptions />,
+        for: new Set(['checkbox']),
     },
     container: {
         component: () => <Container />,

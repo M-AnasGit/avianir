@@ -40,9 +40,23 @@ export const DEFAULT_STYLES: Record<ElementTypes, React.CSSProperties> = {
     },
     radio: {
         width: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '8px',
+        paddingLeft: '0px',
+        paddingRight: '0px',
+        paddingTop: '16px',
+        paddingBottom: '16px',
     },
     checkbox: {
         width: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '8px',
+        paddingLeft: '0px',
+        paddingRight: '0px',
+        paddingTop: '16px',
+        paddingBottom: '16px',
     },
 };
 
@@ -120,6 +134,38 @@ export const DEFAULT_FORM_CONTENT: EditorElement['formContent'] = {
         config: {
             rows: 1,
         },
+    },
+    radio_checkbox: {
+        label: {
+            value: 'Radio/Checkbox label',
+            style: DEFAULT_FORM_TEXT_STYLES['label'],
+        },
+        options: [
+            {
+                value: {
+                    value: 'Option 1',
+                    style: DEFAULT_FORM_TEXT_STYLES['label'],
+                },
+                is_default: true,
+                correct: true,
+            },
+            {
+                value: {
+                    value: 'Option 2',
+                    style: DEFAULT_FORM_TEXT_STYLES['label'],
+                },
+                is_default: false,
+                correct: false,
+            },
+            {
+                value: {
+                    value: 'Option 3',
+                    style: DEFAULT_FORM_TEXT_STYLES['label'],
+                },
+                is_default: false,
+                correct: false,
+            },
+        ],
     },
 };
 

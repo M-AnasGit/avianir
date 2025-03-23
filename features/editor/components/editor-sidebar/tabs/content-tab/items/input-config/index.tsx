@@ -1,26 +1,24 @@
 'use client';
 import React from 'react';
+import PreviewModal from './preview-modal';
+import PreviewStatesButton from '../preview-states-button';
 //@SHADCNUI
 import { AccordionContent } from '@/components/ui/accordion';
 import { Input } from '@/components/ui/input';
 import { Slider } from '@/components/ui/slider';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import { Checkbox } from '@/components/ui/checkbox';
 //@LUCIDE REACT
-import { Eye, Info } from 'lucide-react';
+import { Info } from 'lucide-react';
 //@CUSTOM HOOKS
 import { useEditor } from '@/features/editor/provider';
 import { useContent } from '../../provider';
-import { Checkbox } from '@/components/ui/checkbox';
 //@TYPES
 import { InputDetails } from '@/features/editor/types';
-import { Button } from '@/components/ui/button';
-import { useModal } from '@/components/providers/modal-provider';
-import PreviewModal from './preview-modal';
 
 export default function InputConfig() {
-    const { state, palette } = useEditor();
+    const { state } = useEditor();
     const { handleFormContentChange } = useContent();
-    const { handleSetModal } = useModal();
 
     const inputContent = React.useMemo(
         () => state.editor.selectedElement?.formContent?.input,
@@ -38,10 +36,6 @@ export default function InputConfig() {
                 },
             },
         });
-    };
-
-    const handlePreviewModal = () => {
-        handleSetModal(<PreviewModal palette={palette} />);
     };
 
     if (!inputContent) return null;
@@ -133,15 +127,7 @@ export default function InputConfig() {
                         />
                     </section>
                 )}
-                <Button
-                    variant={'outline'}
-                    onClick={handlePreviewModal}
-                    className="text-primary"
-                    data-testid="edit-content"
-                >
-                    <Eye size={16} />
-                    Preview states
-                </Button>
+                <PreviewStatesButton />
             </TooltipProvider>
         </AccordionContent>
     );
