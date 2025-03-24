@@ -1,5 +1,6 @@
 'use client';
 import React from 'react';
+//@CONSTANTS
 import Loading from '@/components/loading';
 import { defaultPalette, initialState } from './constants';
 //@HELPER AND REDUCER
@@ -7,9 +8,10 @@ import { loadData } from './helpers';
 import editorReducer from './dispatch-actions/reducer';
 //@CUSTOM HOOKS
 import { useEditorData } from './hooks/useEditorData';
-//@TYPES
-import { Preset, ChapterData, EditorAction, EditorState, ElementTypes } from './types';
 import { useTheme } from 'next-themes';
+//@TYPES
+import { Preset, ChapterData, EditorAction, EditorState, ElementTypes, EditorElement } from './types';
+
 type EditorContextType = {
     state: EditorState;
     chapter: ChapterData;
@@ -17,6 +19,8 @@ type EditorContextType = {
     palette: Palette;
     componentDragged: HTMLElement | null;
     draggedType: ElementTypes | null;
+    clipboard: EditorElement | null;
+    setClipboard: React.Dispatch<React.SetStateAction<EditorElement | null>>;
     handleDragComponent: (element: HTMLElement | null, type: ElementTypes | null) => void;
     updateCourseData: (id: string, data: ChapterData | Palette | Preset[]) => Promise<void>;
     dispatch: React.Dispatch<EditorAction>;
@@ -73,6 +77,8 @@ const EditorProvider = ({ children, course_id, chapter_id }: EditorProps) => {
         setDraggedType(type);
     }, []);
 
+    const [clipboard, setClipboard] = React.useState<EditorElement | null>(null);
+
     if (isLoading) return <Loading />;
     if (!presets || !palette || !chapter || isError) throw new Error('Error fetching data');
 
@@ -85,6 +91,8 @@ const EditorProvider = ({ children, course_id, chapter_id }: EditorProps) => {
                 chapter,
                 componentDragged,
                 draggedType,
+                clipboard,
+                setClipboard,
                 dispatch,
                 handleDragComponent,
                 updateCourseData,

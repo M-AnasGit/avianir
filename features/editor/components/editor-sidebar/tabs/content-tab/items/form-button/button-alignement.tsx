@@ -13,8 +13,8 @@ type Props = {
 
 const TEXT_ALIGMENTS: Record<string, React.ReactNode> = {
     start: <AlignLeft size={20} />,
-    end: <AlignRight size={20} />,
     center: <AlignCenter size={20} />,
+    end: <AlignRight size={20} />,
 };
 
 export default function ButtonAlignement({ style, handleStyleChange }: Props) {

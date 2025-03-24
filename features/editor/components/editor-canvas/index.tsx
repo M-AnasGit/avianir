@@ -1,5 +1,8 @@
 'use client';
 import React from 'react';
+//@CUSTOM COMPONENTS
+import CanvasProvider from './provider';
+import ContextMenuWrapper from '../../context-menu-wrapper';
 //@LUCIDE ICONS
 import { EyeOff } from 'lucide-react';
 //@SHADCNUI
@@ -7,7 +10,6 @@ import { Button } from '@/components/ui/button';
 import clsx from 'clsx';
 //@CUSTOM HOOK
 import { useEditor } from '../../provider';
-import CanvasProvider from './provider';
 
 export default function EditorCanvas() {
     const { state, dispatch } = useEditor();

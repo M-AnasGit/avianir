@@ -1,4 +1,4 @@
-import { ChapterData, EditorState } from './types';
+import { ChapterData, EditorElement, EditorState } from './types';
 
 /**
  * Loads the editor state with the given chapter data.
@@ -38,4 +38,23 @@ export const unloadData = (state: EditorState): ChapterData => {
         elements: state.editor.elements,
         elementsMap: Array.from(state.editor.elementsMap),
     };
+};
+
+export const isDisabled = (ele: EditorElement, clipboard: EditorElement | null): boolean => {
+    if (!clipboard) return true;
+    if (!Array.isArray(ele.content)) return true;
+    if (
+        (clipboard.type === 'input' || clipboard.type === 'radio' || clipboard.type === 'checkbox') &&
+        ele.type !== 'form'
+    )
+        return true;
+    if (
+        ele.type === 'form' &&
+        clipboard.type !== 'input' &&
+        clipboard.type !== 'radio' &&
+        clipboard.type !== 'checkbox'
+    )
+        return true;
+
+    return false;
 };

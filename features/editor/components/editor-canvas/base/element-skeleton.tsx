@@ -1,6 +1,7 @@
 'use client';
 import React from 'react';
 //@CUSTOM COMPONENTS
+import ContextMenuWrapper from '@/features/editor/context-menu-wrapper';
 import ElementIndicator from './insert-indicator';
 import ElementFactory from './element-factory';
 //@SHADCNUI
@@ -157,41 +158,44 @@ export default function ElementSkeleton({ index, ele, flexDirection }: Props) {
     return (
         <>
             <ElementIndicator id={id} index={index} flexDirection={flexDirection} canvasRef={canvasRef} />
-            <div
-                data-position={index}
-                id={id}
-                ref={canvasRef}
-                className={clsx('relative cursor-grab transition-all', {
-                    'border border-transparent': !state.editor.preview,
-                    'border-solid !border-blue-500': state.editor.selectedElementId === id,
-                    'border-solid !border-yellow-500': hoveredElement?.id === id,
-                    'border-dashed !border-slate-300':
-                        state.editor.selectedElementId !== id && type === 'container' && id !== '_body',
-                })}
-                style={{
-                    width: style.width,
-                    height: style.height,
-                    textAlign: style.textAlign,
+            <ContextMenuWrapper ele={ele} allowed={new Set(ele.id !== '_body' ? ['*'] : ['paste', 'rename'])}>
+                <div
+                    data-position={index}
+                    id={id}
+                    ref={canvasRef}
+                    className={clsx('relative cursor-grab transition-all', {
+                        'border border-transparent': !state.editor.preview,
+                        'border-solid !border-blue-500': state.editor.selectedElementId === id,
+                        'border-solid !border-yellow-500': hoveredElement?.id === id,
+                        'border-dashed !border-slate-300':
+                            state.editor.selectedElementId !== id && type === 'container' && id !== '_body',
+                    })}
+                    style={{
+                        width: style.width,
+                        height: style.height,
+                        textAlign: style.textAlign,
 
-                    marginTop: style.marginTop,
-                    marginRight: style.marginRight,
-                    marginBottom: style.marginBottom,
-                    marginLeft: style.marginLeft,
-                }}
-                onClick={(e: React.MouseEvent) => handleSelect(e, id)}
-                draggable={id !== '_body' && !state.editor.preview}
-                onDragStart={(e: React.DragEvent) => handleDragStart(e, id, type)}
-                onDragOver={handleDragOver}
-                onDragEnter={handleDragEnter}
-                onDrop={(e: React.DragEvent) => handleDrop(e)}
-            >
-                {ElementFactory.renderElement(ele, state.editor.device)}
-                {state.editor.selectedElementId === id && !state.editor.preview && (
-                    <Badge className="absolute -left-[1px] -top-[22px] truncate rounded-none !rounded-t-lg">
-                        {name}
-                    </Badge>
-                )}
-            </div>
+                        marginTop: style.marginTop,
+                        marginRight: style.marginRight,
+                        marginBottom: style.marginBottom,
+                        marginLeft: style.marginLeft,
+                    }}
+                    onClick={(e: React.MouseEvent) => handleSelect(e, id)}
+                    draggable={id !== '_body' && !state.editor.preview}
+                    onDragStart={(e: React.DragEvent) => handleDragStart(e, id, type)}
+                    onDragOver={handleDragOver}
+                    onDragEnter={handleDragEnter}
+                    onDrop={(e: React.DragEvent) => handleDrop(e)}
+                >
+                    {ElementFactory.renderElement(ele, state.editor.device)}
+                    {state.editor.selectedElementId === id && !state.editor.preview && (
+                        <Badge className="absolute -left-[1px] -top-[22px] truncate rounded-none !rounded-t-lg">
+                            {name}
+                        </Badge>
+                    )}
+                </div>
+            </ContextMenuWrapper>
+
             <ElementIndicator id={id} index={index + 1} flexDirection={flexDirection} canvasRef={canvasRef} />
         </>
     );
