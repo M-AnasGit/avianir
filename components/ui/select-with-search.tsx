@@ -21,7 +21,7 @@ export function SelectWithSearch({ data, value, handleValueChange }: Props) {
     const [open, setOpen] = React.useState(false);
 
     return (
-        <Popover open={open} onOpenChange={setOpen}>
+        <Popover open={open} onOpenChange={setOpen} modal={false}>
             <PopoverTrigger asChild>
                 <Button variant="outline" role="combobox" aria-expanded={open} className="w-[200px] justify-between">
                     <span className="w-[100px] truncate text-left capitalize">
