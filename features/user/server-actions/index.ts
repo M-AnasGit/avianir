@@ -1,7 +1,9 @@
 'use server';
 import { v4 } from 'uuid';
-import { GetObjectCommand, PutObjectCommand, S3Client } from '@aws-sdk/client-s3';
-import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
+import fs from 'fs';
+import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3';
+import { getSignedUrl as getS3SignedUrl } from '@aws-sdk/s3-request-presigner';
+import { getSignedUrl as getCloudFrontSignedUrl } from '@aws-sdk/cloudfront-signer';
 
 import serverClient from '@/db/server';
 import { INPUT_FILE_TYPES, MAX_SIZES } from '@/features/constants';
@@ -123,7 +125,7 @@ export async function uploadMedia(
     let signedURL = '';
 
     try {
-        signedURL = await getSignedUrl(s3, putObjectCommand, {
+        signedURL = await getS3SignedUrl(s3, putObjectCommand, {
             expiresIn: 60,
         });
     } catch (error) {
@@ -136,20 +138,18 @@ export async function uploadMedia(
 export async function downloadMedia(id: string): Promise<string> {
     if (!id) return '';
 
-    const getObjectCommand = new GetObjectCommand({
-        Bucket: process.env.AWS_BUCKET_NAME!,
-        Key: id,
+    const privateKey = fs.readFileSync(process.env.AWS_CLOUDFRONT_PRIVATE_KEY_PATH!, 'utf-8');
+
+    const url = getCloudFrontSignedUrl({
+        url: 'https://' + process.env.AWS_CLOUDFRONT_DOMAIN! + '/' + id,
+        dateLessThan: new Date(Date.now() + 1000 * 60 * 60 * 24).toISOString(),
+        privateKey,
+        keyPairId: process.env.AWS_CLOUDFRONT_KEY_PAIR_ID!,
     });
 
-    let signedURL = '';
-
-    try {
-        signedURL = await getSignedUrl(s3, getObjectCommand, {
-            expiresIn: 60,
-        });
-    } catch (error) {
-        console.error('Error getting signed URL:', error);
-    } finally {
-        return signedURL;
+    if (url) {
+        return url;
     }
+
+    return '';
 }
