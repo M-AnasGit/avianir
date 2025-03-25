@@ -10,8 +10,7 @@ import FormInput from '../form-elements/input';
 import FormRadio from '../form-elements/radio';
 import FormCheckbox from '../form-elements/checkbox';
 //@CONSTANTS
-import { initialStyles } from '@/features/editor/constants';
-import { DEFAULT_FORM_CONTENT, DEFAULT_STYLES, DUMMY_CONTENT } from '../constants';
+import { INITIAL_STYLES, DEFAULT_FORM_CONTENT, DEFAULT_STYLES, DUMMY_CONTENT } from '../constants';
 //@TYPES
 import { ElementTypes, EditorElement, DeviceTypes } from '@/features/editor/types';
 
@@ -28,97 +27,88 @@ class ElementFactory {
             };
         };
 
-        const generateStyle = (type: ElementTypes): React.CSSProperties => ({
-            ...initialStyles,
-            ...DEFAULT_STYLES[type],
-        });
-
-        const generateFormContent = (type: ElementTypes): EditorElement['formContent'] => {
-            return (
-                DEFAULT_FORM_CONTENT && {
-                    ...(type === 'form' && {
-                        form: DEFAULT_FORM_CONTENT['form'],
-                    }),
-                    ...(type === 'input' && {
-                        input: DEFAULT_FORM_CONTENT['input'],
-                    }),
-                    ...((type === 'radio' || type === 'checkbox') && {
-                        radio_checkbox: DEFAULT_FORM_CONTENT['radio_checkbox'],
-                    }),
-                }
-            );
-        };
-
-        if (!type) return null;
+        if (!type || !DEFAULT_FORM_CONTENT) return null;
 
         return {
             id: v4(),
             type,
             name: type,
             stylePerDevice: {
-                desktop: generateStyle(type),
-                tablet: generateStyle(type),
-                mobile: generateStyle(type),
+                desktop: DEFAULT_STYLES[type],
+                tablet: DEFAULT_STYLES[type],
+                mobile: DEFAULT_STYLES[type],
             },
             globalStyle: true,
             content: generateContent(type),
-            ...(type === 'form' && { formContent: generateFormContent('form') }),
-            ...(type === 'input' && { formContent: generateFormContent('input') }),
-            ...(type === 'radio' && { formContent: generateFormContent('radio') }),
-            ...(type === 'checkbox' && { formContent: generateFormContent('checkbox') }),
+            ...(type === 'form' && {
+                formContent: {
+                    form: DEFAULT_FORM_CONTENT['form'],
+                },
+            }),
+            ...(type === 'input' && {
+                formContent: {
+                    input: DEFAULT_FORM_CONTENT['input'],
+                },
+            }),
+            ...(type === 'radio' && {
+                formContent: {
+                    radio_checkbox: DEFAULT_FORM_CONTENT['radio_checkbox'],
+                },
+            }),
+            ...(type === 'checkbox' && {
+                formContent: {
+                    radio_checkbox: DEFAULT_FORM_CONTENT['radio_checkbox'],
+                },
+            }),
         };
     }
 
     static renderElement = (element: EditorElement, activeDevice: DeviceTypes): React.ReactNode => {
         const { type, stylePerDevice } = element;
 
+        const currentStyle = React.useMemo(
+            () => ({
+                ...INITIAL_STYLES,
+                ...stylePerDevice[activeDevice],
+            }),
+            [activeDevice],
+        );
+
         switch (type) {
             case 'container':
                 return (
                     Array.isArray(element.content) && (
-                        <ContainerElement style={stylePerDevice[activeDevice]} content={element.content} />
+                        <ContainerElement style={currentStyle} content={element.content} />
                     )
                 );
             case 'text':
                 return (
                     !Array.isArray(element.content) && (
-                        <RichContentElement style={stylePerDevice[activeDevice]} content={element.content} />
+                        <RichContentElement style={currentStyle} content={element.content} />
                     )
                 );
             case 'table':
                 return (
                     !Array.isArray(element.content) && (
-                        <RichContentElement style={stylePerDevice[activeDevice]} content={element.content} />
+                        <RichContentElement style={currentStyle} content={element.content} />
                     )
                 );
             case 'image':
                 return (
                     !Array.isArray(element.content) && (
-                        <MediaElement
-                            mediaType="image"
-                            style={stylePerDevice[activeDevice]}
-                            content={element.content}
-                        />
+                        <MediaElement mediaType="image" style={currentStyle} content={element.content} />
                     )
                 );
             case 'video':
                 return (
                     !Array.isArray(element.content) && (
-                        <MediaElement
-                            mediaType="video"
-                            style={stylePerDevice[activeDevice]}
-                            content={element.content}
-                        />
+                        <MediaElement mediaType="video" style={currentStyle} content={element.content} />
                     )
                 );
             case 'audio':
                 return (
                     !Array.isArray(element.content) && (
-                        <MediaElement
-                            mediaType="audio"
-                            style={stylePerDevice[activeDevice]}
-                            content={element.content}
-                        />
+                        <MediaElement mediaType="audio" style={currentStyle} content={element.content} />
                     )
                 );
             case 'form':
@@ -128,7 +118,7 @@ class ElementFactory {
                     Array.isArray(element.content) && (
                         <FormContainer
                             formDetails={element.formContent.form}
-                            style={stylePerDevice[activeDevice]}
+                            style={currentStyle}
                             content={element.content}
                         />
                     )
@@ -138,11 +128,7 @@ class ElementFactory {
                     element.formContent &&
                     element.formContent.input &&
                     !Array.isArray(element.content) && (
-                        <FormInput
-                            id={element.id}
-                            inputDetails={element.formContent.input}
-                            style={stylePerDevice[activeDevice]}
-                        />
+                        <FormInput id={element.id} inputDetails={element.formContent.input} style={currentStyle} />
                     )
                 );
             case 'radio':
@@ -153,7 +139,7 @@ class ElementFactory {
                         <FormRadio
                             id={element.id}
                             radioDetails={element.formContent.radio_checkbox}
-                            style={stylePerDevice[activeDevice]}
+                            style={currentStyle}
                         />
                     )
                 );
@@ -165,7 +151,7 @@ class ElementFactory {
                         <FormCheckbox
                             id={element.id}
                             radioDetails={element.formContent.radio_checkbox}
-                            style={stylePerDevice[activeDevice]}
+                            style={currentStyle}
                         />
                     )
                 );

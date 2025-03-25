@@ -1,21 +1,6 @@
 import { EditorState } from './types';
 
-export const initialStyles: React.CSSProperties = {
-    width: 'fit-content',
-    height: 'fit-content',
-    backgroundPosition: 'center',
-    objectFit: 'cover',
-    backgroundRepeat: 'no-repeat',
-    textAlign: 'left',
-    opacity: '100%',
-    paddingTop: '4px',
-    paddingRight: '4px',
-    paddingBottom: '4px',
-    paddingLeft: '4px',
-};
-
 const bodyStyles: React.CSSProperties = {
-    ...initialStyles,
     width: '100%',
     height: '1000px',
     display: 'flex',

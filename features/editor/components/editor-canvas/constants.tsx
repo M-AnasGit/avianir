@@ -1,5 +1,19 @@
 import { EditorElement, ElementTypes } from '@/features/editor/types';
 
+export const INITIAL_STYLES: React.CSSProperties = {
+    width: 'fit-content',
+    height: 'fit-content',
+    backgroundPosition: 'center',
+    objectFit: 'cover',
+    backgroundRepeat: 'no-repeat',
+    textAlign: 'left',
+    opacity: '100%',
+    paddingTop: '4px',
+    paddingRight: '4px',
+    paddingBottom: '4px',
+    paddingLeft: '4px',
+};
+
 export const DEFAULT_STYLES: Record<ElementTypes, React.CSSProperties> = {
     container: {
         height: '100px',
