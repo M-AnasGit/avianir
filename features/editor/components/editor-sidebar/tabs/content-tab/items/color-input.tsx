@@ -53,7 +53,6 @@ export default function ColorInput({ colorKey = 'color', style, handleStyleChang
     };
     const handleTransparent = (checked: boolean) => {
         if (!checked) {
-            console.log(prevColor.current);
             handleStyleChange({
                 target: {
                     id: colorKey,

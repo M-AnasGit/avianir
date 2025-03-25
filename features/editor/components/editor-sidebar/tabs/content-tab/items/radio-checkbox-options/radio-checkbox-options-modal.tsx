@@ -103,7 +103,6 @@ export default function RadioCheckboxOptionsModal({ options, isCheckbox, handleU
     const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        console.log(localOptions);
         handleUpdateOptions(localOptions || []);
 
         closeBtnRef.current?.click();
