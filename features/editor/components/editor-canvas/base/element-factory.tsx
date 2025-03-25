@@ -10,7 +10,8 @@ import FormInput from '../form-elements/input';
 import FormRadio from '../form-elements/radio';
 import FormCheckbox from '../form-elements/checkbox';
 //@CONSTANTS
-import { INITIAL_STYLES, DEFAULT_FORM_CONTENT, DEFAULT_STYLES, DUMMY_CONTENT } from '../constants';
+import { INITIAL_STYLES } from '@/features/editor/constants';
+import { DEFAULT_FORM_CONTENT, DEFAULT_STYLES, DUMMY_CONTENT } from '../constants';
 //@TYPES
 import { ElementTypes, EditorElement, DeviceTypes } from '@/features/editor/types';
 
@@ -34,9 +35,18 @@ class ElementFactory {
             type,
             name: type,
             stylePerDevice: {
-                desktop: DEFAULT_STYLES[type],
-                tablet: DEFAULT_STYLES[type],
-                mobile: DEFAULT_STYLES[type],
+                desktop: {
+                    ...INITIAL_STYLES,
+                    ...DEFAULT_STYLES[type],
+                },
+                tablet: {
+                    ...INITIAL_STYLES,
+                    ...DEFAULT_STYLES[type],
+                },
+                mobile: {
+                    ...INITIAL_STYLES,
+                    ...DEFAULT_STYLES[type],
+                },
             },
             globalStyle: true,
             content: generateContent(type),
@@ -71,7 +81,7 @@ class ElementFactory {
                 ...INITIAL_STYLES,
                 ...stylePerDevice[activeDevice],
             }),
-            [activeDevice],
+            [stylePerDevice, activeDevice],
         );
 
         switch (type) {

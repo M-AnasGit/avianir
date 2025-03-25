@@ -1,4 +1,5 @@
-import { ChapterData, EditorElement, EditorState } from './types';
+import { INITIAL_STYLES } from './constants';
+import { ChapterData, DeviceTypes, EditorElement, EditorState } from './types';
 
 /**
  * Loads the editor state with the given chapter data.
@@ -13,7 +14,23 @@ export const loadData = (chapterData: ChapterData, course_id: string, chapter_id
         course_id,
         chapter_id,
         editor: {
-            elements,
+            elements: elements.map((e) => ({
+                ...e,
+                stylePerDevice: {
+                    desktop: {
+                        ...INITIAL_STYLES,
+                        ...e.stylePerDevice.desktop,
+                    },
+                    tablet: {
+                        ...INITIAL_STYLES,
+                        ...e.stylePerDevice.tablet,
+                    },
+                    mobile: {
+                        ...INITIAL_STYLES,
+                        ...e.stylePerDevice.mobile,
+                    },
+                },
+            })),
             elementsMap: new Map(elementsMap),
             selectedElement: null,
             selectedElementId: null,
@@ -35,7 +52,22 @@ export const loadData = (chapterData: ChapterData, course_id: string, chapter_id
  */
 export const unloadData = (state: EditorState): ChapterData => {
     return {
-        elements: state.editor.elements,
+        elements: state.editor.elements.filter((e) => {
+            const currStyles = e.stylePerDevice;
+
+            Object.entries(currStyles).forEach(([device, styles]) => {
+                const typedStyles = styles as Record<string, any>;
+                Object.keys(typedStyles).forEach((key) => {
+                    if (typedStyles[key] === (INITIAL_STYLES as Record<string, any>)[key]) {
+                        delete typedStyles[key];
+                    }
+                });
+
+                e.stylePerDevice[device as DeviceTypes] = typedStyles as React.CSSProperties;
+            });
+
+            return e;
+        }),
         elementsMap: Array.from(state.editor.elementsMap),
     };
 };

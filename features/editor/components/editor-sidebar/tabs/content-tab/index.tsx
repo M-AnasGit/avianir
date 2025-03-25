@@ -14,6 +14,11 @@ import { ElementTypes } from '@/features/editor/types';
 
 export default function ContentTab() {
     const { state } = useEditor();
+    const [currentTabs, setCurrentTabs] = React.useState<string[]>([]);
+
+    React.useEffect(() => {
+        setCurrentTabs([]);
+    }, [state.editor.selectedElementId]);
 
     if (!state.editor.selectedElement) {
         return (
@@ -24,7 +29,7 @@ export default function ContentTab() {
     }
 
     return (
-        <Accordion type="multiple" className="w-full">
+        <Accordion type="multiple" className="w-full" value={currentTabs} onValueChange={(v) => setCurrentTabs(v)}>
             <ContentProvider>
                 {Object.entries(CONTENT_TAB_ITEMS).map(([key, value], i) => {
                     const exists =
