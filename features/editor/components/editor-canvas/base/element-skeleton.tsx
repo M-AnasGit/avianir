@@ -111,12 +111,15 @@ export default function ElementSkeleton({ index, ele, flexDirection }: Props) {
     const handleDragEnter = (e: React.DragEvent) => {
         e.preventDefault();
         e.stopPropagation();
-        if (draggedType !== 'input' && draggedType !== 'radio' && draggedType !== 'checkbox') {
-            if (type === 'container' && hoveredElement !== e.currentTarget)
-                handleHoverElement(e.currentTarget as HTMLElement);
-        } else {
-            if (type === 'form' && hoveredElement !== e.currentTarget)
-                handleHoverElement(e.currentTarget as HTMLElement);
+        if (
+            (draggedType === 'input' || draggedType === 'radio' || draggedType === 'checkbox') &&
+            type === 'form' &&
+            hoveredElement !== e.currentTarget
+        ) {
+            handleHoverElement(e.currentTarget as HTMLDivElement);
+        } else if ((type === 'form' || type === 'container') && hoveredElement !== e.currentTarget) {
+            if (draggedType === 'form' && type === 'container') return;
+            handleHoverElement(e.currentTarget as HTMLDivElement);
         }
     };
     const lastExecutionTime = React.useRef<number | null>(null);

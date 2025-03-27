@@ -38,7 +38,7 @@ export default function MediaElement({ mediaType, style, content }: Props) {
         if (content.src) {
             fetchDownload();
         }
-    }, []);
+    }, [content.src]);
 
     return url ? (
         mediaType === 'image' ? (

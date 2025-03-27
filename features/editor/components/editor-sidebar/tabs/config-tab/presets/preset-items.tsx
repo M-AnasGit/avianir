@@ -7,13 +7,7 @@ import { COMPONENTS_TYPES_ICONS } from '../../../constants';
 //@TYPES
 import { ElementTypes, Preset } from '@/features/editor/types';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
-import {
-    ContextMenu,
-    ContextMenuContent,
-    ContextMenuItem,
-    ContextMenuShortcut,
-    ContextMenuTrigger,
-} from '@/components/ui/context-menu';
+import { ContextMenu, ContextMenuContent, ContextMenuItem, ContextMenuTrigger } from '@/components/ui/context-menu';
 import { Trash } from 'lucide-react';
 import { useModal } from '@/components/providers/modal-provider';
 import GenericModal from '@/components/generic-modal';

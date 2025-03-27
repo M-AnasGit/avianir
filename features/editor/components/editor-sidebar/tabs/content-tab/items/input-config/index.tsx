@@ -1,6 +1,5 @@
 'use client';
 import React from 'react';
-import PreviewModal from './preview-modal';
 import PreviewStatesButton from '../preview-states-button';
 //@SHADCNUI
 import { AccordionContent } from '@/components/ui/accordion';
@@ -65,7 +64,7 @@ export default function InputConfig() {
                     <h5 className="prop-label">Expected answer</h5>
                     <Input
                         id="expected-answer"
-                        type="number"
+                        type="text"
                         placeholder="Enter the expected answer"
                         defaultValue={inputContent.answer.value}
                         onChange={(e) => {
