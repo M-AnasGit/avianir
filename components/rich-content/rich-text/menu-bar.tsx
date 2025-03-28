@@ -19,6 +19,7 @@ import {
     ListOrdered,
     PaintBucket,
     Quote,
+    SquareRadical,
     Strikethrough,
     Underline,
 } from 'lucide-react';
@@ -123,6 +124,12 @@ export default function MenuBar({ editor, palette }: Props) {
                 icon: <ListOrdered />,
                 action: () => editor.chain().focus().toggleOrderedList().run(),
                 pressed: editor.isActive('orderedList'),
+            },
+            maths: {
+                icon: <SquareRadical />,
+                action: () =>
+                    editor.chain().focus().insertContent('<span data-math formula="\\frac{a}{b}"></span>').run(),
+                pressed: false,
             },
             eraser: {
                 icon: <Eraser />,

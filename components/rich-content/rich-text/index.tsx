@@ -2,6 +2,7 @@
 import React from 'react';
 import StarterKit from '@tiptap/starter-kit';
 import { EditorContent, useEditor } from '@tiptap/react';
+import { MathExtension } from '../custom-extensions/maths';
 //@CUSTOM COMPONENTS
 import MenuBar from './menu-bar';
 //@CONSTANTS
@@ -56,7 +57,7 @@ export default function RichTextInput({ content, style, palette, handleSaveConte
             >
                 <EditorContent
                     editor={editor}
-                    style={{ ...style, height: '200px' }}
+                    style={{ ...style, height: '300px' }}
                     data-testid="rich-content"
                     className="rich-editor-content"
                 />

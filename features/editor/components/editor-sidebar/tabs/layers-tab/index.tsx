@@ -117,7 +117,7 @@ export default function LayersTab() {
                 <BreadcrumbList>
                     {pathToCurrentContainer.map((path, i) => (
                         <React.Fragment key={i}>
-                            <BreadcrumbItem className="cursor-pointer">
+                            <BreadcrumbItem className="cursor-pointer select-none">
                                 <BreadcrumbLink onClick={() => handleChangeCurrentContainerToParentContainer(i)}>
                                     {path.name}
                                 </BreadcrumbLink>

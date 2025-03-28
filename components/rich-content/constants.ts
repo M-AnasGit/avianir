@@ -9,6 +9,7 @@ import { Color } from '@tiptap/extension-color';
 
 import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight';
 import { all, createLowlight } from 'lowlight';
+import { MathExtension } from './custom-extensions/maths';
 
 export const text_extensions = [
     TextStyle,
@@ -62,6 +63,7 @@ export const text_extensions = [
     CodeBlockLowlight.configure({
         lowlight: createLowlight(all),
     }),
+    MathExtension,
 ];
 
 export const table_extensions = [

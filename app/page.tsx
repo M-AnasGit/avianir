@@ -24,8 +24,8 @@ export default function App() {
             <div className="z-[20] min-h-screen bg-muted">
                 <QueryClientProvider client={queryClient}>
                     <UserProvider user_id="98c71683-bcef-441e-bb24-dbd425228c31">
-                        <ModalProvider>
-                            <MathJaxContext>
+                        <MathJaxContext>
+                            <ModalProvider>
                                 <ToastProvider>
                                     <React.Suspense fallback={<Loading />}>
                                         <EditorProvider
@@ -41,8 +41,8 @@ export default function App() {
                                         </EditorProvider>
                                     </React.Suspense>
                                 </ToastProvider>
-                            </MathJaxContext>
-                        </ModalProvider>
+                            </ModalProvider>
+                        </MathJaxContext>
                     </UserProvider>
                 </QueryClientProvider>
             </div>

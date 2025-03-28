@@ -67,7 +67,7 @@ export default function Layer({ ele, handleChangeContainer }: Props) {
                 }}
             >
                 <GripVertical size={16} />
-                <span className="flex w-[150px] items-center justify-start gap-3">
+                <span className="flex w-[150px] select-none items-center justify-start gap-3">
                     <Icon className="!size-4 flex-shrink-0 text-muted-foreground" />
                     <p className="truncate text-sm" aria-label={ele.name}>
                         {ele.name}

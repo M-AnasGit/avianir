@@ -8,6 +8,8 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/comp
 import { Check, Clapperboard, ClipboardCopy, Headphones, Image, Trash } from 'lucide-react';
 //@HELPERS
 import { renderSize } from './helper';
+//@CUSTOM HOOKS
+import { useUser } from '@/features/user/provider';
 //@TYPES
 import { Media } from '@/features/types';
 type Props = {
@@ -37,6 +39,25 @@ export default function MediaCard({ item, handleCardClick, handleDeleteFile }: P
         }, 1000);
     };
 
+    const { downloadMedia } = useUser();
+
+    const [url, setUrl] = React.useState<string | null>(null);
+    React.useEffect(() => {
+        const fetchDownload = async () => {
+            const url = await downloadMedia(item.id ?? '');
+
+            if (url) {
+                setUrl(url);
+            } else {
+                console.error('Error while fetching media');
+            }
+        };
+
+        if (item.id) {
+            fetchDownload();
+        }
+    }, [item.id]);
+
     return (
         <Card
             onClick={handleCardClick}
@@ -44,8 +65,8 @@ export default function MediaCard({ item, handleCardClick, handleDeleteFile }: P
         >
             <div className="flex h-full items-center">
                 <div className="ml-4 flex h-full rounded-md bg-muted p-4 text-muted-foreground">
-                    {item.type === 'image' ? (
-                        <Image size={24} />
+                    {item.type === 'image' && url ? (
+                        <img src={url} alt={item.name} />
                     ) : item.type === 'video' ? (
                         <Clapperboard size={24} />
                     ) : (

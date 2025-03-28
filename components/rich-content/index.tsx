@@ -23,9 +23,11 @@ export default function RichContent({ content, style }: RichTextProps) {
 
     React.useEffect(() => {
         if (editor) {
-            editor.commands.setContent(content);
+            setTimeout(() => {
+                editor.commands.setContent(content);
+            });
         }
-    }, [content]);
+    }, [content, editor]);
 
     if (!editor) {
         return null;
