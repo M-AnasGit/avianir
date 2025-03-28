@@ -3,20 +3,32 @@ import React from 'react';
 //@SHADCNUI
 import { Button } from '@/components/ui/button';
 import { DialogClose, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+//@CONSTANTS
+import { DUMMY_CONTENT } from '@/features/editor/constants';
 //@CUSTOM COMPONENTS
 import InputWithErrors from '@/components/input-with-errors';
 //@TYPES
-import { EditorState, Preset } from '@/features/editor/types';
+import { EditorElement, EditorState, Preset } from '@/features/editor/types';
 type Props = {
     selectedElement: EditorState['editor']['selectedElement'];
     presets: Preset[];
     updateCourseData: (id: string, data: Preset[]) => Promise<void>;
 };
 
+const cleanContent = (content: EditorElement[]): EditorElement[] => {
+    return content.map((element) => {
+        return {
+            ...element,
+            content: Array.isArray(element.content) ? cleanContent(element.content) : DUMMY_CONTENT[element.type] || {},
+        };
+    });
+};
+
 export default function SaveModal({ selectedElement, presets, updateCourseData }: Props) {
     const [nameError, setNameError] = React.useState<Record<'message', string>>({ message: '' });
 
     const closeBtnRef = React.useRef<HTMLButtonElement>(null);
+
     const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const formData = new FormData(e.currentTarget);
@@ -46,6 +58,7 @@ export default function SaveModal({ selectedElement, presets, updateCourseData }
                 globalStyle: selectedElement.globalStyle,
                 type: selectedElement.type,
                 ...(selectedElement.formContent && { formContent: selectedElement.formContent }),
+                ...(Array.isArray(selectedElement.content) && { content: cleanContent(selectedElement.content) }),
             },
         ]);
 

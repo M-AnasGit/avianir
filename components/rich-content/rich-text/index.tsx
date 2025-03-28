@@ -54,7 +54,12 @@ export default function RichTextInput({ content, style, palette, handleSaveConte
                     overflowY: 'auto',
                 }}
             >
-                <EditorContent editor={editor} style={{ ...style, minHeight: '150px' }} data-testid="rich-content" />
+                <EditorContent
+                    editor={editor}
+                    style={{ ...style, height: '200px' }}
+                    data-testid="rich-content"
+                    className="rich-editor-content"
+                />
             </div>
         </>
     );

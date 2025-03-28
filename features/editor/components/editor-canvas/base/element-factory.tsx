@@ -10,8 +10,8 @@ import FormInput from '../form-elements/input';
 import FormRadio from '../form-elements/radio';
 import FormCheckbox from '../form-elements/checkbox';
 //@CONSTANTS
-import { INITIAL_STYLES } from '@/features/editor/constants';
-import { DEFAULT_FORM_CONTENT, DEFAULT_STYLES, DUMMY_CONTENT } from '../constants';
+import { INITIAL_STYLES, DUMMY_CONTENT } from '@/features/editor/constants';
+import { DEFAULT_FORM_CONTENT, DEFAULT_STYLES } from '../constants';
 //@TYPES
 import { ElementTypes, EditorElement, DeviceTypes } from '@/features/editor/types';
 

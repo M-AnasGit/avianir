@@ -1,3 +1,12 @@
+.rich-editor-content div {
+    height: 190px;
+    overflow-y: auto;
+}
+
+.rich-editor-content div::-webkit-scrollbar {
+    display: none;
+}
+
 .tiptap {
     color: var(--default-text);
 }

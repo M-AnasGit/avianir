@@ -14,6 +14,7 @@ import EditorCanvas from '@/features/editor/components/editor-canvas';
 //@SHADCNUI
 import { ToastProvider } from '@/components/ui/toast';
 import { Toaster } from '@/components/ui/toaster';
+import { MathJaxContext, MathJax } from 'better-react-mathjax';
 
 const queryClient = new QueryClient();
 
@@ -24,21 +25,23 @@ export default function App() {
                 <QueryClientProvider client={queryClient}>
                     <UserProvider user_id="98c71683-bcef-441e-bb24-dbd425228c31">
                         <ModalProvider>
-                            <ToastProvider>
-                                <React.Suspense fallback={<Loading />}>
-                                    <EditorProvider
-                                        course_id="44637aa0-e072-4275-ac07-f2414d4bb190"
-                                        chapter_id="e1ee54d2-95bd-4d29-8ed1-eeab3197f314"
-                                    >
-                                        <EditorNavigation />
-                                        <div className="flex h-full justify-center">
-                                            <EditorCanvas />
-                                        </div>
-                                        <Toaster />
-                                        <EditorSidebar />
-                                    </EditorProvider>
-                                </React.Suspense>
-                            </ToastProvider>
+                            <MathJaxContext>
+                                <ToastProvider>
+                                    <React.Suspense fallback={<Loading />}>
+                                        <EditorProvider
+                                            course_id="44637aa0-e072-4275-ac07-f2414d4bb190"
+                                            chapter_id="e1ee54d2-95bd-4d29-8ed1-eeab3197f314"
+                                        >
+                                            <EditorNavigation />
+                                            <div className="flex h-full justify-center">
+                                                <EditorCanvas />
+                                            </div>
+                                            <Toaster />
+                                            <EditorSidebar />
+                                        </EditorProvider>
+                                    </React.Suspense>
+                                </ToastProvider>
+                            </MathJaxContext>
                         </ModalProvider>
                     </UserProvider>
                 </QueryClientProvider>

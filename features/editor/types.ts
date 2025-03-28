@@ -129,6 +129,7 @@ export type Preset = {
     stylePerDevice: EditorElement['stylePerDevice'];
     globalStyle: EditorElement['globalStyle'];
     type: EditorElement['type'];
+    content?: EditorElement[];
     formContent?: EditorElement['formContent'];
 };
 

@@ -14,6 +14,33 @@ export const INITIAL_STYLES: React.CSSProperties = {
     paddingLeft: '4px',
 };
 
+export const DUMMY_CONTENT: Record<string, string> = {
+    text: '<p>Text</p>',
+    table: `
+        <table border="1" style="width:100%; border-collapse: collapse;">
+            <thead>
+                <tr>
+                    <th style="padding: 8px;">Header 1</th>
+                    <th style="padding: 8px;">Header 2</th>
+                    <th style="padding: 8px;">Header 3</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td style="padding: 8px;">Row 1, Col 1</td>
+                    <td style="padding: 8px;">Row 1, Col 2</td>
+                    <td style="padding: 8px;">Row 1, Col 3</td>
+                </tr>
+                <tr>
+                    <td style="padding: 8px;">Row 2, Col 1</td>
+                    <td style="padding: 8px;">Row 2, Col 2</td>
+                    <td style="padding: 8px;">Row 2, Col 3</td>
+                </tr>
+            </tbody>
+        </table>
+    `,
+};
+
 const bodyStyles: React.CSSProperties = {
     width: '100%',
     height: '1000px',
