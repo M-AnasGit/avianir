@@ -6,7 +6,6 @@ import DirectionInputs from '../direction-inputs';
 //@SHADCNUI
 import { Input } from '@/components/ui/input';
 import { AccordionContent } from '@/components/ui/accordion';
-import { TooltipProvider } from '@/components/ui/tooltip';
 //@CUSTOM HOOKS
 import { useEditor } from '@/features/editor/provider';
 import { useContent } from '../../provider';
@@ -92,47 +91,45 @@ export default function InputArea() {
 
     return (
         <AccordionContent className="prop-accordion-content">
-            <TooltipProvider>
-                <section className="prop-container">
-                    <h5 className="prop-label">Placeholder</h5>
-                    <Input
-                        id="placeholder-value"
-                        defaultValue={inputContent.placeholder.value}
-                        onBlur={handlePlaceholderValueChange}
-                    />
-                </section>
-                <GapInput />
-                <FormTextContent parent_id="input" id="placeholder" />
-                <DirectionInputs
-                    id="padding"
-                    label="Inner Padding"
+            <section className="prop-container">
+                <h5 className="prop-label">Placeholder</h5>
+                <Input
+                    id="placeholder-value"
+                    defaultValue={inputContent.placeholder.value}
+                    onBlur={handlePlaceholderValueChange}
+                />
+            </section>
+            <GapInput />
+            <FormTextContent parent_id="input" id="placeholder" />
+            <DirectionInputs
+                id="padding"
+                label="Inner Padding"
+                style={inputContent.placeholder.style}
+                handleStyleChange={handleLocalStyleChange}
+                handleBatchStyleChange={handleBatchLocalStyleChange}
+            />
+            <DirectionInputs
+                id="borderWidth"
+                label="Input Border width"
+                style={inputContent.placeholder.style}
+                handleStyleChange={handleLocalStyleChange}
+                handleBatchStyleChange={handleBatchLocalStyleChange}
+            />
+            <DirectionInputs
+                id="borderRadius"
+                label="Input Border radius"
+                style={inputContent.placeholder.style}
+                handleStyleChange={handleLocalStyleChange}
+                handleBatchStyleChange={handleBatchLocalStyleChange}
+            />
+            <section className="prop-container">
+                <h5 className="prop-label">Input Border color</h5>
+                <ColorInput
+                    colorKey="borderColor"
                     style={inputContent.placeholder.style}
                     handleStyleChange={handleLocalStyleChange}
-                    handleBatchStyleChange={handleBatchLocalStyleChange}
                 />
-                <DirectionInputs
-                    id="borderWidth"
-                    label="Input Border width"
-                    style={inputContent.placeholder.style}
-                    handleStyleChange={handleLocalStyleChange}
-                    handleBatchStyleChange={handleBatchLocalStyleChange}
-                />
-                <DirectionInputs
-                    id="borderRadius"
-                    label="Input Border radius"
-                    style={inputContent.placeholder.style}
-                    handleStyleChange={handleLocalStyleChange}
-                    handleBatchStyleChange={handleBatchLocalStyleChange}
-                />
-                <section className="prop-container">
-                    <h5 className="prop-label">Input Border color</h5>
-                    <ColorInput
-                        colorKey="borderColor"
-                        style={inputContent.placeholder.style}
-                        handleStyleChange={handleLocalStyleChange}
-                    />
-                </section>
-            </TooltipProvider>
+            </section>
         </AccordionContent>
     );
 }

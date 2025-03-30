@@ -29,12 +29,12 @@ type ContextMenuProps = React.PropsWithChildren<{
 }>;
 
 const ContextMenuWrapper = ({ ele, allowed, children }: ContextMenuProps) => {
-    const { state, dispatch, clipboard, setClipboard } = useEditor();
+    const { state, dispatch, clipboard, handleSetClipboard } = useEditor();
     const { handleSetModal } = useModal();
 
     const handleContextMenuCopy = React.useCallback((ele: EditorElement) => {
         if (ele.id === '_body') return;
-        setClipboard(ele);
+        handleSetClipboard(ele);
     }, []);
     const handleContextMenuPaste = React.useCallback(
         (ele: EditorElement) => {
@@ -116,7 +116,10 @@ const ContextMenuWrapper = ({ ele, allowed, children }: ContextMenuProps) => {
                     <ContextMenuItem
                         inset
                         className="flex cursor-pointer items-center justify-between gap-2"
-                        onClick={() => handleContextMenuCopy(ele)}
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            handleContextMenuCopy(ele);
+                        }}
                     >
                         Copy
                         <ContextMenuShortcut>Ctrl + C</ContextMenuShortcut>
@@ -126,7 +129,10 @@ const ContextMenuWrapper = ({ ele, allowed, children }: ContextMenuProps) => {
                     <ContextMenuItem
                         inset
                         className="flex cursor-pointer items-center justify-between gap-2"
-                        onClick={() => handleContextMenuPaste(ele)}
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            handleContextMenuPaste(ele);
+                        }}
                         disabled={isDisabled(ele, clipboard)}
                     >
                         Paste
@@ -138,7 +144,10 @@ const ContextMenuWrapper = ({ ele, allowed, children }: ContextMenuProps) => {
                     <ContextMenuItem
                         inset
                         className="flex cursor-pointer items-center justify-between gap-2"
-                        onClick={() => handleContextMenuRename(ele)}
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            handleContextMenuRename(ele);
+                        }}
                     >
                         Rename
                         <ContextMenuShortcut>Ctrl + alt + R</ContextMenuShortcut>
@@ -149,7 +158,10 @@ const ContextMenuWrapper = ({ ele, allowed, children }: ContextMenuProps) => {
                     <ContextMenuItem
                         inset
                         className="flex cursor-pointer items-center justify-between gap-2"
-                        onClick={() => handleContextMenuDelete()}
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            handleContextMenuDelete();
+                        }}
                     >
                         Delete
                         <Trash size={16} />

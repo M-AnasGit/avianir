@@ -6,7 +6,7 @@ import RichTextColorInput from './menu-components/rich-text-color-input';
 import LinkInput from './menu-components/link-input';
 //@SHADCNUI
 import { Toggle } from '@/components/ui/toggle';
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 import { SelectWithSearch } from '@/components/ui/select-with-search';
 //@LUICDE REACT
 import {
@@ -152,26 +152,19 @@ export default function MenuBar({ editor, palette }: Props) {
 
     return (
         <div className="control-group bg-background text-muted-foreground">
-            <TooltipProvider>
-                <div className="flex flex-wrap gap-2">
-                    {buttons &&
-                        Object.entries(buttons).map(([key, { icon, action, pressed }]) => (
-                            <Tooltip key={key}>
-                                <TooltipTrigger>
-                                    <Toggle
-                                        asChild
-                                        pressed={!!pressed}
-                                        onClick={action}
-                                        data-testid={`menu-bar-${key}`}
-                                    >
-                                        {icon}
-                                    </Toggle>
-                                </TooltipTrigger>
-                                <TooltipContent className="capitalize">{key}</TooltipContent>
-                            </Tooltip>
-                        ))}
-                </div>
-            </TooltipProvider>
+            <div className="flex flex-wrap gap-2">
+                {buttons &&
+                    Object.entries(buttons).map(([key, { icon, action, pressed }]) => (
+                        <Tooltip key={key}>
+                            <TooltipTrigger>
+                                <Toggle asChild pressed={!!pressed} onClick={action} data-testid={`menu-bar-${key}`}>
+                                    {icon}
+                                </Toggle>
+                            </TooltipTrigger>
+                            <TooltipContent className="capitalize">{key}</TooltipContent>
+                        </Tooltip>
+                    ))}
+            </div>
             <div
                 className="px-1 pt-2"
                 data-testid="menu-bar-inputs"

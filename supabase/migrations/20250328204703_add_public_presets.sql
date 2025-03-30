@@ -5,6 +5,7 @@ CREATE TABLE IF NOT EXISTS public.public_presets (
     type TEXT NOT NULL,
     content JSONB DEFAULT NULL,
     formContent JSONB DEFAULT NULL,
+    stylePerDevice JSONB DEFAULT NULL,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT now(),
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT now(),
     user_id UUID REFERENCES public.user(id) ON DELETE CASCADE

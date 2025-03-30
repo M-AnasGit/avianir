@@ -3,7 +3,7 @@ import React from 'react';
 import { Editor } from '@tiptap/react';
 //@SHADCNUI
 import { Toggle } from '@/components/ui/toggle';
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 //@LUICDE REACT
 import {
     BetweenHorizonalEnd,
@@ -99,27 +99,25 @@ export default function MenuBar({ editor }: Props) {
 
     return (
         <div className="control-group bg-background pb-2 text-muted-foreground">
-            <TooltipProvider>
-                <div className="flex flex-wrap gap-2">
-                    {buttons &&
-                        Object.entries(buttons).map(([key, btn]) =>
-                            btn.tooltip ? (
-                                <Tooltip key={key}>
-                                    <TooltipTrigger>
-                                        <Toggle asChild pressed={btn.pressed ?? false} onClick={btn.action}>
-                                            {btn.icon}
-                                        </Toggle>
-                                    </TooltipTrigger>
-                                    <TooltipContent className="capitalize">{key}</TooltipContent>
-                                </Tooltip>
-                            ) : (
-                                <Toggle key={key} onClick={btn.action} pressed={btn.pressed ?? false}>
-                                    {btn.icon}
-                                </Toggle>
-                            ),
-                        )}
-                </div>
-            </TooltipProvider>
+            <div className="flex flex-wrap gap-2">
+                {buttons &&
+                    Object.entries(buttons).map(([key, btn]) =>
+                        btn.tooltip ? (
+                            <Tooltip key={key}>
+                                <TooltipTrigger>
+                                    <Toggle asChild pressed={btn.pressed ?? false} onClick={btn.action}>
+                                        {btn.icon}
+                                    </Toggle>
+                                </TooltipTrigger>
+                                <TooltipContent className="capitalize">{key}</TooltipContent>
+                            </Tooltip>
+                        ) : (
+                            <Toggle key={key} onClick={btn.action} pressed={btn.pressed ?? false}>
+                                {btn.icon}
+                            </Toggle>
+                        ),
+                    )}
+            </div>
         </div>
     );
 }

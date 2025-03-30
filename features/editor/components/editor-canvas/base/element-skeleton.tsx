@@ -111,23 +111,24 @@ export default function ElementSkeleton({ index, ele, flexDirection }: Props) {
     const handleDragEnter = (e: React.DragEvent) => {
         e.preventDefault();
         e.stopPropagation();
-        if (
-            (draggedType === 'input' || draggedType === 'radio' || draggedType === 'checkbox') &&
-            type === 'form' &&
-            hoveredElement !== e.currentTarget
-        ) {
-            handleHoverElement(e.currentTarget as HTMLDivElement);
-        } else if ((type === 'form' || type === 'container') && hoveredElement !== e.currentTarget) {
-            if (draggedType === 'form' && type === 'container') return;
-            handleHoverElement(e.currentTarget as HTMLDivElement);
+        if (type !== 'form' && type !== 'container' && hoveredElement !== e.currentTarget) return;
+
+        if (draggedType === 'input' || draggedType === 'radio' || draggedType === 'checkbox') {
+            if (type === 'form') {
+                handleHoverElement(e.currentTarget as HTMLDivElement);
+            }
+        } else {
+            if (draggedType !== 'form' || type !== 'form') {
+                handleHoverElement(e.currentTarget as HTMLDivElement);
+            }
         }
     };
     const lastExecutionTime = React.useRef<number | null>(null);
     const handleDragOver = (e: React.DragEvent) => {
         e.preventDefault();
         e.stopPropagation();
-        if (!hoveredElement || hoveredElement !== e.currentTarget) return;
-        const container = Array.from(e.currentTarget.children).find((child) =>
+        if (!hoveredElement) return;
+        const container = Array.from(hoveredElement.children).find((child) =>
             child.getAttribute('data-property')?.includes('container'),
         );
         if (!container) return;
@@ -166,7 +167,7 @@ export default function ElementSkeleton({ index, ele, flexDirection }: Props) {
                     data-position={index}
                     id={id}
                     ref={canvasRef}
-                    className={clsx('relative cursor-grab transition-all', {
+                    className={clsx('relative cursor-grab p-1 transition-all', {
                         'border border-transparent': !state.editor.preview,
                         'border-solid !border-blue-500': state.editor.selectedElementId === id,
                         'border-solid !border-yellow-500': hoveredElement?.id === id,

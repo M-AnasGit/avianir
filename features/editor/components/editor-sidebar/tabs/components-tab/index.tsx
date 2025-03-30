@@ -1,7 +1,6 @@
 'use client';
 //@SHADCNUI
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { TooltipProvider } from '@/components/ui/tooltip';
 //@CUSTOM COMPONENTS
 import ComponentItems from './component-items';
 //@CONSTANTS
@@ -17,9 +16,7 @@ export default function ComponentsTab() {
                             {key}
                         </AccordionTrigger>
                         <AccordionContent className="grid grid-cols-3 gap-y-4">
-                            <TooltipProvider>
-                                <ComponentItems items={value} />
-                            </TooltipProvider>
+                            <ComponentItems items={value} />
                         </AccordionContent>
                     </AccordionItem>
                 );

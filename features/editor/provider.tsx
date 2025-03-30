@@ -20,7 +20,7 @@ type EditorContextType = {
     componentDragged: HTMLElement | null;
     draggedType: ElementTypes | null;
     clipboard: EditorElement | null;
-    setClipboard: React.Dispatch<React.SetStateAction<EditorElement | null>>;
+    handleSetClipboard: (clipboard: EditorElement | null) => void;
     handleDragComponent: (element: HTMLElement | null, type: ElementTypes | null) => void;
     updateCourseData: (id: string, data: ChapterData | Palette | Preset[]) => Promise<void>;
     dispatch: React.Dispatch<EditorAction>;
@@ -78,6 +78,10 @@ const EditorProvider = ({ children, course_id, chapter_id }: EditorProps) => {
     }, []);
 
     const [clipboard, setClipboard] = React.useState<EditorElement | null>(null);
+    const handleSetClipboard = React.useCallback((ele: EditorElement | null) => {
+        if (ele && ele.id === '_body') return;
+        setClipboard(ele);
+    }, []);
 
     if (isLoading) return <Loading />;
     if (!presets || !palette || !chapter || isError) throw new Error('Error fetching data');
@@ -92,7 +96,7 @@ const EditorProvider = ({ children, course_id, chapter_id }: EditorProps) => {
                 componentDragged,
                 draggedType,
                 clipboard,
-                setClipboard,
+                handleSetClipboard,
                 dispatch,
                 handleDragComponent,
                 updateCourseData,

@@ -11,7 +11,7 @@ import {
     getUserMedia,
     updateUserMedia,
     uploadMedia,
-} from '../server-actions';
+} from '../server-actions/user-data';
 import { uploadLimits } from '../constants';
 import { uploadMediaType } from '../types';
 

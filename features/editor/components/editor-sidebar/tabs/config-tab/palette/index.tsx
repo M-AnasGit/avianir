@@ -3,7 +3,6 @@ import DisplayPalette from './display-palette';
 import EditPaletteModal from './edit-palette/edit-palette-modal';
 //@SHADCNUI
 import { Button } from '@/components/ui/button';
-import { TooltipProvider } from '@/components/ui/tooltip';
 //@LUCIDE ICONS
 import { Pencil } from 'lucide-react';
 //@CUSTOM HOOKS
@@ -27,12 +26,12 @@ export default function PaletteTab({ isDefault }: Props) {
     };
 
     return (
-        <TooltipProvider>
+        <>
             <DisplayPalette palette={currentPalette} />
             <Button variant={'outline'} onClick={handleEditPalette} className="w-full text-primary">
                 <Pencil size={16} />
                 Edit palette
             </Button>
-        </TooltipProvider>
+        </>
     );
 }

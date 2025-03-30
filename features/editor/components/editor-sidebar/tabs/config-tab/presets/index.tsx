@@ -1,7 +1,6 @@
 'use client';
 import PresetItems from './preset-items';
 //@SHADCNUI
-import { TooltipProvider } from '@/components/ui/tooltip';
 //@CUSTOM HOOKS
 import { useEditor } from '@/features/editor/provider';
 
@@ -17,9 +16,5 @@ export default function PresetsTab({}: Props) {
             </p>
         );
 
-    return (
-        <TooltipProvider>
-            <PresetItems items={presets} />
-        </TooltipProvider>
-    );
+    return <PresetItems items={presets} />;
 }
