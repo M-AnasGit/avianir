@@ -49,7 +49,9 @@ const MathComponent = ({ node, updateAttributes, deleteNode }: any) => {
                     }}
                 />
             ) : (
-                <MathJax inline>{`\\(${node.attrs.formula}\\)`}</MathJax>
+                <MathJax inline dynamic>
+                    {`\\(${node.attrs.formula.replace(/\\\\/g, '\\')}\\)`}
+                </MathJax>
             )}
             <NodeViewContent as="span" />
         </NodeViewWrapper>

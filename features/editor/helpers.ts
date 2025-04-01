@@ -44,6 +44,29 @@ export const loadData = (chapterData: ChapterData, course_id: string, chapter_id
     };
 };
 
+const unloadDataHelper = (e: EditorElement): EditorElement => {
+    const currStyles = e.stylePerDevice;
+
+    Object.entries(currStyles).forEach(([device, styles]) => {
+        const typedStyles = styles as Record<string, any>;
+        Object.keys(typedStyles).forEach((key) => {
+            if (typedStyles[key] === (INITIAL_STYLES as Record<string, any>)[key]) {
+                delete typedStyles[key];
+            }
+        });
+
+        e.stylePerDevice[device as DeviceTypes] = typedStyles as React.CSSProperties;
+    });
+
+    if (e.content && Array.isArray(e.content)) {
+        e.content = e.content.map((item) => {
+            return unloadDataHelper(item);
+        });
+    }
+
+    return e;
+};
+
 /**
  * Unloads the editor state and returns the chapter data.
  *
@@ -52,22 +75,7 @@ export const loadData = (chapterData: ChapterData, course_id: string, chapter_id
  */
 export const unloadData = (state: EditorState): ChapterData => {
     return {
-        elements: state.editor.elements.filter((e) => {
-            const currStyles = e.stylePerDevice;
-
-            Object.entries(currStyles).forEach(([device, styles]) => {
-                const typedStyles = styles as Record<string, any>;
-                Object.keys(typedStyles).forEach((key) => {
-                    if (typedStyles[key] === (INITIAL_STYLES as Record<string, any>)[key]) {
-                        delete typedStyles[key];
-                    }
-                });
-
-                e.stylePerDevice[device as DeviceTypes] = typedStyles as React.CSSProperties;
-            });
-
-            return e;
-        }),
+        elements: state.editor.elements.filter((e) => unloadDataHelper(e)),
         elementsMap: Array.from(state.editor.elementsMap),
     };
 };

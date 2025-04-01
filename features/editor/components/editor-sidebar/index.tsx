@@ -44,7 +44,7 @@ export default function EditorSidebar() {
                                 className="focus:outline-none focus:ring-0 focus-visible:ring-0"
                             >
                                 <SheetHeader className="p-6 text-left">
-                                    <SheetTitle className="capitalize">{k}</SheetTitle>
+                                    <SheetTitle className="select-none capitalize">{k}</SheetTitle>
                                     <SheetDescription />
                                     {component}
                                 </SheetHeader>
