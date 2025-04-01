@@ -35,20 +35,49 @@ export const getCourseData = async (course_id: string, chapter_id: string) => {
     };
 };
 
-export const updateCourseData = async (course_id: string, id: string, data: ChapterData | Palette | Preset[]) => {
+export const updateCourseData = async (
+    course_id: string,
+    id: string,
+    data: ChapterData,
+    palette?: Palette,
+    presets?: Preset[],
+) => {
     if (!course_id) throw new Error('Course_id should be provided and not empty');
     if (!id) throw new Error('Chapter_id should be provided and not empty');
 
     const supabase = await serverClient();
 
     const path = `${course_id}/${id}.json`;
-    const { data: upload_data, error } = await supabase.storage
+    const { data: upload_data, error: dataUploadError } = await supabase.storage
         .from(process.env.NEXT_PUBLIC_SUPABASE_BUCKET!)
         .upload(path, new Blob([JSON.stringify(data)], { type: 'application/json' }), {
             contentType: 'application/json',
             upsert: true,
         });
-    if (error) throw new Error('Error uploading data');
+
+    if (dataUploadError) throw new Error('Error uploading data');
+
+    if (palette) {
+        const { error: paletteUploadError } = await supabase.storage
+            .from(process.env.NEXT_PUBLIC_SUPABASE_BUCKET!)
+            .upload(`${course_id}/palette.json`, new Blob([JSON.stringify(palette)], { type: 'application/json' }), {
+                contentType: 'application/json',
+                upsert: true,
+            });
+
+        if (paletteUploadError) throw new Error('Error uploading palette');
+    }
+
+    if (presets) {
+        const { error: presetsUploadError } = await supabase.storage
+            .from(process.env.NEXT_PUBLIC_SUPABASE_BUCKET!)
+            .upload(`${course_id}/presets.json`, new Blob([JSON.stringify(presets)], { type: 'application/json' }), {
+                contentType: 'application/json',
+                upsert: true,
+            });
+
+        if (presetsUploadError) throw new Error('Error uploading presets');
+    }
 
     return { data: upload_data };
 };

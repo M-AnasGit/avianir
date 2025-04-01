@@ -9,6 +9,7 @@ import { Loader2 } from 'lucide-react';
 //@CUSTOM HOOK
 import { useEditor } from '@/features/editor/provider';
 import { useUser } from '@/features/user/provider';
+import MediaLoading from './media-loading';
 
 type Props = {
     mediaType: 'image' | 'video' | 'audio';
@@ -49,8 +50,6 @@ export default function MediaElement({ mediaType, style, content }: Props) {
             <AudioElement url={url} style={style} />
         ) : null
     ) : (
-        <div className="flex h-full w-full items-center justify-center bg-muted text-muted-foreground">
-            <Loader2 size={32} className="animate-spin" />
-        </div>
+        <MediaLoading />
     );
 }

@@ -55,7 +55,7 @@ export default function CommunityModal({ device, presets, updateCourseData }: Pr
                 <DialogTitle>Community</DialogTitle>
                 <DialogDescription>Explore and share presets with other users.</DialogDescription>
             </DialogHeader>
-            <div className="no-scrollbar flex max-h-[300px] flex-col gap-4 overflow-y-auto">
+            <div className="no-scrollbar flex max-h-[300px] flex-col gap-4 overflow-y-auto py-4">
                 {isLoading ? (
                     <Loading screen={false} />
                 ) : publicPresets && publicPresets.length > 0 ? (

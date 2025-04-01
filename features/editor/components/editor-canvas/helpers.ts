@@ -1,3 +1,5 @@
+import { v4 } from 'uuid';
+import { EditorElement, Preset } from '../../types';
 import { InsertPositionType } from './provider';
 
 export const calculateInsertPosition = (
@@ -46,4 +48,12 @@ export const calculateInsertPosition = (
         id: closestElement.id,
         position: newPosition,
     };
+};
+
+export const fillPresetWithId = (item: Preset): EditorElement => {
+    return {
+        ...item,
+        id: v4(),
+        content: Array.isArray(item.content) ? item.content.map((c) => fillPresetWithId(c)) : item.content,
+    } as EditorElement;
 };

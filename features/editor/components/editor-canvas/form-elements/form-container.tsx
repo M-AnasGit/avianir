@@ -7,13 +7,15 @@ import RichContent from '@/components/rich-content';
 //@TYPES
 import { EditorElement, FormDetails } from '@/features/editor/types';
 import ElementSkeleton from '../base/element-skeleton';
+import ElementFactory from '../base/element-factory';
 type Props = {
     content: EditorElement[];
     formDetails: FormDetails;
     style: React.CSSProperties;
+    preset?: boolean;
 };
 
-export default function FormContainer({ content, style, formDetails }: Props) {
+export default function FormContainer({ content, style, formDetails, preset }: Props) {
     const filtredStyle = React.useMemo(() => {
         let tempStyle = { ...style };
 
@@ -38,7 +40,11 @@ export default function FormContainer({ content, style, formDetails }: Props) {
             )}
             <div className="flex flex-col gap-2 pb-4" id="form-elements">
                 {content.map((ele, i) => {
-                    return <ElementSkeleton key={ele.id} index={i} ele={ele} flexDirection={'column'} />;
+                    return preset ? (
+                        <React.Fragment key={i}>{ElementFactory.renderElement(ele, 'desktop', true)}</React.Fragment>
+                    ) : (
+                        <ElementSkeleton key={ele.id} index={i} ele={ele} flexDirection={'column'} />
+                    );
                 })}
             </div>
 

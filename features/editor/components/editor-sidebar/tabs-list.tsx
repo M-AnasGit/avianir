@@ -21,6 +21,7 @@ export default function TabList() {
     const handleCommunityTab = () => {
         handleSetModal(
             <CommunityModal device={state.editor.device} presets={presets} updateCourseData={updateCourseData} />,
+            1200,
         );
     };
 

@@ -1,5 +1,8 @@
 CREATE TABLE IF NOT EXISTS public.user (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    name TEXT NOT NULL,
+    pfp TEXT DEFAULT NULL,
+    tokens_used INT DEFAULT 0,
     subscription_plan TEXT NOT NULL,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT now(),
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT now()

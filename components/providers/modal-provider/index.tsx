@@ -4,7 +4,7 @@ import { Dialog, DialogContent, DialogClose } from '@/components/ui/dialog';
 
 type ModalContextType = {
     modal: React.ReactNode | null;
-    handleSetModal: (modal: React.ReactNode) => void;
+    handleSetModal: (modal: React.ReactNode, width?: number) => void;
     handleRemoveModal: () => void;
 };
 
@@ -12,9 +12,14 @@ const ModalContext = React.createContext<ModalContextType | undefined>(undefined
 
 const ModalProvider = ({ children }: { children: React.ReactNode }) => {
     const [modal, setModal] = React.useState<React.ReactNode>(null);
-
-    const handleSetModal = React.useCallback((modal: React.ReactNode) => {
+    const [width, setWidth] = React.useState<number | null>(null);
+    const handleSetModal = React.useCallback((modal: React.ReactNode, width?: number) => {
         setModal(modal);
+        if (width) {
+            setWidth(width);
+        } else {
+            setWidth(null);
+        }
     }, []);
 
     const handleRemoveModal = React.useCallback(() => {
@@ -25,7 +30,15 @@ const ModalProvider = ({ children }: { children: React.ReactNode }) => {
         <ModalContext.Provider value={{ modal, handleSetModal, handleRemoveModal }}>
             {children}
             <Dialog open={!!modal} onOpenChange={handleRemoveModal}>
-                <DialogContent data-testid="modal-dialog">{modal}</DialogContent>
+                <DialogContent
+                    data-testid="modal-dialog"
+                    style={{
+                        maxWidth: width ? '90%' : '32rem',
+                        ...(width ? { width: `${width}px` } : {}),
+                    }}
+                >
+                    {modal}
+                </DialogContent>
             </Dialog>
         </ModalContext.Provider>
     );

@@ -46,7 +46,6 @@ export type EditorElement = {
         | EditorElement[]
         | {
               text?: string;
-              href?: string;
               src?: string;
               alt?: string;
           };
@@ -129,7 +128,7 @@ export type Preset = {
     stylePerDevice: EditorElement['stylePerDevice'];
     globalStyle: EditorElement['globalStyle'];
     type: EditorElement['type'];
-    content?: EditorElement[];
+    content: Preset[] | EditorElement['content'];
     formContent?: EditorElement['formContent'];
 };
 

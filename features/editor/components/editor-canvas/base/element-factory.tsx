@@ -14,6 +14,7 @@ import { INITIAL_STYLES, DUMMY_CONTENT } from '@/features/editor/constants';
 import { DEFAULT_FORM_CONTENT, DEFAULT_STYLES } from '../constants';
 //@TYPES
 import { ElementTypes, EditorElement, DeviceTypes } from '@/features/editor/types';
+import MediaLoading from '../default-elements/media-element/media-loading';
 
 class ElementFactory {
     static createElement(type: ElementTypes): EditorElement | null {
@@ -73,7 +74,7 @@ class ElementFactory {
         };
     }
 
-    static renderElement = (element: EditorElement, activeDevice: DeviceTypes): React.ReactNode => {
+    static renderElement = (element: EditorElement, activeDevice: DeviceTypes, preset?: boolean): React.ReactNode => {
         const { type, stylePerDevice } = element;
 
         const currentStyle = React.useMemo(
@@ -88,7 +89,20 @@ class ElementFactory {
             case 'container':
                 return (
                     Array.isArray(element.content) && (
-                        <ContainerElement style={currentStyle} content={element.content} />
+                        <ContainerElement style={currentStyle} content={element.content} preset={!!preset} />
+                    )
+                );
+            case 'form':
+                return (
+                    element.formContent &&
+                    element.formContent.form &&
+                    Array.isArray(element.content) && (
+                        <FormContainer
+                            formDetails={element.formContent.form}
+                            style={currentStyle}
+                            content={element.content}
+                            preset={!!preset}
+                        />
                     )
                 );
             case 'text':
@@ -105,33 +119,30 @@ class ElementFactory {
                 );
             case 'image':
                 return (
-                    !Array.isArray(element.content) && (
+                    !Array.isArray(element.content) &&
+                    (!!preset ? (
+                        <MediaLoading style={currentStyle} />
+                    ) : (
                         <MediaElement mediaType="image" style={currentStyle} content={element.content} />
-                    )
+                    ))
                 );
             case 'video':
                 return (
-                    !Array.isArray(element.content) && (
+                    !Array.isArray(element.content) &&
+                    (!!preset ? (
+                        <MediaLoading style={currentStyle} />
+                    ) : (
                         <MediaElement mediaType="video" style={currentStyle} content={element.content} />
-                    )
+                    ))
                 );
             case 'audio':
                 return (
-                    !Array.isArray(element.content) && (
+                    !Array.isArray(element.content) &&
+                    (!!preset ? (
+                        <MediaLoading style={currentStyle} />
+                    ) : (
                         <MediaElement mediaType="audio" style={currentStyle} content={element.content} />
-                    )
-                );
-            case 'form':
-                return (
-                    element.formContent &&
-                    element.formContent.form &&
-                    Array.isArray(element.content) && (
-                        <FormContainer
-                            formDetails={element.formContent.form}
-                            style={currentStyle}
-                            content={element.content}
-                        />
-                    )
+                    ))
                 );
             case 'input':
                 return (

@@ -6,7 +6,7 @@ import { Input } from '@/components/ui/input';
 import { useContent } from '../../provider';
 
 type Props = {
-    id: 'text' | 'href' | 'src' | 'alt';
+    id: 'text' | 'src' | 'alt';
     label: string;
     placeholder: string;
 };

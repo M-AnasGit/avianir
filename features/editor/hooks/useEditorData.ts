@@ -25,8 +25,17 @@ export const useEditorData = ({ course_id, chapter_id }: Props) => {
     });
 
     const updateCourseDataMutation = useMutation({
-        mutationFn: ({ id, data }: { id: string; data: Palette | Preset[] | ChapterData }) =>
-            updateCourseData(course_id, id, data),
+        mutationFn: ({
+            id,
+            data,
+            palette,
+            presets,
+        }: {
+            id: string;
+            data: ChapterData;
+            palette?: Palette;
+            presets?: Preset[];
+        }) => updateCourseData(course_id, id, data, palette, presets),
         onMutate: () => {
             toast({
                 title: 'Updating...',

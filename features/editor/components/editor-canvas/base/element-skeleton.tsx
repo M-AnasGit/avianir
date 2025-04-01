@@ -11,7 +11,7 @@ import clsx from 'clsx';
 import { useEditor } from '@/features/editor/provider';
 import { useCanvas } from '../provider';
 //@HELPERS
-import { calculateInsertPosition } from '../helpers';
+import { calculateInsertPosition, fillPresetWithId } from '../helpers';
 //@TYPES
 import { EditorElement, ElementTypes } from '@/features/editor/types';
 
@@ -87,10 +87,8 @@ export default function ElementSkeleton({ index, ele, flexDirection }: Props) {
             if (current_preset) {
                 element = {
                     ...element,
-                    stylePerDevice: current_preset.stylePerDevice,
-                    globalStyle: current_preset.globalStyle,
+                    ...fillPresetWithId(current_preset),
                     preset: current_preset.name,
-                    formContent: current_preset.formContent,
                 };
             }
             dispatch({

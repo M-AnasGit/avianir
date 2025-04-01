@@ -40,6 +40,8 @@ const EditorProvider = ({ children, course_id, chapter_id }: EditorProps) => {
     const { theme } = useTheme();
     const [localPalette, setLocalPalette] = React.useState<Palette | null>(null);
     const [localPresets, setLocalPresets] = React.useState<Preset[] | null>(null);
+    const localPaletteRef = React.useRef(localPalette);
+    const localPresetsRef = React.useRef(localPresets);
     const [state, dispatch] = React.useReducer(editorReducer, initialState);
     React.useEffect(() => {
         if (palette) setLocalPalette(palette);
@@ -61,14 +63,26 @@ const EditorProvider = ({ children, course_id, chapter_id }: EditorProps) => {
             });
         }
     }, [localPalette, theme]);
-    const updateCourseData = React.useCallback(
-        async (id: string, data: ChapterData | Palette | Preset[]) => {
-            await updateCourseDataMutation.mutateAsync({ id, data });
-            if (id === 'palette') setLocalPalette(data as Palette);
-            if (id === 'presets') setLocalPresets(data as Preset[]);
-        },
-        [updateCourseDataMutation],
-    );
+    const updateCourseData = async (id: string, data: ChapterData | Palette | Preset[]) => {
+        if (id === 'palette') {
+            setLocalPalette(data as Palette);
+            localPaletteRef.current = data as Palette;
+        } else if (id === 'presets') {
+            setLocalPresets(data as Preset[]);
+            localPresetsRef.current = data as Preset[];
+        } else {
+            const params = {
+                id,
+                data: data as ChapterData,
+                ...(localPaletteRef.current ? { palette: localPaletteRef.current } : {}),
+                ...(localPresetsRef.current ? { presets: localPresetsRef.current } : {}),
+            };
+
+            await updateCourseDataMutation.mutateAsync(params);
+            localPaletteRef.current = null;
+            localPresetsRef.current = null;
+        }
+    };
 
     const [componentDragged, setComponentDragged] = React.useState<HTMLElement | null>(null);
     const [draggedType, setDraggedType] = React.useState<ElementTypes | null>(null);

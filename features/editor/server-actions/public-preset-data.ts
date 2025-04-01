@@ -29,7 +29,7 @@ export const createPublicPreset = async (user_id: string, preset: Preset | undef
 export const getPublicPresets = async () => {
     const supabase = await serverClient();
 
-    const { data, error } = await supabase.from('public_presets').select('*');
+    const { data, error } = await supabase.from('public_presets_view').select('*');
 
     if (error) throw new Error('Error fetching data');
 

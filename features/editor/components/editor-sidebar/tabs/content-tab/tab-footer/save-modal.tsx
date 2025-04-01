@@ -3,8 +3,6 @@ import React from 'react';
 //@SHADCNUI
 import { Button } from '@/components/ui/button';
 import { DialogClose, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-//@CONSTANTS
-import { DUMMY_CONTENT } from '@/features/editor/constants';
 //@CUSTOM COMPONENTS
 import InputWithErrors from '@/components/input-with-errors';
 //@TYPES
@@ -15,13 +13,28 @@ type Props = {
     updateCourseData: (id: string, data: Preset[]) => Promise<void>;
 };
 
-const cleanContent = (content: EditorElement[]): EditorElement[] => {
-    return content.map((element) => {
-        return {
-            ...element,
-            content: Array.isArray(element.content) ? cleanContent(element.content) : DUMMY_CONTENT[element.type] || {},
-        };
+const cleanContentFromId = (content: EditorElement[]): Preset[] => {
+    return content.map((item) => {
+        const { id, ...rest } = item;
+        let curr = { ...rest } as Preset;
+
+        if (Array.isArray(item.content)) {
+            curr = {
+                ...rest,
+                content: cleanContentFromId(item.content),
+            } as Preset;
+        }
+
+        return curr;
     });
+};
+
+const cleanContentFromSrc = (content: { text?: string; src?: string; alt?: string }): { text?: string } => {
+    const { text, ...rest } = content;
+
+    return {
+        text,
+    };
 };
 
 export default function SaveModal({ selectedElement, presets, updateCourseData }: Props) {
@@ -57,8 +70,10 @@ export default function SaveModal({ selectedElement, presets, updateCourseData }
                 stylePerDevice: selectedElement.stylePerDevice,
                 globalStyle: selectedElement.globalStyle,
                 type: selectedElement.type,
+                content: Array.isArray(selectedElement.content)
+                    ? cleanContentFromId(selectedElement.content)
+                    : cleanContentFromSrc(selectedElement.content),
                 ...(selectedElement.formContent && { formContent: selectedElement.formContent }),
-                ...(Array.isArray(selectedElement.content) && { content: cleanContent(selectedElement.content) }),
             },
         ]);
 
