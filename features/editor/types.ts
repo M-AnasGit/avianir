@@ -150,3 +150,15 @@ export type Chapter = {
     updated_at: string;
     data: ChapterData;
 };
+
+export type CopilotHistory = {
+    course_id: string;
+    prompt: string;
+    response: {
+        content: {
+            text: string;
+        };
+        stylePerDevice?: EditorElement['stylePerDevice'];
+    };
+    created_at: string;
+};

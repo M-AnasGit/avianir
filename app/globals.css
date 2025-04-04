@@ -124,6 +124,22 @@ html body[data-scroll-locked] {
     .tabs-trigger {
         @apply h-10 w-12 p-0 data-[state=active]:bg-muted;
     }
+
+    /* Sidebar beta icon */
+    .beta-element::before {
+        content: 'BETA';
+        @apply absolute -bottom-3 right-[2px] rounded-md bg-yellow-400 px-1 text-[10px] font-semibold text-white;
+    }
+
+    /* Copilot tab */
+    .history-card {
+        @apply w-full rounded-md border border-border p-4 shadow-md;
+    }
+
+    .history-card-prompt-container::before {
+        content: 'Your Prompt';
+        @apply absolute -top-[9px] left-2 bg-background px-1 text-[10px] font-medium text-muted-foreground;
+    }
 }
 
 @layer base {

@@ -14,7 +14,9 @@ import {
     Check,
     Table,
     SlidersHorizontal,
+    BotMessageSquare,
     LucideIcon,
+    NotebookText,
 } from 'lucide-react';
 
 import ContentTab from './tabs/content-tab';
@@ -22,6 +24,8 @@ import ConfigTab from './tabs/config-tab';
 import ComponentsTab from './tabs/components-tab';
 import LayersTab from './tabs/layers-tab';
 import MediaTab from './tabs/media-tab';
+import CopilotTab from './tabs/copilot-tab';
+import GuidelinesTab from './tabs/guidelines-tab';
 
 import { ComponentTabItem } from './types';
 
@@ -31,6 +35,8 @@ export const SIDEBAR_TABS: Record<string, React.ReactNode> = {
     media: <MediaTab />,
     config: <ConfigTab />,
     layers: <LayersTab />,
+    guidelines: <GuidelinesTab />,
+    copilot: <CopilotTab />,
 };
 
 export const SIDEBAR_TABS_ICONS: Record<string, React.ReactNode> = {
@@ -39,7 +45,11 @@ export const SIDEBAR_TABS_ICONS: Record<string, React.ReactNode> = {
     media: <Database />,
     config: <SettingsIcon />,
     layers: <SquareStackIcon />,
+    guidelines: <NotebookText />,
+    copilot: <BotMessageSquare />,
 };
+
+export const BETA_FEATURES: Set<string> = new Set(['copilot']);
 
 export const COMPONENTS_TYPES_ICONS: Record<string, LucideIcon> = {
     text: Type,

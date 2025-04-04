@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 //@LUCIDE ICONS
 import { Moon, Sun, Users } from 'lucide-react';
 //@CONSTANTS
-import { SIDEBAR_TABS_ICONS } from './constants';
+import { SIDEBAR_TABS_ICONS, BETA_FEATURES } from './constants';
 //@HOOKS
 import { useTheme } from 'next-themes';
 import { useModal } from '@/components/providers/modal-provider';
@@ -35,7 +35,12 @@ export default function TabList() {
                         value={k}
                         className="h-10 w-10 p-0 data-[state=active]:bg-muted"
                     >
-                        {icon}
+                        <span
+                            data-beta={BETA_FEATURES.has(k)}
+                            className="data-[beta=true]:beta-element relative rounded-md p-2 data-[beta=true]:border-2 data-[beta=true]:border-yellow-400"
+                        >
+                            {icon}
+                        </span>
                     </TabsTrigger>
                 ))}
             </TabsList>
