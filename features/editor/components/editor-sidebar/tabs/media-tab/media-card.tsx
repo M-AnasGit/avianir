@@ -64,9 +64,9 @@ export default function MediaCard({ item, handleCardClick, handleDeleteFile }: P
             className="flex cursor-pointer items-center justify-between py-2 transition-colors duration-200 hover:bg-muted"
         >
             <div className="flex h-full items-center">
-                <div className="ml-4 flex h-full rounded-md bg-muted p-4 text-muted-foreground">
+                <div className="ml-4 flex h-full rounded-md bg-muted p-2 text-muted-foreground">
                     {item.type === 'image' && url ? (
-                        <img src={url} alt={item.name} />
+                        <img src={url} alt={item.name} className="object-contain" />
                     ) : item.type === 'video' ? (
                         <Clapperboard size={24} />
                     ) : (

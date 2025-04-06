@@ -24,11 +24,13 @@ export default function UploadForm({ fileType, handleChangeFileType }: Props) {
     const { file, fileURL, Component, handleDeleteFile } = useUpload();
     const [fileNameError, setFileNameError] = React.useState<Record<'message', string>>({ message: '' });
 
+    const [clicked, setClicked] = React.useState<boolean>(false);
     const closeBtnRef = React.useRef<HTMLButtonElement>(null);
     const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (!file) return;
-
+        if (clicked) return;
+        setClicked(true);
         const formData = new FormData(e.currentTarget);
         const mediaName = formData.get('mediaName') as string;
 
@@ -58,6 +60,7 @@ export default function UploadForm({ fileType, handleChangeFileType }: Props) {
             console.error('Unexpected error occurred:', err);
         } finally {
             closeBtnRef.current?.click();
+            setClicked(false);
         }
     };
 
@@ -122,7 +125,7 @@ export default function UploadForm({ fileType, handleChangeFileType }: Props) {
                         Cancel
                     </Button>
                 </DialogClose>
-                <Button type="submit" disabled={!file}>
+                <Button type="submit" disabled={!file || clicked}>
                     Upload
                 </Button>
             </DialogFooter>

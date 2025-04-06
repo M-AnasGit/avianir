@@ -13,10 +13,8 @@ export default function UpdateModal({ id }: Props) {
     return (
         <>
             <DialogHeader className="gap-1 space-y-0">
-                <DialogTitle>Upload a media</DialogTitle>
-                <DialogDescription>
-                    Any media you upload will be available for use in all your documents.
-                </DialogDescription>
+                <DialogTitle>Update a media</DialogTitle>
+                <DialogDescription>Update the media name for future reference.</DialogDescription>
             </DialogHeader>
             <UpdateForm id={id} />
         </>

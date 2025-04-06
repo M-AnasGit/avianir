@@ -12,7 +12,10 @@ type Props = {
 
 export default function GenericModal({ title, description, btn_text, btn_action }: Props) {
     const closeBtnRef = React.useRef<HTMLButtonElement>(null);
+    const [clicked, setClicked] = React.useState<boolean>(false);
     const handleLocalAction = () => {
+        if (clicked) return;
+        setClicked(true);
         btn_action();
         if (closeBtnRef.current) {
             closeBtnRef.current.click();
@@ -31,7 +34,7 @@ export default function GenericModal({ title, description, btn_text, btn_action 
                         Cancel
                     </Button>
                 </DialogClose>
-                <Button type="button" onClick={handleLocalAction}>
+                <Button type="button" onClick={handleLocalAction} disabled={clicked}>
                     {btn_text}
                 </Button>
             </DialogFooter>

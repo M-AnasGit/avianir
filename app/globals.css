@@ -140,6 +140,31 @@ html body[data-scroll-locked] {
         content: 'Your Prompt';
         @apply absolute -top-[9px] left-2 bg-background px-1 text-[10px] font-medium text-muted-foreground;
     }
+
+    /* Guidelines tab */
+    .guidelines-section {
+        @apply space-y-2;
+    }
+
+    .guidelines-title {
+        @apply font-medium text-muted-foreground;
+    }
+
+    .guidelines-content {
+        @apply text-sm text-foreground;
+    }
+
+    .guidelines-list {
+        @apply flex flex-col gap-2;
+    }
+
+    .guidelines-list-item {
+        @apply flex items-center gap-2;
+    }
+
+    .guidelines-icon {
+        @apply flex size-8 flex-shrink-0 items-center justify-center rounded-full bg-muted text-muted-foreground;
+    }
 }
 
 @layer base {

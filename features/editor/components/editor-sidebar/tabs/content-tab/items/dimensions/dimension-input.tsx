@@ -43,7 +43,7 @@ export default function DimensionInput({ id }: Props) {
     const [val, setVal] = React.useState<number | 'fit-content'>(
         isNaN(parseInt(style[id] as string)) ? 'fit-content' : parseInt(style[id] as string),
     );
-    const prevValue = React.useRef<number | 'fit-content'>(val === 'fit-content' ? 100 : val);
+    const prevValue = React.useRef<number>(val === 'fit-content' ? 100 : val);
 
     React.useEffect(() => {
         setVal(isNaN(parseInt(style[id] as string)) ? 'fit-content' : parseInt(style[id] as string));
@@ -71,7 +71,7 @@ export default function DimensionInput({ id }: Props) {
         let value = style[id] as string;
 
         if (checked) {
-            prevValue.current = val;
+            prevValue.current = val === 'fit-content' ? 100 : val;
             value = 'fit-content';
             setVal('fit-content');
         } else {
@@ -92,7 +92,7 @@ export default function DimensionInput({ id }: Props) {
             <h5 className="prop-label capitalize">{id}</h5>
             <InputWithSelect
                 placeholder={id.charAt(0).toUpperCase() + id.slice(1)}
-                value={val === 'fit-content' ? prevValue.current : val}
+                value={val === 'fit-content' ? (isNaN(prevValue.current) ? 0 : prevValue.current) : val}
                 unit={unit}
                 units={DIMENSION_UNITS}
                 handleUnitChange={handleUnitChange}

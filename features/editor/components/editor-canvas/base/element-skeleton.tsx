@@ -14,6 +14,7 @@ import { useCanvas } from '../provider';
 import { calculateInsertPosition, fillPresetWithId } from '../helpers';
 //@TYPES
 import { EditorElement, ElementTypes } from '@/features/editor/types';
+import { useUser } from '@/features/user/provider';
 
 const THROTTLE_TIME = 200;
 
@@ -36,7 +37,28 @@ export default function ElementSkeleton({ index, ele, flexDirection }: Props) {
         handleDraggedType,
     } = useCanvas();
     const { id, type, name, stylePerDevice } = ele;
+    const { downloadMedia } = useUser();
+
     const style = React.useMemo(() => stylePerDevice[state.editor.device], [stylePerDevice, state.editor.device]);
+
+    const [url, setUrl] = React.useState<string | null>(null);
+    React.useEffect(() => {
+        const fetchDownload = async (src: string) => {
+            const url = await downloadMedia(src);
+
+            if (url) {
+                setUrl(url);
+            } else {
+                console.error('Error while fetching media');
+            }
+        };
+
+        if (style.backgroundImage) {
+            fetchDownload(style.backgroundImage);
+        } else {
+            setUrl(null);
+        }
+    }, [style.backgroundImage]);
 
     const handleSelect = React.useCallback(
         (e: React.MouseEvent, id: string) => {
@@ -181,6 +203,11 @@ export default function ElementSkeleton({ index, ele, flexDirection }: Props) {
                         marginRight: style.marginRight,
                         marginBottom: style.marginBottom,
                         marginLeft: style.marginLeft,
+
+                        backgroundImage: `url(${url})`,
+                        backgroundRepeat: style.backgroundRepeat,
+                        backgroundPosition: style.backgroundPosition,
+                        objectFit: style.objectFit,
                     }}
                     onClick={(e: React.MouseEvent) => handleSelect(e, id)}
                     draggable={id !== '_body' && !state.editor.preview}

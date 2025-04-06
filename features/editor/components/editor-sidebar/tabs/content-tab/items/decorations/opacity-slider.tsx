@@ -21,11 +21,11 @@ export default function OpacitySlider() {
     };
 
     return (
-        <section className="prop-container">
+        <section className="prop-container px-2">
             <div className="flex justify-between">
                 <h5 className="prop-label">Opacity</h5>
                 <small className="text-muted-foreground">
-                    {renderOpacity(parseInt(style.opacity as string) ?? 100)}
+                    {renderOpacity(parseInt(style.opacity as string) || 100)}
                 </small>
             </div>
             <Slider
@@ -33,7 +33,7 @@ export default function OpacitySlider() {
                 min={0}
                 max={1}
                 step={0.01}
-                defaultValue={[parseInt(style.opacity as string) ?? 100]}
+                defaultValue={[parseInt(style.opacity as string) || 1]}
                 onValueChange={(v) => handleOpacityChange(v[0] * 100)}
             />
         </section>
