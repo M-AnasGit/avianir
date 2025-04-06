@@ -73,6 +73,23 @@ export const promptCopilot = async (prompt: string, course_id: string, user_id: 
     if (!course_id) throw new Error('Course_id should be provided and not empty');
     if (!user_id) throw new Error('User id should be provided and not empty');
 
+    const supabase = await serverClient();
+
+    const { data: userData, error: fetchUserError } = await supabase
+        .from('user')
+        .select('tokens_used')
+        .eq('id', user_id)
+        .single();
+    if (fetchUserError || !userData) {
+        throw new Error('Error fetching user tokens: ' + (fetchUserError?.message || 'User not found'));
+    }
+
+    if ((userData.tokens_used || 0) >= 1000000) {
+        throw new Error(
+            'User has reached the maximum token limit of 1,000,000. Please contact support for assistance.',
+        );
+    }
+
     const response = await openai.responses.create({
         model: 'gpt-4o-mini',
         input: prompt,
@@ -83,8 +100,6 @@ export const promptCopilot = async (prompt: string, course_id: string, user_id: 
     if (openAIError || !usage) {
         throw new Error('Error generating response from Copilot: ' + openAIError?.message || 'Unknown error');
     }
-
-    const supabase = await serverClient();
 
     const { error: insertHistoryError } = await supabase.from('copilot_history').insert([
         {
@@ -98,14 +113,6 @@ export const promptCopilot = async (prompt: string, course_id: string, user_id: 
         throw new Error('Error saving Copilot history: ' + insertHistoryError.message);
     }
 
-    const { data: userData, error: fetchUserError } = await supabase
-        .from('user')
-        .select('tokens_used')
-        .eq('id', user_id)
-        .single();
-    if (fetchUserError || !userData) {
-        throw new Error('Error fetching user tokens: ' + (fetchUserError?.message || 'User not found'));
-    }
     const updatedTokens = (userData.tokens_used || 0) + usage.total_tokens;
 
     const { error: updateUserTokensError } = await supabase

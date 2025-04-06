@@ -10,15 +10,15 @@ export default function ContentGuide() {
             </section>
             <section className="guidelines-section">
                 <h6 className="guidelines-title">Edit content</h6>
-                <TutorialVideoButton src={'content_editelementcontent'} />
+                <TutorialVideoButton src={'content_edit'} />
             </section>
             <section className="guidelines-section">
                 <h6 className="guidelines-title">Add code</h6>
-                <TutorialVideoButton src={'content_elementcontentcode'} />
+                <TutorialVideoButton src={'content_code'} />
             </section>
             <section className="guidelines-section">
                 <h6 className="guidelines-title">Add maths</h6>
-                <TutorialVideoButton src={'content_elementcontentmaths'} />
+                <TutorialVideoButton src={'content_maths'} />
             </section>
             <section className="guidelines-section">
                 <h6 className="guidelines-title">Save and use presets</h6>

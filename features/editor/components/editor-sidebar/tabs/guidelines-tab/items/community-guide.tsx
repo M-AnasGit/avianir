@@ -13,14 +13,14 @@ export default function CommunityGuide() {
                         Your media won't be shared but the text content will be available.
                     </span>
                 </p>
-                <TutorialVideoButton src={'community_publishpresets'} />
+                <TutorialVideoButton src={'community_publish'} />
             </section>
             <section className="guidelines-section">
                 <h6 className="guidelines-title">Import presets</h6>
                 <p className="guidelines-content">
                     When you import a preset, if it includes media, it will be replaced with a placeholder.{' '}
                 </p>
-                <TutorialVideoButton src={'community_publishpresets'} />
+                <TutorialVideoButton src={'community_import'} />
             </section>
         </div>
     );

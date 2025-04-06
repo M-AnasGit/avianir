@@ -17,7 +17,7 @@ export default function CopilotGuide() {
                         Your usage progress can be found on the copilot tab.
                     </span>
                 </p>
-                <TutorialVideoButton src={'form_2'} />
+                <TutorialVideoButton src={'copilot_credit'} />
             </section>
         </div>
     );

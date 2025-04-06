@@ -3,7 +3,7 @@ import React from 'react';
 import { DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 
 type Props = {
-    url: string;
+    url: string | null;
 };
 
 export default function TutorialVideoModal({ url }: Props) {
@@ -14,6 +14,7 @@ export default function TutorialVideoModal({ url }: Props) {
                 <DialogDescription>
                     Video will be played here to show how to use one of the editor's features.
                 </DialogDescription>
+                <img src={url!} alt="Tutorial video" className="w-full rounded-md" loading="lazy" />
             </DialogHeader>
         </>
     );
