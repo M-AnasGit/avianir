@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { ThemeProvider } from '@/components/providers/theme-provider';
+import { ErrorBoundary } from 'next/dist/client/components/error-boundary';
 
 import { Inter } from 'next/font/google';
 import './globals.css';
@@ -22,9 +23,11 @@ export default function RootLayout({
     return (
         <html lang="en" suppressHydrationWarning>
             <body className={`${inter.variable} font-inter antialiased`}>
-                <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-                    {children}
-                </ThemeProvider>
+                <ErrorBoundary>
+                    <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+                        {children}
+                    </ThemeProvider>
+                </ErrorBoundary>
             </body>
         </html>
     );

@@ -1,7 +1,7 @@
-import { addElement, moveElement } from '../../features/editor/dispatch-actions';
+import { addElement, moveElement } from '../../services/editor/dispatch-actions';
 //@ElementFactory
 import { initialState, generateElement, isContentArray } from './utils';
-import { EditorState } from '@/features/editor/types';
+import { EditorState } from '@/services/editor/types';
 
 describe('moveELement Action', () => {
     const type = 'MOVE_ELEMENT';

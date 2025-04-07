@@ -1,7 +1,7 @@
-import { addElement, deleteElement, changeSelectedElement } from '../../features/editor/dispatch-actions';
+import { addElement, deleteElement, changeSelectedElement } from '../../services/editor/dispatch-actions';
 //@ElementFactory
 import { initialState, generateElement, isContentArray } from './utils';
-import { EditorState } from '@/features/editor/types';
+import { EditorState } from '@/services/editor/types';
 
 describe('deleteElement Action', () => {
     const type = 'DELETE_ELEMENT';

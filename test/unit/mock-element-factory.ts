@@ -1,5 +1,5 @@
 //@TYPES
-import { ElementTypes, EditorElement } from '../../features/editor/types';
+import { ElementTypes, EditorElement } from '../../services/editor/types';
 
 import { v4 } from 'uuid';
 

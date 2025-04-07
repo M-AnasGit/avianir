@@ -7,7 +7,8 @@
         "build": "next build",
         "start": "next start",
         "lint": "next lint",
-        "test": "jest"
+        "test": "jest",
+        "depcruise": "depcruise --config dependency-cruiser.js --output-type archi . | dot -T svg | depcruise-wrap-stream-in-html > high-level-dependencies.htmldepcruise --version && depcruise --config dependency-cruiser.js --output-type archi . | dot -T svg | depcruise-wrap-stream-in-html > high-level-dependencies.html"
     },
     "dependencies": {
         "@aws-sdk/client-s3": "^3.744.0",
@@ -75,6 +76,7 @@
         "@types/node": "^20",
         "@types/react": "^19",
         "@types/react-dom": "^19",
+        "dependency-cruiser": "^16.10.1",
         "jest": "^29.7.0",
         "postcss": "^8",
         "prettier": "^3.4.2",

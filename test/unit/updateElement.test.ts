@@ -1,7 +1,7 @@
-import { addElement, updateElement } from '../../features/editor/dispatch-actions';
+import { addElement, updateElement } from '../../services/editor/dispatch-actions';
 //@ElementFactory
 import { initialState, generateElement } from './utils';
-import { EditorState } from '@/features/editor/types';
+import { EditorState } from '@/services/editor/types';
 
 describe('updateElement Action', () => {
     const type = 'UPDATE_ELEMENT';

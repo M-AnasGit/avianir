@@ -1,4 +1,4 @@
-import { addElement } from '../../features/editor/dispatch-actions';
+import { addElement } from '../../services/editor/dispatch-actions';
 //@ElementFactory
 import { initialState, generateElement } from './utils';
 

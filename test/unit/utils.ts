@@ -1,8 +1,8 @@
 import MockElementFactory from './mock-element-factory';
 //@Constants
-import { initialEditorState, initialHistoryState } from '../../features/editor/constants';
+import { initialEditorState, initialHistoryState } from '../../services/editor/constants';
 //@TYPES
-import { EditorElement, EditorState, ElementTypes } from '../../features/editor/types';
+import { EditorElement, EditorState, ElementTypes } from '../../services/editor/types';
 
 export let initialState: EditorState = {
     editor: {
