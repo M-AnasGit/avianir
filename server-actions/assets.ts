@@ -2,6 +2,8 @@
 import fs from 'fs';
 import { getSignedUrl as getCloudFrontSignedUrl } from '@aws-sdk/cloudfront-signer';
 
+const THIRTY_DAYS_MS = 1000 * 60 * 60 * 24 * 30;
+
 export async function downloadAsset(id: string): Promise<string> {
     if (!id) return '';
 
@@ -9,7 +11,7 @@ export async function downloadAsset(id: string): Promise<string> {
 
     const url = getCloudFrontSignedUrl({
         url: 'https://' + process.env.AWS_CLOUDFRONT_DOMAIN! + '/' + id,
-        dateLessThan: new Date(Date.now() + 1000 * 60 * 60 * 24).toISOString(),
+        dateLessThan: new Date(Date.now() + THIRTY_DAYS_MS).toISOString(),
         privateKey,
         keyPairId: process.env.AWS_CLOUDFRONT_KEY_PAIR_ID!,
     });

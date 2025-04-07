@@ -116,6 +116,7 @@ export async function uploadMedia(
         ContentType: INPUT_FILE_TYPES[fileType as 'image' | 'video' | 'audio'],
         ContentLength: size,
         ChecksumSHA256: checksum,
+        CacheControl: 'max-age=31536000',
     });
 
     if (size > MAX_SIZES[fileType as 'image' | 'video' | 'audio']) {
