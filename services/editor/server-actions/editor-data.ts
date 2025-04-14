@@ -6,7 +6,7 @@ import { ChapterData, Preset } from '../types';
 export const getCourseData = async (course_id: string, chapter_id: string) => {
     if (!course_id) throw new Error('Course_id should be provided and not empty');
 
-    const baseUrl = `${process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL!}/${process.env.NEXT_PUBLIC_SUPABASE_BUCKET!}/${course_id}`;
+    const baseUrl = `${process.env.STORAGE_URL!}/${process.env.SUPABASE_BUCKET!}/${course_id}`;
 
     const chapter_result = await fetch(`${baseUrl}/${chapter_id}.json`, {
         method: 'GET',
@@ -49,7 +49,7 @@ export const updateCourseData = async (
 
     const path = `${course_id}/${id}.json`;
     const { data: upload_data, error: dataUploadError } = await supabase.storage
-        .from(process.env.NEXT_PUBLIC_SUPABASE_BUCKET!)
+        .from(process.env.SUPABASE_BUCKET!)
         .upload(path, new Blob([JSON.stringify(data)], { type: 'application/json' }), {
             contentType: 'application/json',
             upsert: true,
@@ -59,7 +59,7 @@ export const updateCourseData = async (
 
     if (palette) {
         const { error: paletteUploadError } = await supabase.storage
-            .from(process.env.NEXT_PUBLIC_SUPABASE_BUCKET!)
+            .from(process.env.SUPABASE_BUCKET!)
             .upload(`${course_id}/palette.json`, new Blob([JSON.stringify(palette)], { type: 'application/json' }), {
                 contentType: 'application/json',
                 upsert: true,
@@ -70,7 +70,7 @@ export const updateCourseData = async (
 
     if (presets) {
         const { error: presetsUploadError } = await supabase.storage
-            .from(process.env.NEXT_PUBLIC_SUPABASE_BUCKET!)
+            .from(process.env.SUPABASE_BUCKET!)
             .upload(`${course_id}/presets.json`, new Blob([JSON.stringify(presets)], { type: 'application/json' }), {
                 contentType: 'application/json',
                 upsert: true,

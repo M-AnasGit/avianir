@@ -1,11 +1,13 @@
 CREATE TABLE IF NOT EXISTS public.user (
-    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    id UUID PRIMARY KEY NOT NULL REFERENCES auth.users,
+    public_id UUID DEFAULT gen_random_uuid(),
     name TEXT NOT NULL,
     pfp TEXT DEFAULT NULL,
     tokens_used INT DEFAULT 0,
     subscription_plan TEXT NOT NULL,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT now(),
-    updated_at TIMESTAMP WITH TIME ZONE DEFAULT now()
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT now(),
+    deleted_at TIMESTAMP WITH TIME ZONE DEFAULT NULL
 );
 
 CREATE TABLE IF NOT EXISTS course (
@@ -84,14 +86,40 @@ BEGIN
     END LOOP;
 END $$;
 
-INSERT INTO storage.buckets (id, name, public)
-VALUES ('course_details', 'course_details', true)
-ON CONFLICT (id) DO NOTHING;
+-- CREATE POLICY course_details_dev_policy
+-- ON storage.objects
+-- FOR ALL
+-- USING (bucket_id = 'course_details');
 
-ALTER TABLE storage.objects ENABLE ROW LEVEL SECURITY;
+create function public.handle_new_user()
+returns trigger
+language plpgsql
+security definer set search_path = ''
+as $$
+begin
+  insert into public.user (id, name, subscription_plan)
+  values (new.id, new.raw_user_meta_data ->> 'name', 'free');
+  return new;
+end;
+$$;
 
-CREATE POLICY course_details_dev_policy
-ON storage.objects
-FOR ALL
-USING (bucket_id = 'course_details');
+create trigger on_auth_user_created
+  after insert on auth.users
+  for each row execute procedure public.handle_new_user();
 
+CREATE OR REPLACE FUNCTION public.purge_old_users()
+RETURNS void
+LANGUAGE sql
+AS $$
+  DELETE FROM public.user
+  WHERE deleted_at IS NOT NULL
+    AND deleted_at < now() - interval '30 days';
+$$;
+
+-- Uncomment below if you're using Supabase cron jobs (in prod)
+
+-- SELECT cron.schedule(
+--   'purge_old_users_job',
+--   '0 3 * * *',  -- daily at 3 AM UTC
+--   $$SELECT public.purge_old_users();$$
+-- );

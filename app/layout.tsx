@@ -1,9 +1,11 @@
 import type { Metadata } from 'next';
 import { ThemeProvider } from '@/components/providers/theme-provider';
-import { ErrorBoundary } from 'next/dist/client/components/error-boundary';
+import ErrorBoundary from '@/components/error-boundary';
 
 import { Inter } from 'next/font/google';
 import './globals.css';
+import { ToastProvider } from '@radix-ui/react-toast';
+import { Toaster } from '@/components/ui/toaster';
 
 const inter = Inter({
     weight: ['400', '500', '600', '700'],
@@ -12,7 +14,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-    title: 'Editor + Nextjs',
+    title: 'Ivor',
 };
 
 export default function RootLayout({
@@ -24,9 +26,12 @@ export default function RootLayout({
         <html lang="en" suppressHydrationWarning>
             <body className={`${inter.variable} font-inter antialiased`}>
                 <ErrorBoundary>
-                    <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-                        {children}
-                    </ThemeProvider>
+                    <ToastProvider>
+                        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+                            {children}
+                        </ThemeProvider>
+                        <Toaster />
+                    </ToastProvider>
                 </ErrorBoundary>
             </body>
         </html>

@@ -40,6 +40,68 @@ html body[data-scroll-locked] {
         --chart-4: 43 74% 66%;
         --chart-5: 27 87% 67%;
         --radius: 0.5rem;
+        /*
+            Palette
+        */
+        --foreground-95: hsl(188, 60%, 95%);
+        --foreground-90: hsl(188, 61%, 90%);
+        --foreground-80: hsl(188, 61%, 80%);
+        --foreground-70: hsl(187, 59%, 70%);
+        --foreground-60: hsl(187, 60%, 60%);
+        --foreground-95: hsl(187, 60%, 50%);
+        --foreground-40: hsl(187, 60%, 40%);
+        --foreground-30: hsl(187, 59%, 30%);
+        --foreground-20: hsl(188, 61%, 20%);
+        --foreground-10: hsl(188, 61%, 10%);
+        --foreground-5: hsl(184, 60%, 5%);
+
+        --background-95: hsl(0, 0%, 95%);
+        --background-90: hsl(0, 0%, 90%);
+        --background-80: hsl(0, 0%, 80%);
+        --background-70: hsl(0, 0%, 70%);
+        --background-60: hsl(0, 0%, 60%);
+        --background-50: hsl(0, 0%, 50%);
+        --background-40: hsl(0, 0%, 40%);
+        --background-30: hsl(0, 0%, 30%);
+        --background-20: hsl(0, 0%, 20%);
+        --background-10: hsl(0, 0%, 10%);
+        --background-5: hsl(0, 0%, 5%);
+
+        --primary-95: hsl(46, 85%, 95%);
+        --primary-90: hsl(45, 84%, 90%);
+        --primary-80: hsl(45, 84%, 80%);
+        --primary-70: hsl(45, 86%, 70%);
+        --primary-60: hsl(45, 85%, 60%);
+        --primary-50: hsl(45, 85%, 50%);
+        --primary-40: hsl(45, 85%, 40%);
+        --primary-30: hsl(45, 86%, 30%);
+        --primary-20: hsl(45, 84%, 20%);
+        --primary-10: hsl(45, 84%, 10%);
+        --primary-5: hsl(44, 85%, 5%);
+
+        --secondary-95: hsl(37, 84%, 95%);
+        --secondary-90: hsl(38, 84%, 90%);
+        --secondary-80: hsl(38, 84%, 80%);
+        --secondary-70: hsl(38, 84%, 70%);
+        --secondary-60: hsl(38, 84%, 60%);
+        --secondary-50: hsl(38, 84%, 50%);
+        --secondary-40: hsl(38, 84%, 40%);
+        --secondary-30: hsl(38, 84%, 30%);
+        --secondary-20: hsl(38, 84%, 20%);
+        --secondary-10: hsl(38, 84%, 10%);
+        --secondary-5: hsl(40, 84%, 5%);
+
+        --accent-95: hsl(225, 31%, 95%);
+        --accent-90: hsl(228, 29%, 90%);
+        --accent-80: hsl(230, 29%, 80%);
+        --accent-70: hsl(229, 29%, 70%);
+        --accent-60: hsl(228, 30%, 60%);
+        --accent-50: hsl(229, 30%, 50%);
+        --accent-40: hsl(228, 30%, 40%);
+        --accent-30: hsl(229, 29%, 30%);
+        --accent-20: hsl(230, 29%, 20%);
+        --accent-10: hsl(228, 29%, 10%);
+        --accent-5: hsl(233, 31%, 5%);
     }
     .dark {
         --background: 240 10% 3.9%;
@@ -128,7 +190,7 @@ html body[data-scroll-locked] {
     /* Sidebar beta icon */
     .beta-element::before {
         content: 'BETA';
-        @apply absolute -bottom-3 right-[2px] rounded-md bg-yellow-400 px-1 text-[10px] font-semibold text-white;
+        @apply absolute -bottom-3 right-[2px] rounded-md bg-yellow-600 px-1 text-[10px] font-semibold text-white;
     }
 
     /* Copilot tab */
@@ -164,6 +226,23 @@ html body[data-scroll-locked] {
 
     .guidelines-icon {
         @apply flex size-8 flex-shrink-0 items-center justify-center rounded-full bg-muted text-muted-foreground;
+    }
+
+    /* Auth form input */
+    .auth-form-input {
+        @apply !text-sm md:text-base;
+    }
+
+    .auth-form-container {
+        @apply flex flex-col gap-2 md:gap-4;
+    }
+
+    .input-error {
+        @apply !border-destructive !ring-destructive;
+    }
+
+    .form-error-message {
+        @apply text-sm text-destructive;
     }
 }
 
