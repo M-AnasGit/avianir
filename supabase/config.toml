@@ -2,7 +2,7 @@
 # https://supabase.com/docs/guides/local-development/cli/config
 # A string used to distinguish different Supabase projects on the same host. Defaults to the
 # working directory name when running `supabase init`.
-project_id = "ivor"
+project_id = "env(NEXT_PUBLIC_PLACEHOLDER_NAME)"
 
 [api]
 enabled = true
@@ -107,7 +107,7 @@ enabled = true
 # in emails.
 site_url = "http://127.0.0.1:3000"
 # A list of *exact* URLs that auth providers are permitted to redirect to post authentication.
-additional_redirect_urls = ["http://127.0.0.1:3000/auth/callback/confirm"]
+additional_redirect_urls = ["http://127.0.0.1:3000/auth/callback"]
 # How long tokens are valid for, in seconds. Defaults to 3600 (1 hour), maximum 604,800 (1 week).
 jwt_expiry = 3600
 # If disabled, the refresh token will never expire.
@@ -148,7 +148,7 @@ max_frequency = "30s"
 # Number of characters used in the email OTP.
 otp_length = 6
 # Number of seconds before the email OTP expires (defaults to 1 hour).
-otp_expiry = 300
+otp_expiry = 600
 
 # Use a production-ready SMTP server
 [auth.email.smtp]
@@ -160,10 +160,17 @@ pass = "env(SMTP_PW)"
 admin_email = "env(SMTP_EMAIL)"
 sender_name = "env(SMTP_SENDER_NAME)"
 
+[auth.rate_limit]
+email_sent=200
+
 # Uncomment to customize email template
-[auth.email.template.confirmation]
-subject = "Confirm your email address to sign in to Ivor"
-content_path = "./supabase/templates/confirmation.html"
+# [auth.email.template.confirmation]
+# subject = "Confirm your email address to sign in to env(NEXT_PUBLIC_PLACEHOLDER_NAME)"
+# content_path = "./supabase/templates/confirmation.html"
+
+# [auth.email.template.recovery]
+# subject = "Reset your password for env(NEXT_PUBLIC_PLACEHOLDER_NAME)"
+# content_path = "./supabase/templates/recovery.html"
 
 [auth.sms]
 # Allow/disallow new user signups via SMS to your project.

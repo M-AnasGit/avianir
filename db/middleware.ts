@@ -25,11 +25,15 @@ export async function updateSession(request: NextRequest) {
         data: { user },
     } = await supabase.auth.getUser();
 
-    if (user && request.nextUrl.pathname.startsWith('/auth')) {
+    if (user && request.nextUrl.pathname.startsWith('/auth') && request.nextUrl.pathname !== '/auth/callback/reset') {
         return NextResponse.redirect(new URL('/', request.url));
     }
 
-    if (!user && !request.nextUrl.pathname.startsWith('/auth') && !request.nextUrl.pathname.startsWith('/legal')) {
+    if (
+        !user &&
+        (!request.nextUrl.pathname.startsWith('/auth') || request.nextUrl.pathname === '/auth/callback/reset') &&
+        !request.nextUrl.pathname.startsWith('/legal')
+    ) {
         const url = request.nextUrl.clone();
         url.pathname = '/auth';
         url.searchParams.set('current', 'login');

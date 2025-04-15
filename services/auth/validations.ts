@@ -11,7 +11,7 @@ export const registerSchema = z
                 PW_REGEX,
                 'Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character',
             ),
-        confirmPassword: z.string().optional(),
+        confirmPassword: z.string(),
     })
     .superRefine((data, ctx) => {
         if (data.password !== data.confirmPassword) {
@@ -37,3 +37,25 @@ export const forgotPasswordSchema = z.object({
 });
 
 export type ForgotPasswordSchema = z.infer<typeof forgotPasswordSchema>;
+
+export const resetPasswordSchema = z
+    .object({
+        password: z
+            .string()
+            .regex(
+                PW_REGEX,
+                'Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character',
+            ),
+        confirmPassword: z.string(),
+    })
+    .superRefine((data, ctx) => {
+        if (data.password !== data.confirmPassword) {
+            ctx.addIssue({
+                code: z.ZodIssueCode.custom,
+                message: "Passwords don't match",
+                path: ['confirmPassword'],
+            });
+        }
+    });
+
+export type ResetPasswordSchema = z.infer<typeof resetPasswordSchema>;

@@ -1,5 +1,6 @@
 'use client';
 import React from 'react';
+import Link from 'next/link';
 import { useForm } from 'react-hook-form';
 //@SHADCNUI
 import { Button } from '@/components/ui/button';
@@ -27,11 +28,24 @@ export default function LoginForm() {
         resolver: zodResolver(loginSchema),
     });
 
-    const [token, setToken] = React.useState<string | null>(null);
+    const tokenRef = React.useRef<string | null>(null);
     const captchaRef = React.useRef<HCaptcha>(null);
+    const onVerify = (token: string | null) => {
+        tokenRef.current = token;
+        formRef.current?.requestSubmit();
+    };
+
+    const formRef = React.useRef<HTMLFormElement>(null);
+    const preSubmit = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+        e.preventDefault();
+
+        if (captchaRef.current) {
+            captchaRef.current.execute();
+        }
+    };
     const onSubmit = (data: LoginSchema) => {
         captchaRef.current?.resetCaptcha();
-        loginUserMutation({ data, token });
+        loginUserMutation({ data, token: tokenRef.current });
     };
 
     const onGoogleRegistration = () => {
@@ -40,7 +54,7 @@ export default function LoginForm() {
 
     return (
         <>
-            <form onSubmit={handleSubmit(onSubmit)} className="auth-form-container">
+            <form onSubmit={handleSubmit(onSubmit)} className="auth-form-container" ref={formRef}>
                 <div className="space-y-1">
                     <Label htmlFor="email">Email</Label>
                     <FormInput
@@ -56,7 +70,21 @@ export default function LoginForm() {
                     />
                 </div>
                 <div className="relative space-y-1">
-                    <Label htmlFor="password">Password</Label>
+                    <div className="flex items-center justify-between">
+                        <Label htmlFor="password">Password</Label>
+                        <Link
+                            href={{
+                                pathname: '/auth',
+                                query: {
+                                    current: 'forgot-pw',
+                                },
+                            }}
+                            shallow={true}
+                            className="text-xs text-muted-foreground underline transition-colors duration-300 hover:text-primary"
+                        >
+                            Forgot password?
+                        </Link>
+                    </div>
                     <PasswordInput
                         id="password"
                         name="password"
@@ -68,14 +96,13 @@ export default function LoginForm() {
                         error={errors.password}
                     />
                 </div>
-                <div className="flex w-full items-center justify-center">
-                    <HCaptcha
-                        sitekey={process.env.NEXT_PUBLIC_HCAPTCHA_SITE_KEY!}
-                        onVerify={setToken}
-                        ref={captchaRef}
-                    />
-                </div>
-                <Button type="submit" className="w-full" disabled={isLoginPending}>
+                <HCaptcha
+                    sitekey={process.env.NEXT_PUBLIC_HCAPTCHA_SITE_KEY!}
+                    onVerify={onVerify}
+                    size="invisible"
+                    ref={captchaRef}
+                />
+                <Button className="w-full" disabled={isLoginPending} onClick={preSubmit}>
                     {isLoginPending ? <Loader2 className="size-8 animate-spin" /> : 'Log in'}
                 </Button>
             </form>

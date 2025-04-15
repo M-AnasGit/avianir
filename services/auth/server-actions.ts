@@ -86,13 +86,27 @@ export const logoutUser = async () => {
     redirect('/auth?current=login');
 };
 
-export const resetPassword = async (email: string) => {
+export const resetPassword = async (email: string, token: string | null) => {
     if (!email) throw new Error('Email is required and should not be empty');
+    if (!token) throw new Error('Captcha token is required and should not be empty');
 
     const supabase = await serverClient();
-
     const { error } = await supabase.auth.resetPasswordForEmail(email, {
-        redirectTo: process.env.NEXT_PUBLIC_BASE_URL + '/auth/callback/update-password',
+        captchaToken: token,
+        redirectTo: process.env.NEXT_PUBLIC_BASE_URL + '/auth/callback?reset=true',
+    });
+
+    if (error) throw new Error(handleError(error));
+
+    return true;
+};
+
+export const updatePassword = async (password: string) => {
+    if (!password) throw new Error('Password is required and should not be empty');
+
+    const supabase = await serverClient();
+    const { error } = await supabase.auth.updateUser({
+        password,
     });
 
     if (error) throw new Error(handleError(error));

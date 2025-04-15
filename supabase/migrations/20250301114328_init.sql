@@ -9,8 +9,9 @@ CREATE TABLE IF NOT EXISTS public.user (
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT now(),
     deleted_at TIMESTAMP WITH TIME ZONE DEFAULT NULL
 );
+CREATE INDEX IF NOT EXISTS idx_user_public_id ON public.user (public_id);
 
-CREATE TABLE IF NOT EXISTS course (
+CREATE TABLE IF NOT EXISTS public.course (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     name TEXT NOT NULL,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT now(),
@@ -18,7 +19,7 @@ CREATE TABLE IF NOT EXISTS course (
     user_id UUID REFERENCES public.user(id) ON DELETE CASCADE
 );
 
-CREATE TABLE IF NOT EXISTS chapter (
+CREATE TABLE IF NOT EXISTS public.chapter (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     name TEXT NOT NULL,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT now(),
@@ -26,7 +27,7 @@ CREATE TABLE IF NOT EXISTS chapter (
     course_id UUID REFERENCES course(id) ON DELETE CASCADE
 );
 
-CREATE TABLE IF NOT EXISTS media (
+CREATE TABLE IF NOT EXISTS public.media (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     name TEXT NOT NULL,
     type TEXT NOT NULL,
@@ -35,28 +36,6 @@ CREATE TABLE IF NOT EXISTS media (
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT now(),
     user_id UUID REFERENCES public.user(id) ON DELETE CASCADE
 );
-
-CREATE OR REPLACE VIEW course_chapters AS
-SELECT
-    c.id AS course_id,
-    c.name AS course_name,
-    c.created_at AS course_created_at,
-    c.updated_at AS course_updated_at,
-    c.user_id AS user_id,
-    jsonb_agg(
-        jsonb_build_object(
-            'chapter_id', ch.id,
-            'chapter_name', ch.name,
-            'chapter_created_at', ch.created_at,
-            'chapter_updated_at', ch.updated_at
-        )
-    ) AS chapters
-FROM
-    course c
-LEFT JOIN
-    chapter ch ON c.id = ch.course_id
-GROUP BY
-    c.id, c.name, c.created_at, c.updated_at, c.user_id;
 
 CREATE OR REPLACE FUNCTION update_updated_at_column()
 RETURNS TRIGGER AS $$
@@ -86,40 +65,9 @@ BEGIN
     END LOOP;
 END $$;
 
--- CREATE POLICY course_details_dev_policy
--- ON storage.objects
--- FOR ALL
--- USING (bucket_id = 'course_details');
+CREATE POLICY course_details_dev_policy
+ON storage.objects
+FOR ALL
+USING (bucket_id = 'course_details');
 
-create function public.handle_new_user()
-returns trigger
-language plpgsql
-security definer set search_path = ''
-as $$
-begin
-  insert into public.user (id, name, subscription_plan)
-  values (new.id, new.raw_user_meta_data ->> 'name', 'free');
-  return new;
-end;
-$$;
 
-create trigger on_auth_user_created
-  after insert on auth.users
-  for each row execute procedure public.handle_new_user();
-
-CREATE OR REPLACE FUNCTION public.purge_old_users()
-RETURNS void
-LANGUAGE sql
-AS $$
-  DELETE FROM public.user
-  WHERE deleted_at IS NOT NULL
-    AND deleted_at < now() - interval '30 days';
-$$;
-
--- Uncomment below if you're using Supabase cron jobs (in prod)
-
--- SELECT cron.schedule(
---   'purge_old_users_job',
---   '0 3 * * *',  -- daily at 3 AM UTC
---   $$SELECT public.purge_old_users();$$
--- );

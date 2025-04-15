@@ -1,7 +1,14 @@
 'use client';
 import { useMutation } from '@tanstack/react-query';
-import { loginUser, logoutUser, registerUser, oAuthWithGoogleAction } from './server-actions';
-import { LoginSchema, RegisterSchema } from './validations';
+import {
+    loginUser,
+    logoutUser,
+    registerUser,
+    oAuthWithGoogleAction,
+    resetPassword,
+    updatePassword,
+} from './server-actions';
+import { ForgotPasswordSchema, LoginSchema, RegisterSchema, ResetPasswordSchema } from './validations';
 import { toast } from '@/hooks/use-toast';
 import { useRouter } from 'next/navigation';
 
@@ -24,7 +31,7 @@ export default function useAuth() {
             console.error(err);
             toast({
                 title: 'Registration Failed',
-                description: `Error: ${err}. Please try again.`,
+                description: `${err}. Please try again.`,
                 variant: 'destructive',
             });
         },
@@ -47,7 +54,7 @@ export default function useAuth() {
             console.error(err);
             toast({
                 title: 'Login Failed',
-                description: `Error: ${err}. Please try again.`,
+                description: `${err}. Please try again.`,
                 variant: 'destructive',
             });
         },
@@ -56,6 +63,48 @@ export default function useAuth() {
     const { mutate: logoutUserMutation, isPending: isLogoutPending } = useMutation({
         mutationFn: () => {
             return logoutUser();
+        },
+    });
+
+    const { mutate: forgotPasswordMutation, isPending: isForgotPasswordPending } = useMutation({
+        mutationFn: ({ data, token }: { data: ForgotPasswordSchema; token: string | null }) => {
+            return resetPassword(data.email, token);
+        },
+        onSuccess: () => {
+            toast({
+                title: 'Reset Password',
+                description: 'Check your email for the reset password link.',
+                variant: 'default',
+            });
+        },
+        onError: (err: Error) => {
+            console.error(err);
+            toast({
+                title: 'Reset Password Failed',
+                description: `${err}. Please try again.`,
+                variant: 'destructive',
+            });
+        },
+    });
+
+    const { mutate: resetPasswordMutation, isPending: isResetPasswordPending } = useMutation({
+        mutationFn: ({ data }: { data: ResetPasswordSchema }) => {
+            return updatePassword(data.password);
+        },
+        onSuccess: () => {
+            toast({
+                title: 'Password Updated',
+                description: 'Your password has been updated successfully.',
+                variant: 'default',
+            });
+        },
+        onError: (err: Error) => {
+            console.error(err);
+            toast({
+                title: 'Update Password Failed',
+                description: `${err}. Please try again.`,
+                variant: 'destructive',
+            });
         },
     });
 
@@ -68,5 +117,9 @@ export default function useAuth() {
         isLoginPending,
         logoutUserMutation,
         isLogoutPending,
+        forgotPasswordMutation,
+        isForgotPasswordPending,
+        resetPasswordMutation,
+        isResetPasswordPending,
     };
 }

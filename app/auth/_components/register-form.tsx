@@ -27,10 +27,24 @@ export default function RegisterForm() {
         resolver: zodResolver(registerSchema),
     });
 
-    const [token, setToken] = React.useState<string | null>(null);
+    const tokenRef = React.useRef<string | null>(null);
     const captchaRef = React.useRef<HCaptcha>(null);
+    const onVerify = (token: string | null) => {
+        tokenRef.current = token;
+        formRef.current?.requestSubmit();
+    };
+
+    const formRef = React.useRef<HTMLFormElement>(null);
+    const preSubmit = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+        e.preventDefault();
+
+        if (captchaRef.current) {
+            captchaRef.current.execute();
+        }
+    };
     const onSubmit = (data: RegisterSchema) => {
-        registerUserMutation({ data, token });
+        captchaRef.current?.resetCaptcha();
+        registerUserMutation({ data, token: tokenRef.current });
     };
 
     const onGoogleRegistration = () => {
@@ -39,7 +53,7 @@ export default function RegisterForm() {
 
     return (
         <>
-            <form onSubmit={handleSubmit(onSubmit)} className="auth-form-container">
+            <form onSubmit={handleSubmit(onSubmit)} className="auth-form-container" ref={formRef}>
                 <div className="space-y-1">
                     <Label htmlFor="name">Name</Label>
                     <FormInput
@@ -95,15 +109,13 @@ export default function RegisterForm() {
                         error={errors.confirmPassword}
                     />
                 </div>
-                <div className="flex w-full items-center justify-center">
-                    <HCaptcha
-                        sitekey={process.env.NEXT_PUBLIC_HCAPTCHA_SITE_KEY!}
-                        onVerify={setToken}
-                        ref={captchaRef}
-                    />
-                </div>
-
-                <Button type="submit" className="w-full" disabled={isRegistrationPending}>
+                <HCaptcha
+                    sitekey={process.env.NEXT_PUBLIC_HCAPTCHA_SITE_KEY!}
+                    onVerify={onVerify}
+                    size="invisible"
+                    ref={captchaRef}
+                />
+                <Button className="w-full" disabled={isRegistrationPending} onClick={preSubmit}>
                     {isRegistrationPending ? <Loader2 className="size-8 animate-spin" /> : 'Sign Up'}
                 </Button>
             </form>

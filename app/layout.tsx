@@ -14,7 +14,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-    title: 'Ivor',
+    title: process.env.NEXT_PUBLIC_PLACEHOLDER_NAME,
 };
 
 export default function RootLayout({
