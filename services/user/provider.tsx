@@ -3,10 +3,9 @@ import React from 'react';
 import Loading from '@/components/loading';
 import useUserData from './hooks/useUserData';
 
-import { Course, uploadMediaType, User } from './types';
-import { Media } from '../types';
+import { Course, uploadMediaType } from './types';
+import { Media, User } from '../types';
 type UserProviderContextType = {
-    user: User;
     media: Media[];
     courses: Course[];
     canUpload: boolean;
@@ -20,14 +19,13 @@ type UserProviderContextType = {
     deleteMedia: (media_id: string) => Promise<void>;
 };
 type UserProviderProps = React.PropsWithChildren<{
-    user_id: string;
+    user: User;
 }>;
 
 const UserProviderContext = React.createContext<UserProviderContextType | undefined>(undefined);
 
-const UserProvider = ({ user_id, children }: UserProviderProps) => {
+const UserProvider = ({ user, children }: UserProviderProps) => {
     const {
-        user,
         media,
         courses,
         isLoading,
@@ -38,7 +36,7 @@ const UserProvider = ({ user_id, children }: UserProviderProps) => {
         updateMediaMutation,
         deleteMediaMutation,
     } = useUserData({
-        user_id,
+        user,
     });
 
     const getUploadMediaUrl = React.useCallback(
@@ -84,7 +82,6 @@ const UserProvider = ({ user_id, children }: UserProviderProps) => {
     return (
         <UserProviderContext.Provider
             value={{
-                user,
                 media,
                 courses,
                 canUpload,

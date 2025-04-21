@@ -1,11 +1,19 @@
+import React from 'react';
 import type { Metadata } from 'next';
-import { ThemeProvider } from '@/components/providers/theme-provider';
-import ErrorBoundary from '@/components/error-boundary';
-
 import { Inter } from 'next/font/google';
-import './globals.css';
-import { ToastProvider } from '@radix-ui/react-toast';
+//@CUSTOMCOMPONENTS
+import Loading from '@/components/loading';
+import ErrorBoundary from '@/components/error-boundary';
+import ErrorToast from '@/components/error-toast';
+//@PROVIDERS
+import { ThemeProvider } from '@/components/providers/theme-provider';
+import { ToastProvider } from '@/components/ui/toast';
+import { TooltipProvider } from '@/components/ui/tooltip';
+import ModalProvider from '@/components/providers/modal-provider';
+//@SHADCNUI
 import { Toaster } from '@/components/ui/toaster';
+//@STYLES
+import './globals.css';
 
 const inter = Inter({
     weight: ['400', '500', '600', '700'],
@@ -26,12 +34,18 @@ export default function RootLayout({
         <html lang="en" suppressHydrationWarning>
             <body className={`${inter.variable} font-inter antialiased`}>
                 <ErrorBoundary>
-                    <ToastProvider>
-                        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-                            {children}
+                    <ErrorToast>
+                        <ThemeProvider attribute="class">
+                            <ToastProvider>
+                                <TooltipProvider>
+                                    <ModalProvider>
+                                        <React.Suspense fallback={<Loading />}>{children}</React.Suspense>
+                                    </ModalProvider>
+                                </TooltipProvider>
+                                <Toaster />
+                            </ToastProvider>
                         </ThemeProvider>
-                        <Toaster />
-                    </ToastProvider>
+                    </ErrorToast>
                 </ErrorBoundary>
             </body>
         </html>
