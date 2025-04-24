@@ -7,6 +7,7 @@ interface ErrorBoundaryProps {
 }
 
 interface ErrorBoundaryState {
+    message?: string;
     hasError: boolean;
 }
 
@@ -16,8 +17,8 @@ class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundarySta
         this.state = { hasError: false };
     }
 
-    static getDerivedStateFromError(_: Error): ErrorBoundaryState {
-        return { hasError: true };
+    static getDerivedStateFromError(e: Error): ErrorBoundaryState {
+        return { hasError: true, message: e.message };
     }
 
     componentDidCatch(error: Error, errorInfo: React.ErrorInfo): void {
@@ -27,10 +28,13 @@ class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundarySta
     render() {
         if (this.state.hasError) {
             return (
-                <div className="flex h-screen w-full flex-col items-center justify-center gap-y-4">
-                    <h2 className="text-3xl">Oops, there is an error!</h2>
+                <section className="flex h-screen w-full flex-col items-center justify-center gap-y-4">
+                    <h2 className="text-3xl">Oops, an error occured while processing your request.</h2>
+                    {this.state.message && (
+                        <p className="text-base font-normal text-muted-foreground">{this.state.message}</p>
+                    )}
                     <Button onClick={() => this.setState({ hasError: false })}>Try again?</Button>
-                </div>
+                </section>
             );
         }
         return this.props.children;

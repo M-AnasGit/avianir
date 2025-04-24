@@ -1,26 +1,16 @@
 'use server';
-import { v4 } from 'uuid';
 import fs from 'fs';
+import { v4 } from 'uuid';
 import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3';
 import { getSignedUrl as getS3SignedUrl } from '@aws-sdk/s3-request-presigner';
 import { getSignedUrl as getCloudFrontSignedUrl } from '@aws-sdk/cloudfront-signer';
-
+//@SUPABASE
 import serverClient from '@/db/server';
+//@CONSTANTS
 import { INPUT_FILE_TYPES, MAX_SIZES } from '@/services/constants';
-
-import { Chapter, Course, User } from '../types';
+//@TYPES
+import { Chapter, Course } from '../types';
 import { Media } from '@/services/types';
-
-export const getUserDetails = async (user_id: string) => {
-    if (!user_id) throw new Error('User ID is required and should not be empty');
-
-    const supabase = await serverClient();
-
-    const { data, error } = await supabase.from('user').select('*').eq('id', user_id).single();
-    if (error) throw new Error('Error fetching user details');
-
-    return data as User;
-};
 
 export const getUserMedia = async (user_id: string) => {
     if (!user_id) throw new Error('User ID is required and should not be empty');

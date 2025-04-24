@@ -1,14 +1,17 @@
 CREATE TABLE IF NOT EXISTS public.user (
-    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    id UUID PRIMARY KEY NOT NULL REFERENCES auth.users,
+    public_id UUID DEFAULT gen_random_uuid(),
     name TEXT NOT NULL,
     pfp TEXT DEFAULT NULL,
     tokens_used INT DEFAULT 0,
     subscription_plan TEXT NOT NULL,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT now(),
-    updated_at TIMESTAMP WITH TIME ZONE DEFAULT now()
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT now(),
+    deleted_at TIMESTAMP WITH TIME ZONE DEFAULT NULL
 );
+CREATE INDEX IF NOT EXISTS idx_user_public_id ON public.user (public_id);
 
-CREATE TABLE IF NOT EXISTS course (
+CREATE TABLE IF NOT EXISTS public.course (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     name TEXT NOT NULL,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT now(),
@@ -16,7 +19,7 @@ CREATE TABLE IF NOT EXISTS course (
     user_id UUID REFERENCES public.user(id) ON DELETE CASCADE
 );
 
-CREATE TABLE IF NOT EXISTS chapter (
+CREATE TABLE IF NOT EXISTS public.chapter (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     name TEXT NOT NULL,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT now(),
@@ -24,7 +27,7 @@ CREATE TABLE IF NOT EXISTS chapter (
     course_id UUID REFERENCES course(id) ON DELETE CASCADE
 );
 
-CREATE TABLE IF NOT EXISTS media (
+CREATE TABLE IF NOT EXISTS public.media (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     name TEXT NOT NULL,
     type TEXT NOT NULL,
@@ -33,28 +36,6 @@ CREATE TABLE IF NOT EXISTS media (
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT now(),
     user_id UUID REFERENCES public.user(id) ON DELETE CASCADE
 );
-
-CREATE OR REPLACE VIEW course_chapters AS
-SELECT
-    c.id AS course_id,
-    c.name AS course_name,
-    c.created_at AS course_created_at,
-    c.updated_at AS course_updated_at,
-    c.user_id AS user_id,
-    jsonb_agg(
-        jsonb_build_object(
-            'chapter_id', ch.id,
-            'chapter_name', ch.name,
-            'chapter_created_at', ch.created_at,
-            'chapter_updated_at', ch.updated_at
-        )
-    ) AS chapters
-FROM
-    course c
-LEFT JOIN
-    chapter ch ON c.id = ch.course_id
-GROUP BY
-    c.id, c.name, c.created_at, c.updated_at, c.user_id;
 
 CREATE OR REPLACE FUNCTION update_updated_at_column()
 RETURNS TRIGGER AS $$
@@ -84,14 +65,9 @@ BEGIN
     END LOOP;
 END $$;
 
-INSERT INTO storage.buckets (id, name, public)
-VALUES ('course_details', 'course_details', true)
-ON CONFLICT (id) DO NOTHING;
-
-ALTER TABLE storage.objects ENABLE ROW LEVEL SECURITY;
-
 CREATE POLICY course_details_dev_policy
 ON storage.objects
 FOR ALL
 USING (bucket_id = 'course_details');
+
 

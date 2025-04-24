@@ -1,8 +1,18 @@
+import React from 'react';
 import type { Metadata } from 'next';
-import { ThemeProvider } from '@/components/providers/theme-provider';
-import { ErrorBoundary } from 'next/dist/client/components/error-boundary';
-
 import { Inter } from 'next/font/google';
+//@CUSTOMCOMPONENTS
+import Loading from '@/components/loading';
+import ErrorBoundary from '@/components/error-boundary';
+import ErrorToast from '@/components/error-toast';
+//@PROVIDERS
+import { ThemeProvider } from '@/components/providers/theme-provider';
+import { ToastProvider } from '@/components/ui/toast';
+import { TooltipProvider } from '@/components/ui/tooltip';
+import ModalProvider from '@/components/providers/modal-provider';
+//@SHADCNUI
+import { Toaster } from '@/components/ui/toaster';
+//@STYLES
 import './globals.css';
 
 const inter = Inter({
@@ -12,7 +22,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-    title: 'Editor + Nextjs',
+    title: process.env.NEXT_PUBLIC_PLACEHOLDER_NAME,
 };
 
 export default function RootLayout({
@@ -24,9 +34,18 @@ export default function RootLayout({
         <html lang="en" suppressHydrationWarning>
             <body className={`${inter.variable} font-inter antialiased`}>
                 <ErrorBoundary>
-                    <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-                        {children}
-                    </ThemeProvider>
+                    <ErrorToast>
+                        <ThemeProvider attribute="class" disableTransitionOnChange>
+                            <ToastProvider>
+                                <TooltipProvider>
+                                    <ModalProvider>
+                                        <React.Suspense fallback={<Loading />}>{children}</React.Suspense>
+                                    </ModalProvider>
+                                </TooltipProvider>
+                                <Toaster />
+                            </ToastProvider>
+                        </ThemeProvider>
+                    </ErrorToast>
                 </ErrorBoundary>
             </body>
         </html>

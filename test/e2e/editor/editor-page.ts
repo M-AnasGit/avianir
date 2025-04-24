@@ -5,7 +5,7 @@ import ModalComponent from './__components__/modal';
 import RichContentComponent from './__components__/rich-content';
 
 class EditorPage {
-    public url = 'http://localhost:3000';
+    public url = 'http://127.0.0.1:3000';
 
     readonly page: Page;
 
