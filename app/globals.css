@@ -10,66 +10,65 @@ html body[data-scroll-locked] {
 }
 
 @layer base {
-    * {
-        box-sizing: border-box;
-    }
-
     :root {
-        --background: 0 0% 100%;
-        --foreground: 240 10% 3.9%;
-        --card: 0 0% 100%;
-        --card-foreground: 240 10% 3.9%;
-        --popover: 0 0% 100%;
-        --popover-foreground: 240 10% 3.9%;
-        --primary: 240 5.9% 10%;
-        --primary-foreground: 0 0% 98%;
-        --secondary: 240 4.8% 95.9%;
-        --secondary-foreground: 240 5.9% 10%;
-        --muted: 240 4.8% 95.9%;
-        --muted-foreground: 240 3.8% 46.1%;
-        --accent: 240 4.8% 95.9%;
-        --accent-foreground: 240 5.9% 10%;
-        --destructive: 0 84.2% 60.2%;
-        --destructive-foreground: 0 0% 98%;
-        --border: 240 5.9% 90%;
-        --input: 240 5.9% 90%;
-        --ring: 240 10% 3.9%;
-        --chart-1: 12 76% 61%;
-        --chart-2: 173 58% 39%;
-        --chart-3: 197 37% 24%;
-        --chart-4: 43 74% 66%;
-        --chart-5: 27 87% 67%;
+        --background: 35 61% 99%;
+        --foreground: 35 56% 0%;
+        --muted: 35 25% 92%;
+        --muted-foreground: 35 15% 31%;
+        --popover: 35 61% 99%;
+        --popover-foreground: 35 56% 0%;
+        --card: 35 61% 98%;
+        --card-foreground: 0 0% 0%;
+        --border: 35 9% 93%;
+        --input: 35 9% 93%;
+        --primary: 35 99% 59%;
+        --primary-foreground: 0 0% 0%;
+        --secondary: 35 6% 88%;
+        --secondary-foreground: 35 6% 28%;
+        --accent: 35 6% 88%;
+        --accent-foreground: 35 6% 28%;
+        --destructive: 20 81% 34%;
+        --destructive-foreground: 0 0% 100%;
+        --ring: 35 99% 59%;
+        --chart-1: 35 99% 59%;
+        --chart-2: 35 6% 88%;
+        --chart-3: 35 6% 88%;
+        --chart-4: 35 6% 91%;
+        --chart-5: 35 102% 59%;
         --radius: 0.5rem;
     }
+
     .dark {
-        --background: 240 10% 3.9%;
-        --foreground: 0 0% 98%;
-        --card: 240 10% 3.9%;
-        --card-foreground: 0 0% 98%;
-        --popover: 240 10% 3.9%;
-        --popover-foreground: 0 0% 98%;
-        --primary: 0 0% 98%;
-        --primary-foreground: 240 5.9% 10%;
-        --secondary: 240 3.7% 15.9%;
-        --secondary-foreground: 0 0% 98%;
-        --muted: 240 3.7% 15.9%;
-        --muted-foreground: 240 5% 64.9%;
-        --accent: 240 3.7% 15.9%;
-        --accent-foreground: 0 0% 98%;
-        --destructive: 0 62.8% 30.6%;
-        --destructive-foreground: 0 0% 98%;
-        --border: 240 3.7% 15.9%;
-        --input: 240 3.7% 15.9%;
-        --ring: 240 4.9% 83.9%;
-        --chart-1: 220 70% 50%;
-        --chart-2: 160 60% 45%;
-        --chart-3: 30 80% 55%;
-        --chart-4: 280 65% 60%;
-        --chart-5: 340 75% 55%;
+        --background: 35 31% 2%;
+        --foreground: 35 31% 99%;
+        --muted: 35 25% 8%;
+        --muted-foreground: 35 15% 69%;
+        --popover: 35 31% 2%;
+        --popover-foreground: 35 31% 99%;
+        --card: 35 31% 3%;
+        --card-foreground: 0 0% 100%;
+        --border: 35 9% 11%;
+        --input: 35 9% 11%;
+        --primary: 35 99% 59%;
+        --primary-foreground: 0 0% 0%;
+        --secondary: 35 3% 10%;
+        --secondary-foreground: 35 3% 70%;
+        --accent: 35 3% 10%;
+        --accent-foreground: 35 3% 70%;
+        --destructive: 20 81% 60%;
+        --destructive-foreground: 20 81% 0%;
+        --ring: 35 99% 59%;
+        --chart-1: 35 99% 59%;
+        --chart-2: 35 3% 10%;
+        --chart-3: 35 3% 10%;
+        --chart-4: 35 3% 13%;
+        --chart-5: 35 102% 59%;
     }
 }
+
 @layer base {
     * {
+        box-sizing: border-box;
         @apply border-border;
     }
     body {
@@ -128,7 +127,7 @@ html body[data-scroll-locked] {
     /* Sidebar beta icon */
     .beta-element::before {
         content: 'BETA';
-        @apply absolute -bottom-3 right-[2px] rounded-md bg-yellow-400 px-1 text-[10px] font-semibold text-white;
+        @apply absolute -bottom-3 right-[2px] rounded-md bg-yellow-600 px-1 text-[10px] font-semibold text-white;
     }
 
     /* Copilot tab */
@@ -164,6 +163,23 @@ html body[data-scroll-locked] {
 
     .guidelines-icon {
         @apply flex size-8 flex-shrink-0 items-center justify-center rounded-full bg-muted text-muted-foreground;
+    }
+
+    /* Auth form input */
+    .auth-form-input {
+        @apply !text-sm md:text-base;
+    }
+
+    .auth-form-container {
+        @apply flex flex-col gap-2 md:gap-4;
+    }
+
+    .input-error {
+        @apply !border-destructive !ring-destructive;
+    }
+
+    .form-error-message {
+        @apply text-sm text-destructive;
     }
 }
 
