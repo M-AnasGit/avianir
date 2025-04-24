@@ -35,7 +35,7 @@ export default function RootLayout({
             <body className={`${inter.variable} font-inter antialiased`}>
                 <ErrorBoundary>
                     <ErrorToast>
-                        <ThemeProvider attribute="class">
+                        <ThemeProvider attribute="class" disableTransitionOnChange>
                             <ToastProvider>
                                 <TooltipProvider>
                                     <ModalProvider>
