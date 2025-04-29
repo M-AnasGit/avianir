@@ -1,6 +1,8 @@
 import { createServerClient } from '@supabase/ssr';
 import { NextResponse, type NextRequest } from 'next/server';
 
+const PROTECTED_ROUTES = ['main'];
+
 export async function updateSession(request: NextRequest) {
     let supabaseResponse = NextResponse.next({
         request,
@@ -38,7 +40,7 @@ export async function updateSession(request: NextRequest) {
     if (
         !user &&
         (!request.nextUrl.pathname.startsWith('/auth') || request.nextUrl.pathname === '/auth/callback/reset') &&
-        !request.nextUrl.pathname.startsWith('/legal')
+        !PROTECTED_ROUTES.includes(request.nextUrl.pathname)
     ) {
         const url = request.nextUrl.clone();
         url.pathname = '/auth';

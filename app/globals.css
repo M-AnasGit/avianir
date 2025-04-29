@@ -99,6 +99,69 @@ html body[data-scroll-locked] {
 }
 
 @layer components {
+    /* Auth form input */
+    .auth-form-input {
+        @apply !text-sm md:text-base;
+    }
+
+    .auth-form-container {
+        @apply flex flex-col gap-2 md:gap-4;
+    }
+
+    .input-error {
+        @apply !border-destructive !ring-destructive;
+    }
+
+    .form-error-message {
+        @apply text-sm text-destructive;
+    }
+
+    /* Header */
+    .header-drop-down-item {
+        @apply !block !cursor-pointer !px-3 !py-2;
+    }
+
+    .header-drop-down-item h5 {
+        @apply text-sm font-medium;
+    }
+
+    .header-drop-down-item p {
+        @apply text-sm text-muted-foreground;
+    }
+
+    .header-switch-to-studio {
+        @apply relative text-base font-medium;
+        background: linear-gradient(90deg, #fea82f 0%, #f8445c 50%, #fea82f 99.52%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        text-fill-color: transparent;
+        background-size: 200% auto;
+        background-position: 0% center;
+        transition: background-position 0.8s ease-out;
+        animation: none;
+    }
+
+    .header-switch-to-studio:hover {
+        animation: continuous-glisten 2s linear infinite;
+    }
+
+    .header-switch-to-studio {
+        animation: continuous-glisten 2s linear infinite paused;
+    }
+
+    @keyframes continuous-glisten {
+        0% {
+            background-position: 0% center;
+        }
+        100% {
+            background-position: 200% center;
+        }
+    }
+}
+
+/* Editor/studio */
+@layer components {
     /* Style tab prop container */
     .prop-accordion-content {
         @apply flex flex-col gap-4 px-[1px];
@@ -163,22 +226,5 @@ html body[data-scroll-locked] {
 
     .guidelines-icon {
         @apply flex size-8 flex-shrink-0 items-center justify-center rounded-full bg-muted text-muted-foreground;
-    }
-
-    /* Auth form input */
-    .auth-form-input {
-        @apply !text-sm md:text-base;
-    }
-
-    .auth-form-container {
-        @apply flex flex-col gap-2 md:gap-4;
-    }
-
-    .input-error {
-        @apply !border-destructive !ring-destructive;
-    }
-
-    .form-error-message {
-        @apply text-sm text-destructive;
     }
 }
