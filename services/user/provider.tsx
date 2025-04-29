@@ -1,10 +1,14 @@
 'use client';
 import React from 'react';
 import Loading from '@/components/loading';
+
 import useUserData from './hooks/useUserData';
+import { useQuery } from '@tanstack/react-query';
+import { getUserDetails } from './server-actions/user-data';
 
 import { Course, uploadMediaType } from './types';
-import { Media, User } from '../types';
+import { Media } from '../types';
+
 type UserProviderContextType = {
     media: Media[];
     courses: Course[];
@@ -19,12 +23,21 @@ type UserProviderContextType = {
     deleteMedia: (media_id: string) => Promise<void>;
 };
 type UserProviderProps = React.PropsWithChildren<{
-    user: User;
+    user_id: string;
 }>;
 
 const UserProviderContext = React.createContext<UserProviderContextType | undefined>(undefined);
 
-const UserProvider = ({ user, children }: UserProviderProps) => {
+const UserProvider = ({ user_id, children }: UserProviderProps) => {
+    const { data: user, isLoading: isUserLoading } = useQuery({
+        queryKey: ['user', user_id],
+        queryFn: () => getUserDetails(user_id),
+        retry: 3,
+    });
+
+    if (isUserLoading) return <Loading />;
+    if (user === undefined) throw new Error('Error while fetching user data');
+
     const {
         media,
         courses,

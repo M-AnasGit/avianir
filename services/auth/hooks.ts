@@ -1,5 +1,5 @@
 'use client';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 import {
     loginUser,
     logoutUser,
@@ -7,7 +7,6 @@ import {
     oAuthWithGoogleAction,
     resetPassword,
     updatePassword,
-    getUserDetails,
 } from './server-actions';
 import { ForgotPasswordSchema, LoginSchema, RegisterSchema, ResetPasswordSchema } from './validations';
 import { toast } from '@/hooks/use-toast';
@@ -15,12 +14,6 @@ import { useRouter } from 'next/navigation';
 
 export default function useAuth() {
     const router = useRouter();
-
-    const { data: user, isLoading: isUserDataLoading } = useQuery({
-        queryKey: ['user'],
-        queryFn: () => getUserDetails(),
-        retry: 3,
-    });
 
     const { mutate: registerUserMutation, isPending: isRegistrationPending } = useMutation({
         mutationFn: ({ data, token }: { data: RegisterSchema; token: string | null }) => {
@@ -116,8 +109,6 @@ export default function useAuth() {
     });
 
     return {
-        user,
-        isUserDataLoading,
         registerUserMutation,
         isRegistrationPending,
         oAuthWithGoogle,

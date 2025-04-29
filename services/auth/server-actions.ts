@@ -5,27 +5,20 @@ import serverClient from '@/db/server';
 import { AuthError } from '@supabase/supabase-js';
 //@CONSTANTS
 import { EMAIL_REGEX, PW_REGEX } from './constants';
-//@TYPES
-import { User } from '../types';
 
 const handleError = (error: AuthError) => {
     const message = error.code?.replace(/_/g, ' ').toLowerCase();
     return message ? message.charAt(0).toUpperCase() + message.slice(1) : 'Unexpected error occurred';
 };
 
-export const getUserDetails = async () => {
+export const getUser = async () => {
     const supabase = await serverClient();
 
-    const { data: userData, error: userDataError } = await supabase.auth.getUser();
-    if (userDataError) return null;
+    const { data: user, error: userError } = await supabase.auth.getUser();
 
-    const user_id = userData.user.id;
-    if (!user_id) throw new Error('User ID is required and should not be empty');
+    if (userError) throw new Error(handleError(userError));
 
-    const { data, error } = await supabase.from('user').select('*').eq('id', user_id).single();
-    if (error) throw new Error('Error fetching user details');
-
-    return data as User;
+    return user.user;
 };
 
 export const registerUser = async (name: string, email: string, password: string, token: string | null) => {

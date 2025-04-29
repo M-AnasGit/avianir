@@ -5,6 +5,7 @@ CREATE TABLE IF NOT EXISTS public.user (
     pfp TEXT DEFAULT NULL,
     tokens_used INT DEFAULT 0,
     subscription_plan TEXT NOT NULL,
+    details JSONB DEFAULT '{}'::JSONB,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT now(),
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT now(),
     deleted_at TIMESTAMP WITH TIME ZONE DEFAULT NULL

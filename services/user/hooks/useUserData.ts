@@ -7,6 +7,7 @@ import {
     deleteUserMedia,
     downloadMedia,
     getUserCourses,
+    getUserDetails,
     getUserMedia,
     updateUserMedia,
     uploadMedia,
@@ -14,10 +15,10 @@ import {
 import { uploadLimits } from '../constants';
 //@TYPES
 import { uploadMediaType } from '../types';
-import { User } from '@/services/types';
+import { Database } from '@/db/database.types';
 
 type Props = {
-    user: User;
+    user: Database['public']['Tables']['user']['Row'];
 };
 
 const useUserData = ({ user }: Props) => {
@@ -42,7 +43,7 @@ const useUserData = ({ user }: Props) => {
         if (!user.id) return false;
         const userUploadLimit = uploadLimits[user.subscription_plan];
         return media && media.reduce((acc, { size }) => acc + size, 0) < userUploadLimit * 1000000;
-    }, [media, user.id]);
+    }, [media, user, user && user.id]);
 
     const createMediaMutation = useMutation({
         mutationFn: ({ media_id, name, type, size }: { media_id: string; name: string; type: string; size: number }) =>
@@ -145,6 +146,7 @@ const useUserData = ({ user }: Props) => {
             });
         },
     });
+
     return {
         media,
         courses,

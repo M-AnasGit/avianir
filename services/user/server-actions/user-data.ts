@@ -11,6 +11,17 @@ import { INPUT_FILE_TYPES, MAX_SIZES } from '@/services/constants';
 //@TYPES
 import { Chapter, Course } from '../types';
 import { Media } from '@/services/types';
+import { Database } from '@/db/database.types';
+
+export const getUserDetails = async (user_id: string) => {
+    if (!user_id) throw new Error('User ID is required and should not be empty');
+
+    const supabase = await serverClient();
+    const { data: user, error } = await supabase.from('user').select<'*'>('*').eq('id', user_id).single();
+    if (error) throw new Error('Error fetching user details');
+
+    return user as Database['public']['Tables']['user']['Row'];
+};
 
 export const getUserMedia = async (user_id: string) => {
     if (!user_id) throw new Error('User ID is required and should not be empty');
