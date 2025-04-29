@@ -11,57 +11,57 @@ html body[data-scroll-locked] {
 
 @layer base {
     :root {
-        --background: 35 61% 99%;
-        --foreground: 35 56% 0%;
-        --muted: 35 25% 92%;
-        --muted-foreground: 35 15% 31%;
-        --popover: 35 61% 99%;
-        --popover-foreground: 35 56% 0%;
-        --card: 35 61% 98%;
-        --card-foreground: 0 0% 0%;
-        --border: 35 9% 93%;
-        --input: 35 9% 93%;
+        --background: 240 60% 99%;
+        --foreground: 34 54% 5%;
+        --muted: 0 0% 98%;
+        --muted-foreground: 246 0% 42%;
+        --popover: 240 60% 99%;
+        --popover-foreground: 246 76% 5%;
+        --card: 240 60% 99%;
+        --card-foreground: 246 76% 5%;
+        --border: 35 14% 91%;
+        --input: 35 14% 91%;
         --primary: 35 99% 59%;
-        --primary-foreground: 0 0% 0%;
-        --secondary: 35 6% 88%;
-        --secondary-foreground: 35 6% 28%;
-        --accent: 35 6% 88%;
-        --accent-foreground: 35 6% 28%;
-        --destructive: 20 81% 34%;
-        --destructive-foreground: 0 0% 100%;
+        --primary-foreground: 34 71% 12%;
+        --secondary: 215 99% 59%;
+        --secondary-foreground: 215 69% 12%;
+        --accent: 352 93% 62%;
+        --accent-foreground: 351 87% 12%;
+        --destructive: 352 93% 62%;
+        --destructive-foreground: 351 87% 12%;
         --ring: 35 99% 59%;
         --chart-1: 35 99% 59%;
-        --chart-2: 35 6% 88%;
-        --chart-3: 35 6% 88%;
-        --chart-4: 35 6% 91%;
+        --chart-2: 215 99% 59%;
+        --chart-3: 215 99% 59%;
+        --chart-4: 215 99% 62%;
         --chart-5: 35 102% 59%;
         --radius: 0.5rem;
     }
 
     .dark {
-        --background: 35 31% 2%;
-        --foreground: 35 31% 99%;
-        --muted: 35 25% 8%;
-        --muted-foreground: 35 15% 69%;
-        --popover: 35 31% 2%;
-        --popover-foreground: 35 31% 99%;
-        --card: 35 31% 3%;
-        --card-foreground: 0 0% 100%;
-        --border: 35 9% 11%;
-        --input: 35 9% 11%;
+        --background: 35 56% 4%;
+        --foreground: 35 13% 99%;
+        --muted: 215 18% 7%;
+        --muted-foreground: 215 5% 64%;
+        --popover: 35 56% 4%;
+        --popover-foreground: 35 13% 99%;
+        --card: 35 56% 4%;
+        --card-foreground: 35 13% 99%;
+        --border: 35 14% 12%;
+        --input: 35 14% 12%;
         --primary: 35 99% 59%;
         --primary-foreground: 0 0% 0%;
-        --secondary: 35 3% 10%;
-        --secondary-foreground: 35 3% 70%;
-        --accent: 35 3% 10%;
-        --accent-foreground: 35 3% 70%;
-        --destructive: 20 81% 60%;
-        --destructive-foreground: 20 81% 0%;
+        --secondary: 215 99% 59%;
+        --secondary-foreground: 0 0% 100%;
+        --accent: 215 99% 59%;
+        --accent-foreground: 0 0% 100%;
+        --destructive: 18 91% 45%;
+        --destructive-foreground: 0 0% 100%;
         --ring: 35 99% 59%;
         --chart-1: 35 99% 59%;
-        --chart-2: 35 3% 10%;
-        --chart-3: 35 3% 10%;
-        --chart-4: 35 3% 13%;
+        --chart-2: 215 99% 59%;
+        --chart-3: 215 99% 59%;
+        --chart-4: 215 99% 62%;
         --chart-5: 35 102% 59%;
     }
 }
@@ -69,7 +69,7 @@ html body[data-scroll-locked] {
 @layer base {
     * {
         box-sizing: border-box;
-        @apply border-border;
+        @apply border-border outline-ring/50;
     }
     body {
         @apply bg-background text-foreground;
@@ -180,14 +180,5 @@ html body[data-scroll-locked] {
 
     .form-error-message {
         @apply text-sm text-destructive;
-    }
-}
-
-@layer base {
-    * {
-        @apply border-border outline-ring/50;
-    }
-    body {
-        @apply bg-background text-foreground;
     }
 }

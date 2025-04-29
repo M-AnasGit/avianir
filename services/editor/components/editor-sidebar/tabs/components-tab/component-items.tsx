@@ -34,7 +34,7 @@ export default function ComponentItems({ items }: Props) {
         return (
             <div
                 key={i}
-                className="mb-2 flex w-[80px] cursor-pointer flex-col items-center gap-2 rounded-md bg-accent py-4 text-accent-foreground transition-all hover:bg-muted hover:text-muted-foreground"
+                className="mb-2 flex w-[80px] cursor-pointer flex-col items-center gap-2 rounded-md bg-primary/20 py-4 text-primary-foreground transition-all hover:bg-muted hover:text-muted-foreground"
                 draggable
                 onDragStart={(e) => handleDragStart(e, item.type)}
                 data-testid={`component-item-${item.type}`}
