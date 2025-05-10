@@ -2,7 +2,8 @@
 import React from 'react';
 //@CONSTANTS
 import Loading from '@/components/loading';
-import { defaultPalette, initialState } from './constants';
+import { initialState } from './constants';
+import { DEFAULT_PALETTE } from '../constants';
 //@HELPER AND REDUCER
 import { loadData } from './helpers';
 import editorReducer from './dispatch-actions/reducer';
@@ -105,7 +106,7 @@ const EditorProvider = ({ children, course_id, chapter_id }: EditorProps) => {
             value={{
                 state,
                 presets: localPresets ?? [],
-                palette: localPalette ?? defaultPalette,
+                palette: localPalette ?? DEFAULT_PALETTE,
                 chapter,
                 componentDragged,
                 draggedType,
