@@ -3,7 +3,7 @@ CREATE OR REPLACE VIEW public.user_public AS
 SELECT 
   public_id,
   name,
-  pfp,
+  avatar,
   created_at
 FROM public.user
 WHERE deleted_at IS NULL;

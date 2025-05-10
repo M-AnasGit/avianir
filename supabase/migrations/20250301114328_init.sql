@@ -2,10 +2,11 @@ CREATE TABLE IF NOT EXISTS public.user (
     id UUID PRIMARY KEY NOT NULL REFERENCES auth.users,
     public_id UUID DEFAULT gen_random_uuid(),
     name TEXT NOT NULL,
-    pfp TEXT DEFAULT NULL,
+    avatar TEXT DEFAULT NULL,
     tokens_used INT DEFAULT 0,
     subscription_plan TEXT NOT NULL,
     details JSONB DEFAULT '{}'::JSONB,
+    auth_provider TEXT NOT NULL,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT now(),
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT now(),
     deleted_at TIMESTAMP WITH TIME ZONE DEFAULT NULL

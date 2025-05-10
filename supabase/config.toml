@@ -2,7 +2,7 @@
 # https://supabase.com/docs/guides/local-development/cli/config
 # A string used to distinguish different Supabase projects on the same host. Defaults to the
 # working directory name when running `supabase init`.
-project_id = "env(NEXT_PUBLIC_PLACEHOLDER_NAME)"
+project_id = "Avianir"
 
 [api]
 enabled = true
@@ -101,6 +101,12 @@ file_size_limit = "50MiB"
 allowed_mime_types = ["application/json"]
 objects_path = "./dummy_data"
 
+[storage.buckets.avatars]
+public = true
+file_size_limit = "5MiB"
+allowed_mime_types = ["image/jpeg", "image/png", "image/webp"]
+
+
 [auth]
 enabled = true
 # The base URL of your website. Used as an allow-list for redirects and for constructing URLs used
@@ -164,11 +170,11 @@ sender_name = "env(SMTP_SENDER_NAME)"
 email_sent=200
 
 [auth.email.template.confirmation]
-subject = "Confirm your email address to sign in to env(NEXT_PUBLIC_PLACEHOLDER_NAME)"
+subject = "Confirm your email address to sign in to Avianir"
 content_path = "./supabase/templates/confirmation.html"
 
 [auth.email.template.magic_link]
-subject = "Reset your password for env(NEXT_PUBLIC_PLACEHOLDER_NAME)"
+subject = "Reset your password for Avianir"
 content_path = "./supabase/templates/magicLink.html"
 
 [auth.sms]

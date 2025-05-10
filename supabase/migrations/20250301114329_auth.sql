@@ -6,11 +6,12 @@ SECURITY DEFINER
 AS $$
 BEGIN
   IF NEW.email_confirmed_at IS NOT NULL THEN
-    INSERT INTO public.user (id, name, subscription_plan)
+    INSERT INTO public.user (id, name, subscription_plan, auth_provider)
     VALUES (
         NEW.id, 
         NEW.raw_user_meta_data->>'name',
-        'free'
+        'free',
+        NEW.raw_app_meta_data->>'provider'
     );
   END IF;
   RETURN NEW;
