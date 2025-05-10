@@ -6,6 +6,7 @@ import Loading from '@/components/loading';
 import ErrorBoundary from '@/components/error-boundary';
 import ErrorToast from '@/components/error-toast';
 //@PROVIDERS
+import { MathJaxContext } from 'better-react-mathjax';
 import { ThemeProvider } from '@/components/providers/theme-provider';
 import { ToastProvider } from '@/components/ui/toast';
 import { TooltipProvider } from '@/components/ui/tooltip';
@@ -39,7 +40,9 @@ export default function RootLayout({
                             <ToastProvider>
                                 <TooltipProvider>
                                     <ModalProvider>
-                                        <React.Suspense fallback={<Loading />}>{children}</React.Suspense>
+                                        <MathJaxContext>
+                                            <React.Suspense fallback={<Loading />}>{children}</React.Suspense>
+                                        </MathJaxContext>
                                     </ModalProvider>
                                 </TooltipProvider>
                                 <Toaster />
