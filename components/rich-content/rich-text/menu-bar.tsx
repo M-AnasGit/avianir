@@ -151,7 +151,7 @@ export default function MenuBar({ editor, palette }: Props) {
     };
 
     return (
-        <div className="control-group bg-background text-muted-foreground">
+        <div className="control-group text-muted-foreground">
             <div className="flex flex-wrap gap-2">
                 {buttons &&
                     Object.entries(buttons).map(([key, { icon, action, pressed }]) => (

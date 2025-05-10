@@ -13,10 +13,11 @@ import { RichTextProps } from '../types';
 
 type Props = RichTextProps & {
     palette: Palette;
-    handleSaveContent: (v: string) => void;
+    handleSaveContent?: (v: string) => void;
+    setContent?: (v: string) => void;
 };
 
-export default function RichTextInput({ content, style, palette, handleSaveContent }: Props) {
+export default function RichTextInput({ content, style, palette, handleSaveContent, setContent }: Props) {
     const editor = useEditor({
         extensions: [
             StarterKit.configure({
@@ -34,8 +35,14 @@ export default function RichTextInput({ content, style, palette, handleSaveConte
     });
 
     React.useEffect(() => {
+        if (editor && setContent) {
+            editor.on('update', () => {
+                setContent(editor.getHTML());
+            });
+        }
+
         return () => {
-            if (editor) {
+            if (editor && handleSaveContent) {
                 handleSaveContent(editor.getHTML());
             }
         };
@@ -49,7 +56,7 @@ export default function RichTextInput({ content, style, palette, handleSaveConte
         <>
             <MenuBar palette={palette} editor={editor} />
             <div
-                className="no-scrollbar"
+                className="no-scrollbar bg-background"
                 style={{
                     maxHeight: '300px',
                     overflowY: 'auto',
