@@ -7,18 +7,19 @@ import {
     deleteUserMedia,
     downloadMedia,
     getUserCourses,
-    getUserDetails,
     getUserMedia,
+    updateUserAvatar,
+    updateUserData,
     updateUserMedia,
     uploadMedia,
 } from '../server-actions/user-data';
-import { uploadLimits } from '../constants';
+import { UPLOAD_LIMITS } from '../constants';
 //@TYPES
 import { uploadMediaType } from '../types';
-import { Database } from '@/db/database.types';
+import { User, UserWithDetails, UserWithEmail } from '@/services/types';
 
 type Props = {
-    user: Database['public']['Tables']['user']['Row'];
+    user: User | undefined;
 };
 
 const useUserData = ({ user }: Props) => {
@@ -26,28 +27,80 @@ const useUserData = ({ user }: Props) => {
     const { toast } = useToast();
 
     const { data: media, isLoading: isMediaLoading } = useQuery({
-        queryKey: ['media', user.id],
-        queryFn: () => getUserMedia(user.id),
+        queryKey: ['media', user?.id as string],
+        queryFn: () => getUserMedia(user?.id as string),
         retry: 3,
+        enabled: !!user,
     });
 
     const { data: courses, isLoading: isCoursesLoading } = useQuery({
-        queryKey: ['courses', user.id],
-        queryFn: () => getUserCourses(user.id),
+        queryKey: ['courses', user?.id as string],
+        queryFn: () => getUserCourses(user?.id as string),
         retry: 3,
+        enabled: !!user,
     });
 
     const isLoading = React.useMemo(() => isMediaLoading || isCoursesLoading, [isMediaLoading, isCoursesLoading]);
 
     const canUpload = React.useMemo(() => {
-        if (!user.id) return false;
-        const userUploadLimit = uploadLimits[user.subscription_plan];
+        if (!user) return false;
+        const userUploadLimit = UPLOAD_LIMITS[user.subscription_plan];
         return media && media.reduce((acc, { size }) => acc + size, 0) < userUploadLimit * 1000000;
     }, [media, user, user && user.id]);
 
+    const updateUserAvatarMutation = useMutation({
+        mutationFn: ({ avatar }: { avatar: File | null }) => updateUserAvatar(user?.public_id as string, avatar),
+        onMutate: () => {
+            toast({
+                title: 'Updating...',
+                description: 'Your avatar is being updated. Please wait.',
+            });
+        },
+        onSuccess: () => {
+            toast({
+                title: 'Update Successful',
+                description: 'Your avatar has been updated successfully.',
+            });
+            queryClient.invalidateQueries({ queryKey: ['user', user?.id as string] });
+        },
+        onError: (err: Error) => {
+            console.error(err);
+            toast({
+                title: 'Update Failed',
+                description: 'There was an error updating your avatar. Please try again.',
+                variant: 'destructive',
+            });
+        },
+    });
+
+    const updateUserDataMutation = useMutation({
+        mutationFn: ({ newUser }: { newUser: UserWithDetails }) => updateUserData(user?.id as string, newUser),
+        onMutate: () => {
+            toast({
+                title: 'Updating...',
+                description: 'Your data is being updated. Please wait.',
+            });
+        },
+        onSuccess: () => {
+            toast({
+                title: 'Update Successful',
+                description: 'Your data has been updated successfully.',
+            });
+            queryClient.invalidateQueries({ queryKey: ['user', user?.id as string] });
+        },
+        onError: (err: Error) => {
+            console.error(err);
+            toast({
+                title: 'Update Failed',
+                description: 'There was an error updating your data. Please try again.',
+                variant: 'destructive',
+            });
+        },
+    });
+
     const createMediaMutation = useMutation({
         mutationFn: ({ media_id, name, type, size }: { media_id: string; name: string; type: string; size: number }) =>
-            createUserMedia(user.id, media_id, name, type as 'image' | 'video' | 'audio', size),
+            createUserMedia(user?.id as string, media_id, name, type as 'image' | 'video' | 'audio', size),
         onMutate: () => {
             toast({
                 title: 'Upload...',
@@ -59,7 +112,7 @@ const useUserData = ({ user }: Props) => {
                 title: 'Upload Successful',
                 description: 'Your media has been uploaded successfully.',
             });
-            queryClient.invalidateQueries({ queryKey: ['media', user.id] });
+            queryClient.invalidateQueries({ queryKey: ['media', user?.id as string] });
         },
         onError: (err: Error) => {
             console.error(err);
@@ -73,7 +126,7 @@ const useUserData = ({ user }: Props) => {
 
     const getUploadMediaUrlMutation = useMutation({
         mutationFn: ({ file, fileType, checksum }: uploadMediaType) =>
-            uploadMedia(user.id, file.size, fileType, checksum),
+            uploadMedia(user?.id as string, file.size, fileType, checksum),
         onError: (err: Error) => {
             console.error(err);
             toast({
@@ -85,7 +138,7 @@ const useUserData = ({ user }: Props) => {
     });
 
     const downloadMediaMutation = useMutation({
-        mutationFn: (mediaId: string) => downloadMedia(`${user.id}/${mediaId}`),
+        mutationFn: (mediaId: string) => downloadMedia(`${user?.id as string}/${mediaId}`),
         onError: (err: Error) => {
             console.error(err);
             toast({
@@ -98,7 +151,7 @@ const useUserData = ({ user }: Props) => {
 
     const updateMediaMutation = useMutation({
         mutationFn: ({ media_id, name }: { media_id: string; name: string }) =>
-            updateUserMedia(user.id, media_id, name),
+            updateUserMedia(user?.id as string, media_id, name),
         onMutate: () => {
             toast({
                 title: 'Updating...',
@@ -110,7 +163,7 @@ const useUserData = ({ user }: Props) => {
                 title: 'Update Successful',
                 description: 'Your file has been updated successfully.',
             });
-            queryClient.invalidateQueries({ queryKey: ['media', user.id] });
+            queryClient.invalidateQueries({ queryKey: ['media', user?.id as string] });
         },
         onError: (err: Error) => {
             console.error(err);
@@ -123,7 +176,7 @@ const useUserData = ({ user }: Props) => {
     });
 
     const deleteMediaMutation = useMutation({
-        mutationFn: ({ media_id }: { media_id: string }) => deleteUserMedia(user.id, media_id),
+        mutationFn: ({ media_id }: { media_id: string }) => deleteUserMedia(user?.id as string, media_id),
         onMutate: () => {
             toast({
                 title: 'Deleting...',
@@ -135,7 +188,7 @@ const useUserData = ({ user }: Props) => {
                 title: 'Delete Successful',
                 description: 'Your file has been deleted successfully.',
             });
-            queryClient.invalidateQueries({ queryKey: ['media', user.id] });
+            queryClient.invalidateQueries({ queryKey: ['media', user?.id as string] });
         },
         onError: (err: Error) => {
             console.error(err);
@@ -152,6 +205,8 @@ const useUserData = ({ user }: Props) => {
         courses,
         isLoading,
         canUpload: !!canUpload,
+        updateUserAvatarMutation,
+        updateUserDataMutation,
         createMediaMutation,
         getUploadMediaUrlMutation,
         downloadMediaMutation,
