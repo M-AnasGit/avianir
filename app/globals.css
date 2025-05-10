@@ -36,6 +36,14 @@ html body[data-scroll-locked] {
         --chart-4: 215 99% 62%;
         --chart-5: 35 102% 59%;
         --radius: 0.5rem;
+        --sidebar-background: 0 0% 98%;
+        --sidebar-foreground: 34 54% 5%;
+        --sidebar-primary: 240 5.9% 10%;
+        --sidebar-primary-foreground: 0 0% 98%;
+        --sidebar-accent: 240 4.8% 95.9%;
+        --sidebar-accent-foreground: 240 5.9% 10%;
+        --sidebar-border: 220 13% 91%;
+        --sidebar-ring: 217.2 91.2% 59.8%;
     }
 
     .dark {
@@ -63,6 +71,14 @@ html body[data-scroll-locked] {
         --chart-3: 215 99% 59%;
         --chart-4: 215 99% 62%;
         --chart-5: 35 102% 59%;
+        --sidebar-background: 215 18% 7%;
+        --sidebar-foreground: 35 13% 99%;
+        --sidebar-primary: 224.3 76.3% 48%;
+        --sidebar-primary-foreground: 0 0% 100%;
+        --sidebar-accent: 240 3.7% 15.9%;
+        --sidebar-accent-foreground: 240 4.8% 95.9%;
+        --sidebar-border: 240 3.7% 15.9%;
+        --sidebar-ring: 217.2 91.2% 59.8%;
     }
 }
 
@@ -72,6 +88,7 @@ html body[data-scroll-locked] {
         @apply border-border outline-ring/50;
     }
     body {
+        list-style: none;
         @apply bg-background text-foreground;
     }
 
@@ -99,15 +116,15 @@ html body[data-scroll-locked] {
 }
 
 @layer components {
-    /* Auth form input */
-    .auth-form-input {
-        @apply !text-sm md:text-base;
+    .form-input {
+        @apply !bg-background !text-sm md:text-base;
     }
 
-    .auth-form-container {
+    .form-container {
         @apply flex flex-col gap-2 md:gap-4;
     }
 
+    /* Auth form input */
     .input-error {
         @apply !border-destructive !ring-destructive;
     }
@@ -160,7 +177,7 @@ html body[data-scroll-locked] {
     }
 }
 
-/* Editor/studio */
+/* Editor studio */
 @layer components {
     /* Style tab prop container */
     .prop-accordion-content {
@@ -226,5 +243,14 @@ html body[data-scroll-locked] {
 
     .guidelines-icon {
         @apply flex size-8 flex-shrink-0 items-center justify-center rounded-full bg-muted text-muted-foreground;
+    }
+}
+
+@layer base {
+    * {
+        @apply border-border;
+    }
+    body {
+        @apply bg-background text-foreground;
     }
 }

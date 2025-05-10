@@ -13,7 +13,7 @@ import PasswordInput from '@/components/form-password-input';
 //@VALIDATION
 import HCaptcha from '@hcaptcha/react-hcaptcha';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { loginSchema, LoginSchema } from '@/services/auth/validations';
+import { loginSchema, LoginSchema } from '@/services/auth/helpers';
 //@CUSTOM HOOKS
 import useAuth from '@/services/auth/hooks';
 
@@ -54,7 +54,7 @@ export default function LoginForm() {
 
     return (
         <>
-            <form onSubmit={handleSubmit(onSubmit)} className="auth-form-container" ref={formRef}>
+            <form onSubmit={handleSubmit(onSubmit)} className="form-container" ref={formRef}>
                 <div className="space-y-1">
                     <Label htmlFor="email">Email</Label>
                     <FormInput
@@ -63,7 +63,7 @@ export default function LoginForm() {
                         type="email"
                         placeholder="Email"
                         required
-                        className="auth-form-input"
+                        className="form-input"
                         register={register}
                         autoComplete="email"
                         error={errors.email}
@@ -91,7 +91,7 @@ export default function LoginForm() {
                         placeholder="Password"
                         autoComplete="new-password"
                         required
-                        className="auth-form-input"
+                        className="form-input"
                         register={register}
                         error={errors.password}
                     />

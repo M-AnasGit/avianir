@@ -11,7 +11,7 @@ import FormInput from '@/components/form-input';
 //@VALIDATION
 import HCaptcha from '@hcaptcha/react-hcaptcha';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { forgotPasswordSchema, ForgotPasswordSchema } from '@/services/auth/validations';
+import { forgotPasswordSchema, ForgotPasswordSchema } from '@/services/auth/helpers';
 //@CUSTOM HOOKS
 import useAuth from '@/services/auth/hooks';
 
@@ -48,7 +48,7 @@ export default function ForgotPwForm() {
     };
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)} className="auth-form-container" ref={formRef}>
+        <form onSubmit={handleSubmit(onSubmit)} className="form-container" ref={formRef}>
             <div className="space-y-1">
                 <Label htmlFor="email">Email</Label>
                 <FormInput
@@ -57,7 +57,7 @@ export default function ForgotPwForm() {
                     type="email"
                     placeholder="Email"
                     required
-                    className="auth-form-input"
+                    className="form-input"
                     register={register}
                     autoComplete="email"
                     error={errors.email}

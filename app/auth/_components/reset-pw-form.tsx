@@ -11,7 +11,7 @@ import { Loader2 } from 'lucide-react';
 import PasswordInput from '@/components/form-password-input';
 //@VALIDATION
 import { zodResolver } from '@hookform/resolvers/zod';
-import { resetPasswordSchema, ResetPasswordSchema } from '@/services/auth/validations';
+import { resetPasswordSchema, ResetPasswordSchema } from '@/services/auth/helpers';
 //@CUSTOM HOOKS
 import useAuth from '@/services/auth/hooks';
 
@@ -31,7 +31,7 @@ export default function ResetPwForm() {
     };
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)} className="auth-form-container">
+        <form onSubmit={handleSubmit(onSubmit)} className="form-container">
             <div className="relative space-y-1">
                 <Label htmlFor="password">Password</Label>
                 <PasswordInput
@@ -40,7 +40,7 @@ export default function ResetPwForm() {
                     placeholder="Password"
                     autoComplete="new-password"
                     required
-                    className="auth-form-input"
+                    className="form-input"
                     register={register}
                     error={errors.password}
                 />
@@ -55,7 +55,7 @@ export default function ResetPwForm() {
                     placeholder="Confirm your password"
                     autoComplete="new-password"
                     required
-                    className="auth-form-input"
+                    className="form-input"
                     register={register}
                     error={errors.confirmPassword}
                 />
