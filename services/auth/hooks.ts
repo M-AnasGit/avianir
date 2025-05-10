@@ -8,7 +8,7 @@ import {
     resetPassword,
     updatePassword,
 } from './server-actions';
-import { ForgotPasswordSchema, LoginSchema, RegisterSchema, ResetPasswordSchema } from './validations';
+import { ForgotPasswordSchema, LoginSchema, RegisterSchema, ResetPasswordSchema } from './helpers';
 import { toast } from '@/hooks/use-toast';
 import { useRouter } from 'next/navigation';
 
