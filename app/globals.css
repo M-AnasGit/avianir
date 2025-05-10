@@ -179,6 +179,11 @@ html body[data-scroll-locked] {
 
 /* Editor studio */
 @layer components {
+    /* Edit profile */
+    .edit-profile-container {
+        @apply flex w-full flex-col gap-4 rounded-lg border border-border bg-muted p-4 shadow-sm;
+    }
+
     /* Style tab prop container */
     .prop-accordion-content {
         @apply flex flex-col gap-4 px-[1px];

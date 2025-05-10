@@ -1,0 +1,576 @@
+export const PLATFORMS = [
+    { id: 'github', name: 'GitHub' },
+    { id: 'linkedin', name: 'LinkedIn' },
+    { id: 'twitter', name: 'Twitter' },
+    { id: 'instagram', name: 'Instagram' },
+    { id: 'facebook', name: 'Facebook' },
+];
+
+export const LANGUAGES = [
+    { label: 'Afrikaans', value: 'Afrikaans' },
+    { label: 'Albanian - shqip', value: 'Albanian - shqip' },
+    { label: 'Amharic - አማርኛ', value: 'Amharic - አማርኛ' },
+    { label: 'Arabic - العربية', value: 'Arabic - العربية' },
+    { label: 'Aragonese - aragonés', value: 'Aragonese - aragonés' },
+    { label: 'Armenian - հայերեն', value: 'Armenian - հայերեն' },
+    { label: 'Asturian - asturianu', value: 'Asturian - asturianu' },
+    { label: 'Azerbaijani - azərbaycan dili', value: 'Azerbaijani - azərbaycan dili' },
+    { label: 'Basque - euskara', value: 'Basque - euskara' },
+    { label: 'Belarusian - беларуская', value: 'Belarusian - беларуская' },
+    { label: 'Bengali - বাংলা', value: 'Bengali - বাংলা' },
+    { label: 'Bosnian - bosanski', value: 'Bosnian - bosanski' },
+    { label: 'Breton - brezhoneg', value: 'Breton - brezhoneg' },
+    { label: 'Bulgarian - български', value: 'Bulgarian - български' },
+    { label: 'Catalan - català', value: 'Catalan - català' },
+    { label: 'Central Kurdish - کوردی (دەستنوسی عەرەبی)', value: 'Central Kurdish - کوردی (دەستنوسی عەرەبی)' },
+    { label: 'Chinese - 中文', value: 'Chinese - 中文' },
+    { label: 'Chinese (Hong Kong) - 中文（香港）', value: 'Chinese (Hong Kong) - 中文（香港）' },
+    { label: 'Chinese (Simplified) - 中文（简体）', value: 'Chinese (Simplified) - 中文（简体）' },
+    { label: 'Chinese (Traditional) - 中文（繁體）', value: 'Chinese (Traditional) - 中文（繁體）' },
+    { label: 'Corsican', value: 'Corsican' },
+    { label: 'Croatian - hrvatski', value: 'Croatian - hrvatski' },
+    { label: 'Czech - čeština', value: 'Czech - čeština' },
+    { label: 'Danish - dansk', value: 'Danish - dansk' },
+    { label: 'Dutch - Nederlands', value: 'Dutch - Nederlands' },
+    { label: 'English', value: 'English' },
+    { label: 'English (Australia)', value: 'English (Australia)' },
+    { label: 'English (Canada)', value: 'English (Canada)' },
+    { label: 'English (India)', value: 'English (India)' },
+    { label: 'English (New Zealand)', value: 'English (New Zealand)' },
+    { label: 'English (South Africa)', value: 'English (South Africa)' },
+    { label: 'English (United Kingdom)', value: 'English (United Kingdom)' },
+    { label: 'English (United States)', value: 'English (United States)' },
+    { label: 'Esperanto - esperanto', value: 'Esperanto - esperanto' },
+    { label: 'Estonian - eesti', value: 'Estonian - eesti' },
+    { label: 'Faroese - føroyskt', value: 'Faroese - føroyskt' },
+    { label: 'Filipino', value: 'Filipino' },
+    { label: 'Finnish - suomi', value: 'Finnish - suomi' },
+    { label: 'French - français', value: 'French - français' },
+    { label: 'French (Canada) - français (Canada)', value: 'French (Canada) - français (Canada)' },
+    { label: 'French (France) - français (France)', value: 'French (France) - français (France)' },
+    { label: 'French (Switzerland) - français (Suisse)', value: 'French (Switzerland) - français (Suisse)' },
+    { label: 'Galician - galego', value: 'Galician - galego' },
+    { label: 'Georgian - ქართული', value: 'Georgian - ქართული' },
+    { label: 'German - Deutsch', value: 'German - Deutsch' },
+    { label: 'German (Austria) - Deutsch (Österreich)', value: 'German (Austria) - Deutsch (Österreich)' },
+    { label: 'German (Germany) - Deutsch (Deutschland)', value: 'German (Germany) - Deutsch (Deutschland)' },
+    {
+        label: 'German (Liechtenstein) - Deutsch (Liechtenstein)',
+        value: 'German (Liechtenstein) - Deutsch (Liechtenstein)',
+    },
+    { label: 'German (Switzerland) - Deutsch (Schweiz)', value: 'German (Switzerland) - Deutsch (Schweiz)' },
+    { label: 'Greek - Ελληνικά', value: 'Greek - Ελληνικά' },
+    { label: 'Guarani', value: 'Guarani' },
+    { label: 'Gujarati - ગુજરાતી', value: 'Gujarati - ગુજરાતી' },
+    { label: 'Hausa', value: 'Hausa' },
+    { label: 'Hawaiian - ʻŌlelo Hawaiʻi', value: 'Hawaiian - ʻŌlelo Hawaiʻi' },
+    { label: 'Hebrew - עברית', value: 'Hebrew - עברית' },
+    { label: 'Hindi - हिन्दी', value: 'Hindi - हिन्दी' },
+    { label: 'Hungarian - magyar', value: 'Hungarian - magyar' },
+    { label: 'Icelandic - íslenska', value: 'Icelandic - íslenska' },
+    { label: 'Indonesian - Indonesia', value: 'Indonesian - Indonesia' },
+    { label: 'Interlingua', value: 'Interlingua' },
+    { label: 'Irish - Gaeilge', value: 'Irish - Gaeilge' },
+    { label: 'Italian - italiano', value: 'Italian - italiano' },
+    { label: 'Italian (Italy) - italiano (Italia)', value: 'Italian (Italy) - italiano (Italia)' },
+    { label: 'Italian (Switzerland) - italiano (Svizzera)', value: 'Italian (Switzerland) - italiano (Svizzera)' },
+    { label: 'Japanese - 日本語', value: 'Japanese - 日本語' },
+    { label: 'Kannada - ಕನ್ನಡ', value: 'Kannada - ಕನ್ನಡ' },
+    { label: 'Kazakh - қазақ тілі', value: 'Kazakh - қазақ тілі' },
+    { label: 'Khmer - ខ្មែរ', value: 'Khmer - ខ្មែរ' },
+    { label: 'Korean - 한국어', value: 'Korean - 한국어' },
+    { label: 'Kurdish - Kurdî', value: 'Kurdish - Kurdî' },
+    { label: 'Kyrgyz - кыргызча', value: 'Kyrgyz - кыргызча' },
+    { label: 'Lao - ລາວ', value: 'Lao - ລາວ' },
+    { label: 'Latin', value: 'Latin' },
+    { label: 'Latvian - latviešu', value: 'Latvian - latviešu' },
+    { label: 'Lingala - lingála', value: 'Lingala - lingála' },
+    { label: 'Lithuanian - lietuvių', value: 'Lithuanian - lietuvių' },
+    { label: 'Macedonian - македонски', value: 'Macedonian - македонски' },
+    { label: 'Malay - Bahasa Melayu', value: 'Malay - Bahasa Melayu' },
+    { label: 'Malayalam - മലയാളം', value: 'Malayalam - മലയാളം' },
+    { label: 'Maltese - Malti', value: 'Maltese - Malti' },
+    { label: 'Marathi - मराठी', value: 'Marathi - मराठी' },
+    { label: 'Mongolian - монгол', value: 'Mongolian - монгол' },
+    { label: 'Nepali - नेपाली', value: 'Nepali - नेपाली' },
+    { label: 'Norwegian - norsk', value: 'Norwegian - norsk' },
+    { label: 'Norwegian Bokmål - norsk bokmål', value: 'Norwegian Bokmål - norsk bokmål' },
+    { label: 'Norwegian Nynorsk - nynorsk', value: 'Norwegian Nynorsk - nynorsk' },
+    { label: 'Occitan', value: 'Occitan' },
+    { label: 'Oriya - ଓଡ଼ିଆ', value: 'Oriya - ଓଡ଼ିଆ' },
+    { label: 'Oromo - Oromoo', value: 'Oromo - Oromoo' },
+    { label: 'Pashto - پښتو', value: 'Pashto - پښتو' },
+    { label: 'Persian - فارسی', value: 'Persian - فارسی' },
+    { label: 'Polish - polski', value: 'Polish - polski' },
+    { label: 'Portuguese - português', value: 'Portuguese - português' },
+    { label: 'Portuguese (Brazil) - português (Brasil)', value: 'Portuguese (Brazil) - português (Brasil)' },
+    { label: 'Portuguese (Portugal) - português (Portugal)', value: 'Portuguese (Portugal) - português (Portugal)' },
+    { label: 'Punjabi - ਪੰਜਾਬੀ', value: 'Punjabi - ਪੰਜਾਬੀ' },
+    { label: 'Quechua', value: 'Quechua' },
+    { label: 'Romanian - română', value: 'Romanian - română' },
+    { label: 'Romanian (Moldova) - română (Moldova)', value: 'Romanian (Moldova) - română (Moldova)' },
+    { label: 'Romansh - rumantsch', value: 'Romansh - rumantsch' },
+    { label: 'Russian - русский', value: 'Russian - русский' },
+    { label: 'Scottish Gaelic', value: 'Scottish Gaelic' },
+    { label: 'Serbian - српски', value: 'Serbian - српски' },
+    { label: 'Serbo - Croatian', value: 'Serbo - Croatian' },
+    { label: 'Shona - chiShona', value: 'Shona - chiShona' },
+    { label: 'Sindhi', value: 'Sindhi' },
+    { label: 'Sinhala - සිංහල', value: 'Sinhala - සිංහල' },
+    { label: 'Slovak - slovenčina', value: 'Slovak - slovenčina' },
+    { label: 'Slovenian - slovenščina', value: 'Slovenian - slovenščina' },
+    { label: 'Somali - Soomaali', value: 'Somali - Soomaali' },
+    { label: 'Southern Sotho', value: 'Southern Sotho' },
+    { label: 'Spanish - español', value: 'Spanish - español' },
+    { label: 'Spanish (Argentina) - español (Argentina)', value: 'Spanish (Argentina) - español (Argentina)' },
+    {
+        label: 'Spanish (Latin America) - español (Latinoamérica)',
+        value: 'Spanish (Latin America) - español (Latinoamérica)',
+    },
+    { label: 'Spanish (Mexico) - español (México)', value: 'Spanish (Mexico) - español (México)' },
+    { label: 'Spanish (Spain) - español (España)', value: 'Spanish (Spain) - español (España)' },
+    {
+        label: 'Spanish (United States) - español (Estados Unidos)',
+        value: 'Spanish (United States) - español (Estados Unidos)',
+    },
+    { label: 'Sundanese', value: 'Sundanese' },
+    { label: 'Swahili - Kiswahili', value: 'Swahili - Kiswahili' },
+    { label: 'Swedish - svenska', value: 'Swedish - svenska' },
+    { label: 'Tajik - тоҷикӣ', value: 'Tajik - тоҷикӣ' },
+    { label: 'Tamil - தமிழ்', value: 'Tamil - தமிழ்' },
+    { label: 'Tatar', value: 'Tatar' },
+    { label: 'Telugu - తెలుగు', value: 'Telugu - తెలుగు' },
+    { label: 'Thai - ไทย', value: 'Thai - ไทย' },
+    { label: 'Tigrinya - ትግርኛ', value: 'Tigrinya - ትግርኛ' },
+    { label: 'Tongan - lea fakatonga', value: 'Tongan - lea fakatonga' },
+    { label: 'Turkish - Türkçe', value: 'Turkish - Türkçe' },
+    { label: 'Turkmen', value: 'Turkmen' },
+    { label: 'Twi', value: 'Twi' },
+    { label: 'Ukrainian - українська', value: 'Ukrainian - українська' },
+    { label: 'Urdu - اردو', value: 'Urdu - اردو' },
+    { label: 'Uyghur', value: 'Uyghur' },
+    { label: "Uzbek - o'zbek", value: "Uzbek - o'zbek" },
+    { label: 'Vietnamese - Tiếng Việt', value: 'Vietnamese - Tiếng Việt' },
+    { label: 'Walloon - wa', value: 'Walloon - wa' },
+    { label: 'Welsh - Cymraeg', value: 'Welsh - Cymraeg' },
+    { label: 'Western Frisian', value: 'Western Frisian' },
+    { label: 'Xhosa', value: 'Xhosa' },
+    { label: 'Yiddish', value: 'Yiddish' },
+    { label: 'Yoruba - Èdè Yorùbá', value: 'Yoruba - Èdè Yorùbá' },
+    { label: 'Zulu - isiZulu', value: 'Zulu - isiZulu' },
+];
+
+export const FIELDS_OF_INTEREST = [
+    {
+        label: 'Artificial Intelligence',
+        value: 'Artificial Intelligence',
+    },
+    {
+        label: 'Machine Learning',
+        value: 'Machine Learning',
+    },
+    {
+        label: 'Data Science',
+        value: 'Data Science',
+    },
+    {
+        label: 'Web Development',
+        value: 'Web Development',
+    },
+    {
+        label: 'Mobile App Development',
+        value: 'Mobile App Development',
+    },
+    {
+        label: 'Cloud Computing',
+        value: 'Cloud Computing',
+    },
+    {
+        label: 'Cybersecurity',
+        value: 'Cybersecurity',
+    },
+    {
+        label: 'DevOps',
+        value: 'DevOps',
+    },
+    {
+        label: 'Software Engineering',
+        value: 'Software Engineering',
+    },
+    {
+        label: 'Blockchain Technology',
+        value: 'Blockchain Technology',
+    },
+    {
+        label: 'Game Development',
+        value: 'Game Development',
+    },
+    {
+        label: 'UI/UX Design',
+        value: 'UI/UX Design',
+    },
+    {
+        label: 'Digital Marketing',
+        value: 'Digital Marketing',
+    },
+    {
+        label: 'Content Creation',
+        value: 'Content Creation',
+    },
+    {
+        label: 'Business Management',
+        value: 'Business Management',
+    },
+    {
+        label: 'Entrepreneurship',
+        value: 'Entrepreneurship',
+    },
+    {
+        label: 'Finance & Accounting',
+        value: 'Finance & Accounting',
+    },
+    {
+        label: 'Project Management',
+        value: 'Project Management',
+    },
+    {
+        label: 'Human Resources',
+        value: 'Human Resources',
+    },
+    {
+        label: 'Leadership',
+        value: 'Leadership',
+    },
+    {
+        label: 'Sales & Marketing',
+        value: 'Sales & Marketing',
+    },
+    {
+        label: 'E-commerce',
+        value: 'E-commerce',
+    },
+    {
+        label: 'Mathematics',
+        value: 'Mathematics',
+    },
+    {
+        label: 'Statistics',
+        value: 'Statistics',
+    },
+    {
+        label: 'Physics',
+        value: 'Physics',
+    },
+    {
+        label: 'Chemistry',
+        value: 'Chemistry',
+    },
+    {
+        label: 'Biology',
+        value: 'Biology',
+    },
+    {
+        label: 'Environmental Science',
+        value: 'Environmental Science',
+    },
+    {
+        label: 'Health Sciences',
+        value: 'Health Sciences',
+    },
+    {
+        label: 'Medicine',
+        value: 'Medicine',
+    },
+    {
+        label: 'Nursing',
+        value: 'Nursing',
+    },
+    {
+        label: 'Psychology',
+        value: 'Psychology',
+    },
+    {
+        label: 'Sociology',
+        value: 'Sociology',
+    },
+    {
+        label: 'Anthropology',
+        value: 'Anthropology',
+    },
+    {
+        label: 'Political Science',
+        value: 'Political Science',
+    },
+    {
+        label: 'International Relations',
+        value: 'International Relations',
+    },
+    {
+        label: 'Economics',
+        value: 'Economics',
+    },
+    {
+        label: 'History',
+        value: 'History',
+    },
+    {
+        label: 'Geography',
+        value: 'Geography',
+    },
+    {
+        label: 'Philosophy',
+        value: 'Philosophy',
+    },
+    {
+        label: 'Literature',
+        value: 'Literature',
+    },
+    {
+        label: 'Creative Writing',
+        value: 'Creative Writing',
+    },
+    {
+        label: 'Languages & Linguistics',
+        value: 'Languages & Linguistics',
+    },
+    {
+        label: 'Education & Teaching',
+        value: 'Education & Teaching',
+    },
+    {
+        label: 'Early Childhood Education',
+        value: 'Early Childhood Education',
+    },
+    {
+        label: 'Special Education',
+        value: 'Special Education',
+    },
+    {
+        label: 'Music',
+        value: 'Music',
+    },
+    {
+        label: 'Visual Arts',
+        value: 'Visual Arts',
+    },
+    {
+        label: 'Performing Arts',
+        value: 'Performing Arts',
+    },
+    {
+        label: 'Film & Media Studies',
+        value: 'Film & Media Studies',
+    },
+    {
+        label: 'Photography',
+        value: 'Photography',
+    },
+    {
+        label: 'Graphic Design',
+        value: 'Graphic Design',
+    },
+    {
+        label: 'Architecture',
+        value: 'Architecture',
+    },
+    {
+        label: 'Interior Design',
+        value: 'Interior Design',
+    },
+    {
+        label: 'Engineering',
+        value: 'Engineering',
+    },
+    {
+        label: 'Civil Engineering',
+        value: 'Civil Engineering',
+    },
+    {
+        label: 'Mechanical Engineering',
+        value: 'Mechanical Engineering',
+    },
+    {
+        label: 'Electrical Engineering',
+        value: 'Electrical Engineering',
+    },
+    {
+        label: 'Chemical Engineering',
+        value: 'Chemical Engineering',
+    },
+    {
+        label: 'Aerospace Engineering',
+        value: 'Aerospace Engineering',
+    },
+    {
+        label: 'Agricultural Sciences',
+        value: 'Agricultural Sciences',
+    },
+    {
+        label: 'Food Science',
+        value: 'Food Science',
+    },
+    {
+        label: 'Nutrition',
+        value: 'Nutrition',
+    },
+    {
+        label: 'Physical Education',
+        value: 'Physical Education',
+    },
+    {
+        label: 'Sports Science',
+        value: 'Sports Science',
+    },
+    {
+        label: 'Fitness & Personal Training',
+        value: 'Fitness & Personal Training',
+    },
+    {
+        label: 'Law',
+        value: 'Law',
+    },
+    {
+        label: 'Criminal Justice',
+        value: 'Criminal Justice',
+    },
+    {
+        label: 'Public Administration',
+        value: 'Public Administration',
+    },
+    {
+        label: 'Public Health',
+        value: 'Public Health',
+    },
+    {
+        label: 'Social Work',
+        value: 'Social Work',
+    },
+    {
+        label: 'Counseling',
+        value: 'Counseling',
+    },
+    {
+        label: 'Hospitality Management',
+        value: 'Hospitality Management',
+    },
+    {
+        label: 'Tourism',
+        value: 'Tourism',
+    },
+    {
+        label: 'Culinary Arts',
+        value: 'Culinary Arts',
+    },
+    {
+        label: 'Fashion Design',
+        value: 'Fashion Design',
+    },
+    {
+        label: 'Logistics & Supply Chain Management',
+        value: 'Logistics & Supply Chain Management',
+    },
+    {
+        label: 'Manufacturing',
+        value: 'Manufacturing',
+    },
+    {
+        label: 'Automotive Technology',
+        value: 'Automotive Technology',
+    },
+    {
+        label: 'Aviation',
+        value: 'Aviation',
+    },
+    {
+        label: 'Marine Science',
+        value: 'Marine Science',
+    },
+    {
+        label: 'Renewable Energy',
+        value: 'Renewable Energy',
+    },
+    {
+        label: 'Sustainability',
+        value: 'Sustainability',
+    },
+    {
+        label: 'Climate Science',
+        value: 'Climate Science',
+    },
+    {
+        label: 'Astronomy',
+        value: 'Astronomy',
+    },
+    {
+        label: 'Geology',
+        value: 'Geology',
+    },
+    {
+        label: 'Archaeology',
+        value: 'Archaeology',
+    },
+    {
+        label: 'Veterinary Science',
+        value: 'Veterinary Science',
+    },
+    {
+        label: 'Animal Science',
+        value: 'Animal Science',
+    },
+    {
+        label: 'Forestry',
+        value: 'Forestry',
+    },
+    {
+        label: 'Horticulture',
+        value: 'Horticulture',
+    },
+    {
+        label: 'Real Estate',
+        value: 'Real Estate',
+    },
+    {
+        label: 'Urban Planning',
+        value: 'Urban Planning',
+    },
+    {
+        label: 'Library Science',
+        value: 'Library Science',
+    },
+    {
+        label: 'Information Science',
+        value: 'Information Science',
+    },
+    {
+        label: 'Theology & Religious Studies',
+        value: 'Theology & Religious Studies',
+    },
+    {
+        label: 'Ethics',
+        value: 'Ethics',
+    },
+    {
+        label: 'Gender Studies',
+        value: 'Gender Studies',
+    },
+    {
+        label: 'Cultural Studies',
+        value: 'Cultural Studies',
+    },
+    {
+        label: 'Communications',
+        value: 'Communications',
+    },
+    {
+        label: 'Journalism',
+        value: 'Journalism',
+    },
+    {
+        label: 'Public Relations',
+        value: 'Public Relations',
+    },
+    {
+        label: 'Technical Writing',
+        value: 'Technical Writing',
+    },
+];

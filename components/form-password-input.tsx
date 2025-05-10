@@ -36,7 +36,7 @@ export default function PasswordInput({
                 <Input
                     type={showPassword ? 'text' : 'password'}
                     placeholder={placeholder}
-                    className={cn(className, `${error && 'input-error'}`)}
+                    className={cn(className, `${error && 'input-error'} bg-background`)}
                     {...register(name!, { valueAsNumber })}
                     {...rest}
                 />
