@@ -4,15 +4,22 @@ import Loading from '@/components/loading';
 
 import useUserData from './hooks/useUserData';
 import { useQuery } from '@tanstack/react-query';
-import { getUserDetails } from './server-actions/user-data';
+import { getUserData } from './server-actions/user-data';
 
 import { Course, uploadMediaType } from './types';
-import { Media } from '../types';
+import { Media, UserWithDetails } from '../types';
+import { User } from '@supabase/supabase-js';
+import { UserWithEmail } from '../types';
+import { SupabaseAuthClient } from '@supabase/supabase-js/dist/module/lib/SupabaseAuthClient';
 
 type UserProviderContextType = {
+    auth: SupabaseAuthClient;
+    user: UserWithEmail | undefined;
     media: Media[];
     courses: Course[];
     canUpload: boolean;
+    updateUserAvatar: (avatar: File | null) => Promise<void>;
+    updateUserData: (user: UserWithDetails) => Promise<void>;
     createMedia: (media_id: string, name: string, type: 'image' | 'video' | 'audio', size: number) => Promise<void>;
     getUploadMediaUrl: (data: uploadMediaType) => Promise<{
         url: string;
@@ -23,26 +30,27 @@ type UserProviderContextType = {
     deleteMedia: (media_id: string) => Promise<void>;
 };
 type UserProviderProps = React.PropsWithChildren<{
-    user_id: string;
+    auth: SupabaseAuthClient;
+    authUser: User | undefined;
 }>;
 
 const UserProviderContext = React.createContext<UserProviderContextType | undefined>(undefined);
 
-const UserProvider = ({ user_id, children }: UserProviderProps) => {
+const UserProvider = ({ auth, authUser, children }: UserProviderProps) => {
     const { data: user, isLoading: isUserLoading } = useQuery({
-        queryKey: ['user', user_id],
-        queryFn: () => getUserDetails(user_id),
+        queryKey: ['user', authUser?.id],
+        queryFn: () => getUserData(authUser?.id as string),
         retry: 3,
+        enabled: !!authUser?.id,
     });
-
-    if (isUserLoading) return <Loading />;
-    if (user === undefined) throw new Error('Error while fetching user data');
 
     const {
         media,
         courses,
         isLoading,
         canUpload,
+        updateUserAvatarMutation,
+        updateUserDataMutation,
         createMediaMutation,
         getUploadMediaUrlMutation,
         downloadMediaMutation,
@@ -51,6 +59,17 @@ const UserProvider = ({ user_id, children }: UserProviderProps) => {
     } = useUserData({
         user,
     });
+
+    const updateUserAvatar = React.useCallback(async (avatar: File | null) => {
+        await updateUserAvatarMutation.mutateAsync({ avatar });
+    }, []);
+
+    const updateUserData = React.useCallback(
+        async (user: UserWithDetails) => {
+            await updateUserDataMutation.mutateAsync({ newUser: user });
+        },
+        [updateUserDataMutation],
+    );
 
     const getUploadMediaUrl = React.useCallback(
         async (data: uploadMediaType) => {
@@ -88,16 +107,23 @@ const UserProvider = ({ user_id, children }: UserProviderProps) => {
         [deleteMediaMutation],
     );
 
-    if (isLoading) return <Loading />;
+    if (isLoading || isUserLoading || !authUser) return <Loading />;
     if (user === undefined || media === undefined || courses === undefined)
         throw new Error('Error while fetching user data');
 
     return (
         <UserProviderContext.Provider
             value={{
+                auth,
+                user: {
+                    ...user,
+                    email: authUser?.email as string,
+                },
                 media,
                 courses,
                 canUpload,
+                updateUserAvatar,
+                updateUserData,
                 createMedia,
                 getUploadMediaUrl,
                 downloadMedia,

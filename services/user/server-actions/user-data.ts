@@ -8,19 +8,73 @@ import { getSignedUrl as getCloudFrontSignedUrl } from '@aws-sdk/cloudfront-sign
 import serverClient from '@/db/server';
 //@CONSTANTS
 import { INPUT_FILE_TYPES, MAX_SIZES } from '@/services/constants';
+import { PROFILE_PICTURE_LIMIT } from '../constants';
 //@TYPES
 import { Chapter, Course } from '../types';
-import { Media } from '@/services/types';
-import { Database } from '@/db/database.types';
+import { Media, User, UserWithEmail, UserWithDetails } from '@/services/types';
 
-export const getUserDetails = async (user_id: string) => {
+export const getUserData = async (user_id: string) => {
     if (!user_id) throw new Error('User ID is required and should not be empty');
 
     const supabase = await serverClient();
     const { data: user, error } = await supabase.from('user').select<'*'>('*').eq('id', user_id).single();
     if (error) throw new Error('Error fetching user details');
 
-    return user as Database['public']['Tables']['user']['Row'];
+    return user as UserWithDetails;
+};
+
+export const updateUserAvatar = async (user_public_id: string, avatar: File | null) => {
+    if (!user_public_id) throw new Error('User ID is required and should not be empty');
+    if (avatar && avatar.size > PROFILE_PICTURE_LIMIT) throw new Error('File size too large'); // 5MB
+
+    const supabase = await serverClient();
+    if (!avatar) {
+        const { data: user, error } = await supabase
+            .from('user')
+            .update({ avatar: null })
+            .eq('public_id', user_public_id)
+            .select<'*'>('*')
+            .single();
+        if (error) throw new Error('Error updating user profile picture');
+        return user as User;
+    }
+
+    const extension = avatar.type.split('/')[1];
+    const fileName = `${user_public_id}.${extension}`;
+
+    const { data, error } = await supabase.storage.from('avatars').upload(fileName, avatar, {
+        cacheControl: '3600',
+        upsert: true,
+    });
+
+    console.error('Error uploading file:', error);
+    if (error) throw new Error('Error uploading profile picture');
+
+    const { data: user, error: userError } = await supabase
+        .from('user')
+        .update({ avatar: data?.path })
+        .eq('public_id', user_public_id)
+        .select<'*'>('*')
+        .single();
+    if (userError) throw new Error('Error updating user profile picture');
+
+    return user as User;
+};
+
+export const updateUserData = async (user_id: string, user: UserWithDetails) => {
+    if (!user_id) throw new Error('User ID is required and should not be empty');
+    if (!user) throw new Error('User data is required and should not be empty');
+
+    const userData = {
+        ...user,
+        id: user_id,
+    };
+
+    const supabase = await serverClient();
+    const { error } = await supabase.from('user').update(userData).eq('id', user_id);
+    if (error) throw new Error('Error updating user data');
+
+    return true;
 };
 
 export const getUserMedia = async (user_id: string) => {
