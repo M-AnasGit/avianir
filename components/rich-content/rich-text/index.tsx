@@ -56,15 +56,15 @@ export default function RichTextInput({ content, style, palette, handleSaveConte
         <>
             <MenuBar palette={palette} editor={editor} />
             <div
-                className="no-scrollbar bg-background"
+                className="no-scrollbar rounded-lg bg-background"
                 style={{
-                    maxHeight: '300px',
+                    maxHeight: '290px',
                     overflowY: 'auto',
                 }}
             >
                 <EditorContent
                     editor={editor}
-                    style={{ ...style, height: '300px' }}
+                    style={{ ...style, height: '290px' }}
                     data-testid="rich-content"
                     className="rich-editor-content"
                 />
