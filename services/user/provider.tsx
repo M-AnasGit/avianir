@@ -4,7 +4,7 @@ import Loading from '@/components/loading';
 
 import useUserData from './hooks/useUserData';
 import { useQuery } from '@tanstack/react-query';
-import { getUserData } from './server-actions/user-data';
+import { getUserData, updateUserPasswordEmail } from './server-actions/user-data';
 
 import { Course, uploadMediaType } from './types';
 import { Media, UserWithDetails } from '../types';
@@ -20,6 +20,7 @@ type UserProviderContextType = {
     canUpload: boolean;
     updateUserAvatar: (avatar: File | null) => Promise<void>;
     updateUserData: (user: UserWithDetails) => Promise<void>;
+    updateUserPassword: (token: string) => Promise<void>;
     createMedia: (media_id: string, name: string, type: 'image' | 'video' | 'audio', size: number) => Promise<void>;
     getUploadMediaUrl: (data: uploadMediaType) => Promise<{
         url: string;
@@ -51,6 +52,7 @@ const UserProvider = ({ auth, authUser, children }: UserProviderProps) => {
         canUpload,
         updateUserAvatarMutation,
         updateUserDataMutation,
+        updateUserPasswordWithEmailMutation,
         createMediaMutation,
         getUploadMediaUrlMutation,
         downloadMediaMutation,
@@ -69,6 +71,13 @@ const UserProvider = ({ auth, authUser, children }: UserProviderProps) => {
             await updateUserDataMutation.mutateAsync({ newUser: user });
         },
         [updateUserDataMutation],
+    );
+
+    const updateUserPassword = React.useCallback(
+        async (token: string) => {
+            await updateUserPasswordWithEmailMutation.mutateAsync({ token });
+        },
+        [updateUserPasswordEmail],
     );
 
     const getUploadMediaUrl = React.useCallback(
@@ -124,6 +133,7 @@ const UserProvider = ({ auth, authUser, children }: UserProviderProps) => {
                 canUpload,
                 updateUserAvatar,
                 updateUserData,
+                updateUserPassword,
                 createMedia,
                 getUploadMediaUrl,
                 downloadMedia,

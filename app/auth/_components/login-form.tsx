@@ -28,6 +28,7 @@ export default function LoginForm() {
         resolver: zodResolver(loginSchema),
     });
 
+    const [isLoading, setIsLoading] = React.useState<boolean>(false);
     const tokenRef = React.useRef<string | null>(null);
     const captchaRef = React.useRef<HCaptcha>(null);
     const onVerify = (token: string | null) => {
@@ -40,11 +41,13 @@ export default function LoginForm() {
         e.preventDefault();
 
         if (captchaRef.current) {
+            setIsLoading(true);
             captchaRef.current.execute();
         }
     };
     const onSubmit = (data: LoginSchema) => {
         captchaRef.current?.resetCaptcha();
+        setIsLoading(false);
         loginUserMutation({ data, token: tokenRef.current });
     };
 
@@ -102,8 +105,8 @@ export default function LoginForm() {
                     size="invisible"
                     ref={captchaRef}
                 />
-                <Button className="w-full" disabled={isLoginPending} onClick={preSubmit}>
-                    {isLoginPending ? <Loader2 className="size-8 animate-spin" /> : 'Log in'}
+                <Button className="w-full" disabled={isLoginPending || isLoading} onClick={preSubmit}>
+                    {isLoginPending || isLoading ? <Loader2 className="size-8 animate-spin" /> : 'Log in'}
                 </Button>
             </form>
             <div className="relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t after:border-border">

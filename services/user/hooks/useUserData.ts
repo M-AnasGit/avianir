@@ -11,6 +11,7 @@ import {
     updateUserAvatar,
     updateUserData,
     updateUserMedia,
+    updateUserPasswordEmail,
     uploadMedia,
 } from '../server-actions/user-data';
 import { UPLOAD_LIMITS } from '../constants';
@@ -93,6 +94,32 @@ const useUserData = ({ user }: Props) => {
             toast({
                 title: 'Update Failed',
                 description: 'There was an error updating your data. Please try again.',
+                variant: 'destructive',
+            });
+        },
+    });
+
+    const updateUserPasswordWithEmailMutation = useMutation({
+        mutationFn: ({ token }: { token: string }) => updateUserPasswordEmail(token),
+        onMutate: () => {
+            console.log('Mutating...');
+            toast({
+                title: 'Processing...',
+                description: 'Your request is being processed. Please wait.',
+            });
+        },
+        onSuccess: () => {
+            console.log('Mutated Successfully');
+            toast({
+                title: 'Email sent Successfully',
+                description: 'Please check your email for the password reset link.',
+            });
+        },
+        onError: (err: Error) => {
+            console.error(err);
+            toast({
+                title: 'Request Failed',
+                description: 'There was an error processing your request. Please try again.',
                 variant: 'destructive',
             });
         },
@@ -207,6 +234,7 @@ const useUserData = ({ user }: Props) => {
         canUpload: !!canUpload,
         updateUserAvatarMutation,
         updateUserDataMutation,
+        updateUserPasswordWithEmailMutation,
         createMediaMutation,
         getUploadMediaUrlMutation,
         downloadMediaMutation,

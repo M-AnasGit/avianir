@@ -15,7 +15,6 @@ export async function GET(request: Request) {
     const forwardedHost = request.headers.get('x-forwarded-host');
 
     const supabase = await serverClient();
-
     if (code) {
         if (confirm) {
             return NextResponse.redirect(`${newOrigin}/auth/callback/confirm`);
@@ -33,7 +32,7 @@ export async function GET(request: Request) {
         }
 
         return NextResponse.redirect(isLocalEnv ? `${newOrigin}` : `https://${forwardedHost}`);
-    } else {
-        return NextResponse.redirect(`${newOrigin}/auth`);
     }
+
+    return NextResponse.redirect(`${newOrigin}/auth`);
 }

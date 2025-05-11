@@ -26,6 +26,7 @@ export default function ForgotPwForm() {
         resolver: zodResolver(forgotPasswordSchema),
     });
 
+    const [isLoading, setIsLoading] = React.useState<boolean>(false);
     const tokenRef = React.useRef<string | null>(null);
     const captchaRef = React.useRef<HCaptcha>(null);
     const onVerify = (token: string | null) => {
@@ -38,12 +39,14 @@ export default function ForgotPwForm() {
         e.preventDefault();
 
         if (captchaRef.current) {
+            setIsLoading(true);
             captchaRef.current.execute();
         }
     };
 
     const onSubmit = (data: ForgotPasswordSchema) => {
         captchaRef.current?.resetCaptcha();
+        setIsLoading(false);
         forgotPasswordMutation({ data, token: tokenRef.current });
     };
 
@@ -69,8 +72,8 @@ export default function ForgotPwForm() {
                 size="invisible"
                 ref={captchaRef}
             />
-            <Button className="w-full" disabled={isForgotPasswordPending} onClick={preSubmit}>
-                {isForgotPasswordPending ? <Loader2 className="size-8 animate-spin" /> : 'Send Reset Link'}
+            <Button className="w-full" disabled={isForgotPasswordPending || isLoading} onClick={preSubmit}>
+                {isForgotPasswordPending || isLoading ? <Loader2 className="size-8 animate-spin" /> : 'Send Reset Link'}
             </Button>
         </form>
     );

@@ -15,6 +15,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { RegisterSchema, registerSchema } from '@/services/auth/helpers';
 //@CUSTOM HOOKS
 import useAuth from '@/services/auth/hooks';
+import { set } from 'lodash';
 
 export default function RegisterForm() {
     const { registerUserMutation, isRegistrationPending, oAuthWithGoogle, oAuthWithGooglePending } = useAuth();
@@ -27,6 +28,7 @@ export default function RegisterForm() {
         resolver: zodResolver(registerSchema),
     });
 
+    const [isLoading, setIsLoading] = React.useState<boolean>(false);
     const tokenRef = React.useRef<string | null>(null);
     const captchaRef = React.useRef<HCaptcha>(null);
     const onVerify = (token: string | null) => {
@@ -39,11 +41,13 @@ export default function RegisterForm() {
         e.preventDefault();
 
         if (captchaRef.current) {
+            setIsLoading(true);
             captchaRef.current.execute();
         }
     };
     const onSubmit = (data: RegisterSchema) => {
         captchaRef.current?.resetCaptcha();
+        setIsLoading(false);
         registerUserMutation({ data, token: tokenRef.current });
     };
 
@@ -115,8 +119,8 @@ export default function RegisterForm() {
                     size="invisible"
                     ref={captchaRef}
                 />
-                <Button className="w-full" disabled={isRegistrationPending} onClick={preSubmit}>
-                    {isRegistrationPending ? <Loader2 className="size-8 animate-spin" /> : 'Sign Up'}
+                <Button className="w-full" disabled={isRegistrationPending || isLoading} onClick={preSubmit}>
+                    {isRegistrationPending || isLoading ? <Loader2 className="size-8 animate-spin" /> : 'Sign Up'}
                 </Button>
             </form>
             <div className="relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t after:border-border">

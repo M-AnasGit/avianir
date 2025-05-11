@@ -77,6 +77,26 @@ export const updateUserData = async (user_id: string, user: UserWithDetails) => 
     return true;
 };
 
+export const updateUserPasswordEmail = async (token: string) => {
+    if (!token) throw new Error('Captcha token is required and should not be empty');
+
+    const supabase = await serverClient();
+    const {
+        data: { user },
+    } = await supabase.auth.getUser();
+
+    if (!user || !user.email) throw new Error('User not found');
+
+    const { error } = await supabase.auth.resetPasswordForEmail(user?.email, {
+        captchaToken: token,
+        redirectTo: process.env.NEXT_PUBLIC_BASE_URL + '/auth/callback?reset=true',
+    });
+
+    if (error) throw new Error('Error sending password reset email');
+
+    return true;
+};
+
 export const getUserMedia = async (user_id: string) => {
     if (!user_id) throw new Error('User ID is required and should not be empty');
 
