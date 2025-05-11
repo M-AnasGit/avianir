@@ -156,7 +156,7 @@ export default function MenuBar({ editor, palette }: Props) {
                 {buttons &&
                     Object.entries(buttons).map(([key, { icon, action, pressed }]) => (
                         <Tooltip key={key}>
-                            <TooltipTrigger>
+                            <TooltipTrigger type="button">
                                 <Toggle asChild pressed={!!pressed} onClick={action} data-testid={`menu-bar-${key}`}>
                                     {icon}
                                 </Toggle>

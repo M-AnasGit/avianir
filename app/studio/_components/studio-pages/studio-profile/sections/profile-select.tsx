@@ -58,7 +58,7 @@ export default function ProfileSelect({ id, title, subtitle, data, values }: Pro
                     localValues.map((val, index) => (
                         <div
                             key={index}
-                            className="flex min-w-[25px] max-w-fit items-center justify-between rounded-md border border-border bg-background pl-4 hover:bg-primary/25"
+                            className="flex min-w-[25px] max-w-fit items-center justify-between rounded-md border bg-background pl-4 hover:bg-primary/25"
                         >
                             <span className="text-sm capitalize">{val}</span>
                             <Button

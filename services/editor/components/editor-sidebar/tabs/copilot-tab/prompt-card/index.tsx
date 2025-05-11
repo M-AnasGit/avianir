@@ -19,7 +19,7 @@ export default function CopilotPromptCard({
 }: Props) {
     return (
         <div className="history-card">
-            <div className="history-card-prompt-container relative mb-4 rounded-md border border-border p-2">
+            <div className="history-card-prompt-container relative mb-4 rounded-md border p-2">
                 <p className="text-xs italic text-muted-foreground">{copilotHistoryElement.prompt}</p>
             </div>
             <div className="flex w-full items-center gap-2">

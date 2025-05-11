@@ -87,7 +87,7 @@ export default function PublicPresetCard({ device, preset, handleImportPreset }:
                     </div>
                 </CardHeader>
                 {isPreview && (
-                    <CardContent className="mx-6 mb-6 rounded-lg border-2 border-border p-8">
+                    <CardContent className="mx-6 mb-6 rounded-lg border-2 p-8">
                         <PreviewPreset preset={newPreset} />
                     </CardContent>
                 )}

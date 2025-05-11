@@ -14,7 +14,7 @@ type Props = {
 export default function UserAvatar({ user, avatarUrl, width, height, textSize, round }: Props) {
     return (
         <Avatar
-            className={cn(round ? 'rounded-full' : 'rounded-lg', 'border border-border shadow-sm')}
+            className={cn(round ? 'rounded-full' : 'rounded-lg', 'border shadow-sm')}
             style={{
                 width: width || '32px',
                 height: height || '32px',
