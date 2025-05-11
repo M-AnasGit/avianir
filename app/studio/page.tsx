@@ -43,9 +43,11 @@ export default function StudioPage() {
                         <Separator orientation="vertical" className="mr-2 h-4" />
                         <StudioBreadcrumb tab={tab ? tab : 'profile'} />
                     </div>
-                    <React.Suspense fallback={<Loading />}>
-                        <TabComponent {...tabComponentProps} />
-                    </React.Suspense>
+                    <div className="px-4">
+                        <React.Suspense fallback={<Loading />}>
+                            <TabComponent {...tabComponentProps} />
+                        </React.Suspense>
+                    </div>
                 </SidebarInset>
             </main>
         </SidebarProvider>

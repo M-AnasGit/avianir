@@ -141,7 +141,7 @@ export default function StudioProfile() {
     if (!user) return null;
 
     return (
-        <div className="flex flex-col items-center gap-8 px-4 xl:flex-row xl:items-start">
+        <div className="flex flex-col items-center gap-8 xl:flex-row xl:items-start">
             <input
                 ref={avatarRef}
                 type="file"

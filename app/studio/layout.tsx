@@ -2,6 +2,9 @@
 import React from 'react';
 import clientSideSupabase from '@/db/client';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+//@SHADNCUI
+import { Toaster } from '@/components/ui/toaster';
+// @COMPONENTS
 import UserProvider from '@/services/user/provider';
 //@TYPES
 import { User } from '@supabase/supabase-js';
@@ -33,6 +36,7 @@ export default function StudioLayout({
             <UserProvider auth={auth} authUser={authUser}>
                 {children}
             </UserProvider>
+            <Toaster />
         </QueryClientProvider>
     );
 }
