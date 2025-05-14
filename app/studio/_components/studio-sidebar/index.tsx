@@ -62,7 +62,7 @@ export function StudioSidebar({ user, tab }: Props) {
                     <Link href="/">
                         <div className="flex aspect-square size-8 items-center justify-center rounded-lg text-sidebar-primary-foreground">
                             <Image
-                                src="/vector.png"
+                                src="/logo.png"
                                 alt="Avianir logo"
                                 width={28}
                                 height={28}

@@ -13,14 +13,7 @@ export default function Header({ isUser }: Props) {
     return (
         <nav className="flex items-center justify-between border-b border-b-border bg-muted px-16 py-6 shadow-sm">
             <div className="flex items-center justify-start space-x-4">
-                <Image
-                    src="/full-logo.png"
-                    alt="Logo"
-                    width={128}
-                    height={128}
-                    className="h-auto w-auto"
-                    priority={true}
-                />
+                <Image src="/logo.png" alt="Logo" width={128} height={128} className="h-auto w-auto" priority={true} />
                 <div className="relative">
                     <Input id="search" placeholder="Search..." className="w-[350px] pr-8" />
                     <button
